@@ -1,8 +1,9 @@
 function onLoad() {
 	//console.log("Running onLoad('" + timelinediv + "')");
-	Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();
-	Omeka.Timeline.eventSource.loadJSON( { "events": Omeka.Timeline.events }, document.location.href);
-	
+	if (!Omeka.Timeline.eventSource) {
+		Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();
+		Omeka.Timeline.eventSource.loadJSON( { "events": Omeka.Timeline.events }, document.location.href);
+	}
 	if (!Omeka.Timeline.bandInfos) {
 		Omeka.Timeline.bandInfos = [ Timeline.createBandInfo( {
 			width : "70%",
@@ -21,6 +22,7 @@ function onLoad() {
 }
 
 var resizeTimerID = null;
+
 function onResize() {
 	console.log("Running onResize()");
 	if (resizeTimerID == null) {
