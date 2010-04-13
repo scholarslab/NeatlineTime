@@ -1,7 +1,6 @@
 function onLoad() {
 	if (!Omeka.Timeline.eventSource) {
-		Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();
-		Omeka.Timeline.eventSource.loadJSON( { "events": Omeka.Timeline.events }, document.location.href);
+		Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();		
 	}
 	if (!Omeka.Timeline.bandInfos) {
 		Omeka.Timeline.bandInfos = [ Timeline.createBandInfo( {
@@ -18,6 +17,7 @@ function onLoad() {
 		Omeka.Timeline.bandInfos[1].highlight = true;
 	}
 	Omeka.Timeline.timeline = Timeline.create(Omeka.Timeline.timelinediv, Omeka.Timeline.bandInfos);
+	Omeka.Timeline.eventSource.loadJSON( { "events": Omeka.Timeline.events }, document.location.href);
 }
 
 var resizeTimerID = null;
