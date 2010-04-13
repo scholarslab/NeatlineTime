@@ -1,6 +1,6 @@
 <?php head(); ?>
 
-<div id="timelinediv"></div>
+<div id="timelinediv" style="height:200px"></div>
 
 <?php
 
