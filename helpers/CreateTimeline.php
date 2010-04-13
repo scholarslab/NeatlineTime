@@ -34,13 +34,13 @@ function getMet($item, $elementSet, $element) {
  * 
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
-		
+		echo js("prototype");
 		global $mets;
 		$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
 		?>
 		<!--  we have to load the script in this funny way because we need to get the tag into the head of the doc
 			because of the the funky way Simile Timeline loads its sub-scripts  -->
-		<script>
+		<script type="text/javascript">
 			scripttag = document.createElement("script"); 
 			scripttag.src = "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false";
 			scripttag.type = "text/javascript";
