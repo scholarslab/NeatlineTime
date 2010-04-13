@@ -57,7 +57,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 		</script>
 
 		<script type="text/javascript" defer="defer">	
-			Omeka.Timeline.timelinediv = "<?php echo $div;?>";
+			Omeka.Timeline.timelinediv = $("<?php echo $div;?>");
 			
 			Omeka.Timeline.events = [
 			<?php 
