@@ -4,11 +4,8 @@
 
 <?php
 
-$tags = array();
-foreach ($item->getTags() as $tag) {
-	array_push($tags, $tag->name);
-}
-$query = array('tags' => implode(',',$tags));
+$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
+$query = array('tags' => $tags);
 $things = get_items($query);
 createTimeline("timelinediv",$things);
 
