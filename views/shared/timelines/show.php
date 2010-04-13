@@ -1,5 +1,5 @@
 <?php head(); ?>
-<body>
+
 <div id="timelinediv"></div>
 
 <?php
@@ -11,5 +11,3 @@ createTimeline("timelinediv",$things);
 
 foot();
 ?>
-
-</body>
