@@ -47,11 +47,11 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			$$("head")[0].insert(scripttag);
 
 			if (typeof(Omeka) == "undefined") {
-				Omeka = Class.create();
+				Omeka = new Object();
 			}
 
 			if (!Omeka.Timeline) {
-				Omeka.Timeline = Class.create();
+				Omeka.Timeline = new Object();
 			}
 			
 		</script>
