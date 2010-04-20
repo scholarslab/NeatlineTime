@@ -57,8 +57,8 @@ function timeline_show_item_in_page($html, $item){
 		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
 		$query = array('tags' => $tags);
 		$things = get_items($query);
-		createTimeline("timelinediv",$things);
-		return "<div id='timelinediv' style='height:200px'></div>";
+		
+		return "<div id='timelinediv' style='height:200px'></div>" . createTimeline("timelinediv",$things);
 	}
 	else return $html;
 }
