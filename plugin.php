@@ -50,6 +50,9 @@ function timeline_initialize()
 }
 
 function timeline_show_item_in_page($item, $html){
+	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
+	$logger = new Zend_Log($writer);
+	$logger->info("Called timeline_show_item_in_page");
 	$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
 	$query = array('tags' => $tags);
 	$things = get_items($query);
