@@ -50,7 +50,8 @@ function timeline_initialize()
 }
 
 function timeline_show_item_in_page($item, $html){
-	return "<div id='timelinediv' style='height:200px'>" . __v()->partial('timelines/show.phtml',array()) . "</div>";
+	__v()->partial('timelines/show.phtml',array());
+	return "<div id='timelinediv' style='height:200px'></div>";
 }
 
 // Add the routes from routes.ini in this plugin folder.
