@@ -49,7 +49,7 @@ function timeline_initialize()
 	require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers/CreateTimeline.php';	
 }
 
-function timeline_show_item_in_page($item, $html){
+function timeline_show_item_in_page($html){
 	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
 	$logger = new Zend_Log($writer);
 	$logger->info(print_r($item,true));
