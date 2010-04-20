@@ -53,12 +53,15 @@ function timeline_show_item_in_page($item, $html){
 	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
 	$logger = new Zend_Log($writer);
 	$e = new Exception();
-	$logger->info($e->getTraceAsString());
-	$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
-	$query = array('tags' => $tags);
-	$things = get_items($query);
-	createTimeline("timelinediv",$things);
-	return "<div id='timelinediv' style='height:200px'></div>";
+	if ($item->getItemType()->name == "Timeline") {
+		$logger->info($e->getTraceAsString());
+		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
+		$query = array('tags' => $tags);
+		$things = get_items($query);
+		createTimeline("timelinediv",$things);
+		return "<div id='timelinediv' style='height:200px'></div>";
+	}
+	else return $html;
 }
 
 // Add the routes from routes.ini in this plugin folder.
