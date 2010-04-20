@@ -10,6 +10,8 @@ add_plugin_hook('uninstall', 'timeline_uninstall');
 add_plugin_hook('initialize', 'timeline_initialize');
 add_plugin_hook('define_routes', 'timeline_routes');
 
+add_filter("show_item_in_page","timeline_show_item_in_page");
+
 define('TIMELINE_PLUGIN_VERSION', get_plugin_ini('Timeline', 'version'));
 define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
 
@@ -45,6 +47,10 @@ function timeline_initialize()
 	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
 	$logger = new Zend_Log($writer);
 	require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers/CreateTimeline.php';	
+}
+
+function timeline_show_item_in_page($item, $html){
+	echo __v()->partial('show.phtml',array());
 }
 
 // Add the routes from routes.ini in this plugin folder.
