@@ -37,16 +37,16 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 		echo js("prototype");
 		global $mets;
 		$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
-		?>
+		echo "
 		<!--  we have to load the script in this funny way because we need to get the tag into the head of the doc
 			because of the the funky way Simile Timeline loads its sub-scripts  -->
-		<script type="text/javascript">
-			scripttag = document.createElement("script"); 
-			scripttag.src = "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false";
-			scripttag.type = "text/javascript";
-			$$("head")[0].insert(scripttag);
+		<script type='text/javascript'>
+			scripttag = document.createElement('script'); 
+			scripttag.src = 'http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false';
+			scripttag.type = 'text/javascript';
+			$$('head')[0].insert(scripttag);
 
-			if (typeof(Omeka) == "undefined") {
+			if (typeof(Omeka) == 'undefined') {
 				Omeka = new Object();
 			}
 
@@ -55,12 +55,13 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			}
 			
 		</script>
-
-		<script type="text/javascript" defer="defer">	
-			Omeka.Timeline.timelinediv = $("<?php echo $div;?>");
+";
+		echo "
+		<script type='text/javascript' defer='defer'>	
+			Omeka.Timeline.timelinediv = $(" . $div . "');
 			
-			Omeka.Timeline.events = [
-			<?php 
+			Omeka.Timeline.events = [ ";
+			
 				function event_to_json($item) {
 					global $mets;
 					return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "', 
@@ -69,18 +70,16 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 					'durationEvent':false }";
 				}
 				echo implode(',',array_map('event_to_json', $items));
-				?>
-				];
+				
+			echo "	];
 			
-		</script>
-		<?php 
+		</script> "; 
 	     echo js("createTimeline");
-		?>
-		<script type="text/javascript">
+		echo "
+		<script type='text/javascript'>
 			Event.observe(window, 'load', onLoad);
 			Event.observe(document.body, 'resize', onResize);
 		</script>
-
-		<?php 
+"; 
 }
 ?>
