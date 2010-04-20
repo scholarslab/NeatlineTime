@@ -54,7 +54,6 @@ function timeline_show_item_in_page($html, $item){
 	$logger = new Zend_Log($writer);
 	$logger->info("timeline_show_item_in_page called with item: " . print_r($item,true));
 	if ($item->getItemType()->name == "Timeline") {
-		$logger->info($e->getTraceAsString());
 		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
 		$query = array('tags' => $tags);
 		$things = get_items($query);
