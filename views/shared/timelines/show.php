@@ -4,7 +4,7 @@
 
 <?php
 
-echo $this->partial("show.phtml",array());
+echo $this->partial("timelines/show.phtml",array());
 
 foot();
 ?>
