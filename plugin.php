@@ -52,7 +52,7 @@ function timeline_initialize()
 function timeline_show_item_in_page($html){
 	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
 	$logger = new Zend_Log($writer);
-	$logger->info(print_r($item,true));
+	$logger->info(print_r($html,true));
 	if ($item->getItemType()->name == "Timeline") {
 		$logger->info($e->getTraceAsString());
 		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
