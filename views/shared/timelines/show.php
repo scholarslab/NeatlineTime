@@ -4,7 +4,7 @@
 
 <?php
 
-partial("show.phtml");
+echo partial("show.phtml",array());
 
 foot();
 ?>
