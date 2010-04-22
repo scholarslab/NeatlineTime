@@ -66,7 +66,12 @@ function timeline_show_item_in_page($html, $item){
 }
 
 function timeline_item_square_thumbnail($thumb, $item) {
-	return "<span>Timeline Thumbnail Dummy</span>";
+	if ($item->getItemType()->name == "Timeline") {
+		return "<span>Timeline Thumbnail Dummy</span>";
+	}
+	else {		
+		return $thumb;
+	}
 }
 
 // Add the routes from routes.ini in this plugin folder.
