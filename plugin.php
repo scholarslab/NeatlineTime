@@ -51,8 +51,6 @@ function timeline_initialize()
 }
 
 function timeline_show_item_in_page($html, $item){
-	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
-	$logger = new Zend_Log($writer);
 	//$logger->info("timeline_show_item_in_page called with item: " . print_r($item,true));
 	if ($item->getItemType()->name == "Timeline") {
 		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
@@ -66,6 +64,9 @@ function timeline_show_item_in_page($html, $item){
 }
 
 function timeline_item_square_thumbnail($thumb, $item) {
+	$writer = new Zend_Log_Writer_Stream(LOGS_DIR . DIRECTORY_SEPARATOR . "timeline.log");
+	$logger = new Zend_Log($writer);
+	$logger->info("timeline_item_square_thumbnail called with Item of type:" . $item->getItemType()->name);
 	if ($item->getItemType()->name == "Timeline") {
 		return "<span>Timeline Thumbnail Dummy</span>";
 	}
