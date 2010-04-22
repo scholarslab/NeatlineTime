@@ -12,6 +12,7 @@ add_plugin_hook('define_routes', 'timeline_routes');
 
 add_filter("show_item_in_page","timeline_show_item_in_page");
 add_filter("item_square_thumbnail","timeline_item_square_thumbnail");
+add_filter("item_has_thumbnail","timeline_item_has_thumbnail");
 
 define('TIMELINE_PLUGIN_VERSION', get_plugin_ini('Timeline', 'version'));
 define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
@@ -61,6 +62,10 @@ function timeline_show_item_in_page($html, $item){
 		return ""  ;
 	}
 	else return $html;
+}
+
+function timeline_item_has_thumbnail($thumb, $item) {
+	return true;
 }
 
 function timeline_item_square_thumbnail($thumb, $item) {
