@@ -1,4 +1,5 @@
 function onLoad() {
+	// we must override this method to provide for our Javascript behaviors on events
 	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
 	    if (url == null || url == '') {
 	        return url;
