@@ -49,7 +49,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
 			    if (url == null || url == '') {
 			        return url;
-			    } else if ((url.indexOf('://') > 0) or (url.indexOf('javascript:') == 0)){
+			    } else if (url.indexOf('://') > 0 or url.indexOf('javascript:') == 0) {
 			        return url;
 			    } else if (url.substr(0,1) == '/') {
 			        return base.substr(0, base.indexOf('/', base.indexOf('://') + 3)) + url;
