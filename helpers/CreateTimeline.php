@@ -69,7 +69,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 					'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
 					'description' : '" . getMet($item, "Dublin Core", "Description") . "',
 					'durationEvent':false , 'eventID' : " . $id . ", " .
-					"'link' : javascript:Omeka.Timeline.behavior(" . $id . ")" . "}" ;
+					"'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}" ;
 				}
 				echo implode(',',array_map('event_to_json', $items));
 				
