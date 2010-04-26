@@ -45,6 +45,18 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			scripttag.src = 'http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false';
 			scripttag.type = 'text/javascript';
 			$$('head')[0].insert(scripttag);
+			
+			Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
+			    if (url == null || url == '') {
+			        return url;
+			    } else if ((url.indexOf('://') > 0) or (url.indexOf('javascript:') = 0)){
+			        return url;
+			    } else if (url.substr(0,1) == '/') {
+			        return base.substr(0, base.indexOf('/', base.indexOf('://') + 3)) + url;
+			    } else {
+			        return base + url;
+			    }
+			};
 
 			if (typeof(Omeka) == 'undefined') {
 				Omeka = new Object();
