@@ -64,10 +64,12 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			
 				function event_to_json($item) {
 					global $mets;
+					$id = item("ID");
 					return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "', 
 					'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
 					'description' : '" . getMet($item, "Dublin Core", "Description") . "',
-					'durationEvent':false , 'eventID' : " . item("ID") . "}";
+					'durationEvent':false , 'eventID' : " . $id . ", " .
+					"'link' : javascript:Omeka.Timeline.behavior(" . $id . ")" . "}" ;
 				}
 				echo implode(',',array_map('event_to_json', $items));
 				
