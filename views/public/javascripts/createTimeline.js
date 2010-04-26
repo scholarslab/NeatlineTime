@@ -1,4 +1,15 @@
 function onLoad() {
+	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
+	    if (url == null || url == '') {
+	        return url;
+	    } else if (url.indexOf('://') > 0 || url.indexOf('javascript:') == 0) {
+	        return url;
+	    } else if (url.substr(0,1) == '/') {
+	        return base.substr(0, base.indexOf('/', base.indexOf('://') + 3)) + url;
+	    } else {
+	        return base + url;
+	    }
+	};
 	if (!Omeka.Timeline.eventSource) {
 		Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();		
 	}
