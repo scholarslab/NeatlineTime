@@ -66,6 +66,7 @@ function timeline_item_has_thumbnail($thumb, $item) {
 }
 
 function timeline_item_square_thumbnail($thumb, $item) {
+	$item = $item ? $item : get_item_by_id(item('ID'));
 	if ($item->getItemType()->name == "Timeline") {
 		return "<span>Timeline Thumbnail Dummy</span>";
 	}
