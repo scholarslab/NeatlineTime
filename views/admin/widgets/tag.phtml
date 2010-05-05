@@ -1,0 +1,15 @@
+<?php
+
+$tags = get_tags(array('sort' => 'alpha'), 200);
+$tagnames = array();
+foreach ($tags as $tag) {
+	array_push($tagnames,$tag->name);
+}
+$options = array_combine($tagnames,$tagnames);
+
+?>
+
+<div id="coveragetext">
+<?php echo $this->formSelect( $inputNameStem . "[text]", reset($options), array('class'=>'select'), $options); ?>
+</div>
+
