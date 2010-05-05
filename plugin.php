@@ -78,7 +78,7 @@ function timeline_item_square_thumbnail($thumb, $item) {
 }
 
 function timeline_tag_widget($html,$inputNameStem,$value,$options,$record,$element) {
-	$div = __v()->partial('widgets/tag.phtml', array("textarea" => __v()->formTextarea($inputNameStem . "[text]",$value,array('class'=>'textinput', 'rows'=>5, 'cols'=>50))	, "inputNameStem" =>$inputNameStem, "value" => $value, "options" => $options, "record" => $record, "element" => $element));
+	$div = __v()->partial('widgets/tag.phtml', array("inputNameStem" =>$inputNameStem, "value" => $value, "options" => $options, "record" => $record, "element" => $element));
 	return $div;
 }
 
