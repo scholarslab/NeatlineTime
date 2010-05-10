@@ -64,7 +64,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			
 				function event_to_json($item) {
 					global $mets;
-					$id = item("ID");
+					$id = $item->id;
 					return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "', 
 					'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
 					'description' : '" . getMet($item, "Dublin Core", "Description") . "',
