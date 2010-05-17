@@ -2,28 +2,28 @@
 /**
  * Timeline helper functions
  *
- * @author Scholars' Lab 
+ * @author Scholars' Lab
  * @version $Id$
  *
  */
 
 /**
  * Return the metadata field for a specific item
- * 
+ *
  * @param Omeka_Item $item the item from which to retrieve metadata
  * @param string $elementSet Element set used to find a specific elemnt
  * @param string $element Metadata element the text of which to retrieve
  * @return Text of the element
- * 
+ *
  */
 function getMet($item, $elementSet, $element) {
-	 $tmp = $item->getElementTextsByElementNameAndSetName($element, $elementSet);
-	 return addslashes( $tmp[0]->text ) ;	
+	$tmp = $item->getElementTextsByElementNameAndSetName($element, $elementSet);
+	return addslashes( $tmp[0]->text ) ;
 }
 
 /**
  * Create a timeline widget
- * 
+ *
  * @param string $div div to push timeline to
  * @param array $items Items to populate in the timeline
  * @param string $captionElementSet Element set used for caption
@@ -31,13 +31,14 @@ function getMet($item, $elementSet, $element) {
  * @param string $dateElementSet Element set used for date
  * @param string $dateElement Specific element for the timeline date
  * @return void
- * 
+ *
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
-		echo js("prototype");
-		global $mets;
-		$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
-		echo "
+	echo js("prototype");
+	echo js("createTimeline");
+	global $mets;
+	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
+	echo "
 		<!--  we have to load the script in this funny way because we need to get the tag into the head of the doc
 			because of the the funky way Simile Timeline loads its sub-scripts  -->
 		<script type='text/javascript'>
@@ -51,35 +52,34 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			}
 
 			if (!Omeka.Timeline) {
-				Omeka.Timeline = new Object();
+				Omeka.Timeline = new Array();
 			}
 			
-		</script>
-";
-		echo "
-		<script type='text/javascript' defer='defer'>	
-			Omeka.Timeline.timelinediv = $('" . $div . "');
+			if (!Omeka.Timeline.history) {
+				Omeka.Timeline = new Array();
+			}
 			
-			Omeka.Timeline.events = [ ";
+			var TLtmp = new Object();
 			
-				function event_to_json($item) {
-					global $mets;
-					$id = $item->id;
-					return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "', 
+			TLtmp.timelinediv = $('" . $div . "');
+			
+			TLtmp.events = [ ";
+		
+	function event_to_json($item) {
+		global $mets;
+		$id = $item->id;
+		return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "',
 					'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
 					'description' : '" . getMet($item, "Dublin Core", "Description") . "',
 					'durationEvent':false , 'eventID' : " . $id . ", " .
 					"'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}" ;
-				}
-				echo implode(',',array_map('event_to_json', $items));
-				
-			echo "	];
-			
-		</script> "; 
-	     echo js("createTimeline");
-		echo "
-		<script type='text/javascript'>
-			Event.observe(window, 'load', onLoad);
+	}
+	echo implode(',',array_map('event_to_json', $items));
+
+	echo "	];
+			Omeka.Timeline.onLoad(TLtmp);
+			Omeka.Timeline.history[Omeka.Timeline.history] = TLtmp;	
+			//Event.observe(window, 'load', onLoad);
 			Event.observe(document.body, 'resize', onResize);
 		</script>
 "; 

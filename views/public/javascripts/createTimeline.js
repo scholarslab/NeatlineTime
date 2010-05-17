@@ -1,5 +1,13 @@
-function onLoad() {
-	// we must override this method to provide for our Javascript behaviors on events
+if (typeof(Omeka) == 'undefined') {
+	Omeka = new Object();
+}
+
+if (!Omeka.Timeline) {
+	Omeka.Timeline = new Array();
+}
+Omeka.Timeline.onLoad = function(config) {
+	// we must override this method to provide for our Javascript behaviors on
+	// events
 	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
 	    if (url == null || url == '') {
 	        return url;
@@ -11,13 +19,13 @@ function onLoad() {
 	        return base + url;
 	    }
 	};
-	if (!Omeka.Timeline.eventSource) {
-		Omeka.Timeline.eventSource = new Timeline.DefaultEventSource();		
+	if (!config.eventSource) {
+		config.eventSource = new Timeline.DefaultEventSource();		
 	}
-	if (!Omeka.Timeline.bandInfos) {
-		Omeka.Timeline.bandInfos = [ Timeline.createBandInfo( {
+	if (!config.bandInfos) {
+		config.bandInfos = [ Timeline.createBandInfo( {
 			width : "70%",
-			eventSource : Omeka.Timeline.eventSource,
+			eventSource : config.eventSource,
 			intervalUnit : Timeline.DateTime.MONTH,
 			intervalPixels : 100
 		}), Timeline.createBandInfo( {
@@ -25,11 +33,11 @@ function onLoad() {
 			intervalUnit : Timeline.DateTime.YEAR,
 			intervalPixels : 200
 		}) ];
-		Omeka.Timeline.bandInfos[1].syncWith = 0;
-		Omeka.Timeline.bandInfos[1].highlight = true;
+		config.bandInfos[1].syncWith = 0;
+		config.bandInfos[1].highlight = true;
 	}
-	Omeka.Timeline.timeline = Timeline.create(Omeka.Timeline.timelinediv, Omeka.Timeline.bandInfos);
-	Omeka.Timeline.eventSource.loadJSON( { "events": Omeka.Timeline.events }, document.location.href);
+	Omeka.Timeline.push( Timeline.create(config.timelinediv, config.bandInfos );
+	config.eventSource.loadJSON( { "events": config.events }, document.location.href);
 }
 
 var resizeTimerID = null;
