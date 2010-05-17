@@ -34,7 +34,6 @@ function getMet($item, $elementSet, $element) {
  *
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
-	echo js("prototype");
 	echo js("createTimeline");
 	global $mets;
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
