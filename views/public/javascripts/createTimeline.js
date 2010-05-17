@@ -36,7 +36,7 @@ Omeka.Timeline.onLoad = function(config) {
 		config.bandInfos[1].syncWith = 0;
 		config.bandInfos[1].highlight = true;
 	}
-	Omeka.Timeline.push( Timeline.create(config.timelinediv, config.bandInfos );
+	Omeka.Timeline.push( Timeline.create(config.timelinediv, config.bandInfos ) );
 	config.eventSource.loadJSON( { "events": config.events }, document.location.href);
 }
 
