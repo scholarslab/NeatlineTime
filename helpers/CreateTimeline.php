@@ -66,8 +66,8 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			TLtmp.events = [ ";
 		
 	$tmp = array();
-	$id = $item->id;
 	foreach ($items as $item) {
+		$id = $item->id;
 		array_push($tmp,"{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "',
 				'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
 				'description' : '" . getMet($item, "Dublin Core", "Description") . "',
@@ -80,7 +80,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	echo "	];
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
 			Event.observe(window, 'load', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );
-			//delete(TLtmp;)
+			delete(TLtmp;)
 			Event.observe(document.body, 'resize', onResize);
 		</script>
 "; 
