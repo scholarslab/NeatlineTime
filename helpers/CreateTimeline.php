@@ -76,7 +76,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	echo implode(',',array_map('event_to_json', $items));
 
 	echo "	];
-			Omeka.Timeline.onLoad(TLtmp);
+			$(document).bind('ready', {config: TLtmp}, Omeka.Timeline.onLoad);
 			Omeka.Timeline.history[Omeka.Timeline.history] = TLtmp;	
 			//Event.observe(window, 'load', onLoad);
 			Event.observe(document.body, 'resize', onResize);
