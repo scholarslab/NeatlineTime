@@ -5,8 +5,7 @@ if (typeof(Omeka) == 'undefined') {
 if (!Omeka.Timeline) {
 	Omeka.Timeline = new Array();
 }
-Omeka.Timeline.onLoad = function(event) {
-	config = event.data.config;
+Omeka.Timeline.onLoad = function(event, config) {
 	// we must override this method to provide for our Javascript behaviors on
 	// events
 	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {

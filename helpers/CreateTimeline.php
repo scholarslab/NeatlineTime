@@ -34,7 +34,6 @@ function getMet($item, $elementSet, $element) {
  *
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
-	echo js("jquery");
 	echo js("createTimeline");
 	global $mets;
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
@@ -47,6 +46,8 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			scripttag.type = 'text/javascript';
 			$$('head')[0].insert(scripttag);
 
+			
+			
 			if (typeof(Omeka) == 'undefined') {
 				Omeka = new Object();
 			}
@@ -77,9 +78,9 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	echo implode(',',array_map('event_to_json', $items));
 
 	echo "	];
-			$(document).bind('ready', {config: TLtmp}, Omeka.Timeline.onLoad);
 			Omeka.Timeline.history[Omeka.Timeline.history] = TLtmp;	
-			//Event.observe(window, 'load', onLoad);
+			Event.observe(window, 'load', Omeka.Timeline.onLoad.bindAsEventListener(this, TLtmp) );
+			//delete(TLtmp;)
 			Event.observe(document.body, 'resize', onResize);
 		</script>
 "; 
