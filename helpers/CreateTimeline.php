@@ -35,7 +35,6 @@ function getMet($item, $elementSet, $element) {
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
 	echo js("createTimeline");
-	global $mets;
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
 	echo "
 		<!--  we have to load the script in this funny way because we need to get the tag into the head of the doc
@@ -66,16 +65,17 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			
 			TLtmp.events = [ ";
 		
-	function event_to_json($item) {
-		global $mets;
-		$id = $item->id;
-		return "{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "',
-					'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
-					'description' : '" . getMet($item, "Dublin Core", "Description") . "',
-					'durationEvent':false , 'eventID' : " . $id . ", " .
-					"'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}" ;
+	$tmp = array();
+	$id = $item->id;
+	foreach ($items as $item) {
+		array_push($tmp,"{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "',
+				'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
+				'description' : '" . getMet($item, "Dublin Core", "Description") . "',
+				'durationEvent':false , 'eventID' : " . $id . ", " .
+				"'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}");
 	}
-	echo implode(',',array_map('event_to_json', $items));
+	
+	echo implode(',',$tmp);
 
 	echo "	];
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
