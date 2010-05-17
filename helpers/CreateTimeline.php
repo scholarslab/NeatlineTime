@@ -57,7 +57,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 			}
 			
 			if (!Omeka.Timeline.history) {
-				Omeka.Timeline = new Array();
+				Omeka.Timeline.history = new Array();
 			}
 			
 			var TLtmp = new Object();
