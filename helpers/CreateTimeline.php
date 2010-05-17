@@ -80,7 +80,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	echo "	];
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
 			Event.observe(window, 'load', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );
-			delete(TLtmp;)
+			delete(TLtmp);
 			Event.observe(document.body, 'resize', onResize);
 		</script>
 "; 
