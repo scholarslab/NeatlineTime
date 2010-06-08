@@ -1,7 +1,7 @@
 <?php
 /**
  * @version $Id$
- * @copyright
+ * @copyright Scholars' Lab
  * @package Timeline
  **/
 
