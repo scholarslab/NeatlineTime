@@ -18,7 +18,7 @@
  */
 function getMet($item, $elementSet, $element) {
 	$tmp = $item->getElementTextsByElementNameAndSetName($element, $elementSet);
-	return addslashes( $tmp[0]->text ) ;
+	return js_escape( $tmp[0]->text ) ;
 }
 
 /**
