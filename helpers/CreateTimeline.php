@@ -68,9 +68,9 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	$tmp = array();
 	foreach ($items as $item) {
 		$id = $item->id;
-		array_push($tmp,"{ 'title' : '" . getMet($item, $mets[0], $mets[1]) . "',
-				'start' : '" . getMet($item, $mets[2], $mets[3]) . "',
-				'description' : '" . getMet($item, "Dublin Core", "Description") . "',
+		array_push($tmp,"{ 'title' : " . getMet($item, $mets[0], $mets[1]) . ",
+				'start' : " . getMet($item, $mets[2], $mets[3]) . ",
+				'description' : " . getMet($item, "Dublin Core", "Description") . ",
 				'durationEvent':false , 'eventID' : " . $id . ", " .
 				"'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}");
 	}
