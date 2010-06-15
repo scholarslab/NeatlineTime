@@ -38,6 +38,9 @@ Omeka.Timeline.createTimeline = function(event, config) {
 	}
 	Omeka.Timeline[Omeka.Timeline.length] = Timeline.create(config.timelinediv, config.bandInfos);
 	config.eventSource.loadJSON( { "events": config.events }, document.location.href);
+	Omeka.Timeline[Omeka.Timeline.length-1].setCenter = function(s) {
+		this.getBand(0).setCenterVisibleDate(SimileAjax.DateTime.parseGregorianDateTime(s));
+	}
 }
 
 var resizeTimerID = null;
