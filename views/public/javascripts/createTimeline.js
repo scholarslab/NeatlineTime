@@ -11,6 +11,10 @@ if (!Omeka.Timeline.behavior) {
 	}
 }
 
+if (!Omeka.Timeline.history) {
+	Omeka.Timeline.history = new Array();
+}
+
 Omeka.Timeline.createTimeline = function(event, config) {
 	// we must override this method to provide for our Javascript behaviors on
 	// events
@@ -31,16 +35,21 @@ Omeka.Timeline.createTimeline = function(event, config) {
 		config.eventSource = new Timeline.DefaultEventSource();
 	}
 	if (!config.bandInfos) {
-		config.bandInfos = [ Timeline.createBandInfo( {
-			width : "70%",
-			eventSource : config.eventSource,
-			intervalUnit : Timeline.DateTime.MONTH,
-			intervalPixels : 100
-		}), Timeline.createBandInfo( {
-			width : "30%",
-			intervalUnit : Timeline.DateTime.YEAR,
-			intervalPixels : 200
-		}) ];
+		config.bandInfos = [
+				Timeline.createBandInfo( {
+					width : "70%",
+					eventSource : config.eventSource,
+					intervalUnit : Timeline.DateTime.MONTH,
+					intervalPixels : 100
+				}),
+				Timeline.createBandInfo( {
+					width : "30%",
+					intervalUnit : Timeline.DateTime.YEAR,
+					intervalPixels : 200,
+					eventSource : config.secondSource ? config.secondSource
+							: new Timeline.DefaultEventSource(),
+					overview : true
+				}) ];
 		config.bandInfos[1].syncWith = 0;
 		config.bandInfos[1].highlight = true;
 	}
