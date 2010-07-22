@@ -34,31 +34,8 @@ function getMet($item, $elementSet, $element) {
  *
  */
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
-	echo js("createTimeline");
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
-	echo "
-		<!--  we have to load the script in this funny way because we need to get the tag into the head of the doc
-			because of the the funky way Simile Timeline loads its sub-scripts  -->
-		<script type='text/javascript'>
-			scripttag = document.createElement('script'); 
-			scripttag.src = 'http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false';
-			scripttag.type = 'text/javascript';
-			$$('head')[0].insert(scripttag);
-
-			
-			
-			if (typeof(Omeka) == 'undefined') {
-				Omeka = new Object();
-			}
-
-			if (!Omeka.Timeline) {
-				Omeka.Timeline = new Array();
-			}
-			
-			if (!Omeka.Timeline.history) {
-				Omeka.Timeline.history = new Array();
-			}
-			
+	echo "<script type=\"text/javascript\" charset=\"utf-8\">
 			var TLtmp = new Object();
 			
 			TLtmp.timelinediv = $('" . $div . "');
@@ -79,7 +56,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 
 	echo "	];
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
-			Event.observe(window, 'load', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );
+			Event.observe(window, 'dom:loaded', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );
 			delete(TLtmp);
 			Event.observe(document.body, 'resize', onResize);
 		</script>

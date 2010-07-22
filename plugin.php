@@ -9,6 +9,7 @@ add_plugin_hook('install', 'timeline_install');
 add_plugin_hook('uninstall', 'timeline_uninstall');
 add_plugin_hook('initialize', 'timeline_initialize');
 add_plugin_hook('define_routes', 'timeline_routes');
+add_plugin_hook('public_theme_header', 'timeline_header');
 
 add_filter("show_item_in_page","timeline_show_item_in_page");
 add_filter("item_square_thumbnail","timeline_item_square_thumbnail");
@@ -51,8 +52,22 @@ function timeline_initialize()
 	require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers/CreateTimeline.php';
 }
 
-function timeline_show_item_in_page($html, $item){
+function timeline_header()
+{
+	if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() !== 'show')
+		return;
+	echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
+	echo js('createTimeline');
+}
+
+function timeline_show_item_in_page($html, $item, $options = array()) {
 	if ($item->getItemType()->name == "Timeline") {
+		$CONFIG = array(
+			'id' =>	'timelinediv',
+			'class' =>	'',
+			'height' =>	'200px'
+		);
+		$CONFIG = array_merge($CONFIG, $options);
 		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
 		$query = array('tags' => $tags);
 		$things = get_items($query);
