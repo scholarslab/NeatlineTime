@@ -3,5 +3,12 @@
 $tags =  item("Item Type Metadata","Tag", array("delimiter" => ','));
 $query = array('tags' => $tags);
 $things = get_items($query);
-createTimeline("timelinediv" . item('ID'),$things);
+# now we filter out Items that lack any date
+$thingswithdates = array();
+foreach ($things as $thing) {
+	if ( count(item('Dublin Core', 'Date', array('all' => true), $thing)) > 0 ) {
+		array_push($thingswithdates,$thing);
+	}
+}
+createTimeline("timelinediv" . item('ID'),$thingswithdates);
 ?>
