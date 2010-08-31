@@ -39,6 +39,7 @@ function timeline_install()
               	define("TIMELINE_ITEMTYPE",$itemtype->id);
               }
               catch (Exception $e) {
+              	debug("Unable to install Timeline Itemtype: " . $e->getMessage() );
               }
 }
 
@@ -52,12 +53,23 @@ function timeline_initialize()
 	require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers/CreateTimeline.php';
 }
 
+// for actions show and edit, loads the appropriate JS. We need both show and edit to 
+// handle both presentation and editing modes
 function timeline_header()
 {
-	if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() !== 'show')
-		return;
-	echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
-	echo js('createTimeline');
+	$actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+	switch (Zend_Controller_Front::getInstance()->getRequest()->getActionName()) {
+		case 'show' :
+			echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
+			echo js('createTimeline');
+			break;
+		case 'edit' :
+			echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
+			echo js('createTimeline');
+			break;
+		default:
+			break;
+	}
 }
 
 function timeline_show_item_in_page($html, $item, $options = array()) {
@@ -66,14 +78,13 @@ function timeline_show_item_in_page($html, $item, $options = array()) {
 			'id' =>	'timelinediv',
 			'class' =>	'',
 			'height' =>	'200px'
-		);
-		$CONFIG = array_merge($CONFIG, $options);
-		$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
-		$query = array('tags' => $tags);
-		$things = get_items($query);
-		echo '<div id="timelinediv' . $item->id . '" style="height:200px"></div>';
-		createTimeline("timelinediv" . $item->id,$things);
-		return ""  ;
+			);
+			$CONFIG = array_merge($CONFIG, $options);
+			$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
+			$things = get_items(array('tags' => $tags));
+			echo '<div id="timelinediv' . $item->id . '" style="height:200px"></div>';
+			createTimeline("timelinediv" . $item->id,$things);
+			return ""  ;
 	}
 	else return $html;
 }
@@ -85,7 +96,7 @@ function timeline_item_has_thumbnail($thumb, $item) {
 function timeline_item_square_thumbnail($thumb, $item) {
 	$item = $item ? $item : get_item_by_id(item('ID'));
 	if ($item->getItemType()->name == "Timeline") {
-		return "<span>Timeline Thumbnail Dummy</span>";
+		return "<img src=" . img('timeline.png') . " />";
 	}
 	else {
 		return $thumb;

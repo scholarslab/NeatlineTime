@@ -1,10 +1,11 @@
 <?php
 
 $tags = get_tags(array('sort' => 'alpha'), 200);
-$tagnames = array();
-foreach ($tags as $tag) {
-	array_push($tagnames,$tag->name);
-}
+
+$funct = create_function('$e', 'return is_array($e) && array_key_exists("name",$e) ? $e["name"] : null;');
+$tagnames = array_map($funct, $tags);
+//unset($funct); // in case this code is called again later, we don't want to try to define $funct twice
+
 $options = array_combine($tagnames,$tagnames);
 
 ?>
