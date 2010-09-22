@@ -62,17 +62,20 @@ function timeline_header()
 		case 'show' :
 			$j =  js('createTimeline');
 			print <<<EOT
-			<!-- begin Timeline plugin scripts -->
-			<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false"></script>
-			$j
-			<!-- end Timeline plugin scripts -->
+<!-- begin Timeline plugin scripts -->
+<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false"></script>
+$j
+<!-- end Timeline plugin scripts -->
 EOT;
 			break;
 		case 'edit' :
-			echo "<!-- begin Timeline plugin scripts -->\n";
-			echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
-			
-			echo "\n<!-- end Timeline plugin scripts -->\n";
+			$j =  js('createTimeline');
+			print <<<EOT
+<!-- begin Timeline plugin scripts -->
+<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false"></script>
+$j
+<!-- end Timeline plugin scripts -->
+EOT;
 			break;
 		default:
 			break;
