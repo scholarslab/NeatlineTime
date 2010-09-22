@@ -2,7 +2,7 @@
 
 $tags = get_tags(array('sort' => 'alpha'), 200);
 
-$pull = create_function('$e', 'return is_array($e) && array_key_exists("name",$e) ? $e["name"] : null;');
+$pull = create_function('$e', 'return $e["name"] ;');
 $tagnames = array_map($pull, $tags);
 
 $options = array_combine($tagnames,$tagnames);
