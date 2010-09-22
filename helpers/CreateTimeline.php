@@ -37,10 +37,9 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
 	echo <<<EOT
 	<script type="text/javascript" charset="utf-8">
-			var TLtmp = new Object();
-			
-			TLtmp.timelinediv = $('$div');
-			
+			jQuery.noConflict();
+			var TLtmp = new Object();	
+			TLtmp.timelinediv = $('$div');	
 			TLtmp.events = [ 
 EOT;
 	$tmp = array();
