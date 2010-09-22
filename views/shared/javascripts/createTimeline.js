@@ -68,7 +68,7 @@ Omeka.Timeline.createTimeline = function(event, config) {
 
 var resizeTimerID = null;
 
-function onResize() {
+Omeka.Timeline.onResize = function() {
 	if (resizeTimerID == null) {
 		resizeTimerID = window.setTimeout(function() {
 			resizeTimerID = null;

@@ -58,7 +58,7 @@ EOT;
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
 			jQuery(document).ready(function () { Omeka.Timeline.createTimeline(this, TLtmp) } );	
 			delete(TLtmp);
-			Event.observe(document.body, 'resize', onResize);
+			jQuery(document.body).resize(Omeka.Timeline.onResize);
 		</script>
 "; 
 }
