@@ -15,7 +15,7 @@ if (!Omeka.Timeline.history) {
 	Omeka.Timeline.history = new Array();
 }
 
-Omeka.Timeline.createTimeline = function(event, config) {
+Omeka.Timeline.createTimeline = function(config) {
 	// we must override this method to provide for our Javascript behaviors on
 	// events
 	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url,
