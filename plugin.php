@@ -60,12 +60,16 @@ function timeline_header()
 	$actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
 	switch (Zend_Controller_Front::getInstance()->getRequest()->getActionName()) {
 		case 'show' :
+			echo "<!-- begin Timeline plugin scripts -->";
 			echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
 			echo js('createTimeline');
+			echo "<!-- end Timeline plugin scripts -->";
 			break;
 		case 'edit' :
+			echo "<!-- begin Timeline plugin scripts -->";
 			echo "<script type=\"text/javascript\" src=\"http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false\"></script>\n";
 			echo js('createTimeline');
+			echo "<!-- end Timeline plugin scripts -->";
 			break;
 		default:
 			break;
