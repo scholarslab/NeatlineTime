@@ -2,8 +2,8 @@
 
 $tags = get_tags(array('sort' => 'alpha'), 200);
 
-$funct = create_function('$e', 'return is_array($e) && array_key_exists("name",$e) ? $e["name"] : null;');
-$tagnames = array_map($funct, $tags);
+$pull = create_function('$e', 'return is_array($e) && array_key_exists("name",$e) ? $e["name"] : null;');
+$tagnames = array_map($pull, $tags);
 
 $options = array_combine($tagnames,$tagnames);
 
