@@ -36,6 +36,7 @@ function getMet($item, $elementSet, $element) {
 function createTimeline($div, $items = array(), $captionElementSet = "Dublin Core", $captionElement =  "Title", $dateElementSet = "Dublin Core", $dateElement =  "Date" ) {
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
 	echo "<script type=\"text/javascript\" charset=\"utf-8\">
+			jQuery.noConflict();
 			var TLtmp = new Object();
 			
 			TLtmp.timelinediv = $('" . $div . "');
@@ -56,7 +57,7 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 
 	echo "	];
 			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
-			Event.observe(window, 'dom:loaded', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );
+			Event.observe(window, 'dom:loaded', Omeka.Timeline.createTimeline.bindAsEventListener(this, TLtmp) );	
 			delete(TLtmp);
 			Event.observe(document.body, 'resize', onResize);
 		</script>
