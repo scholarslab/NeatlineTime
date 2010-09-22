@@ -1,8 +1,7 @@
 <?php
 
 $tags = get_tags(array('sort' => 'alpha'), 200);
-$pull = create_function('$e', 'return $e["name"] ;');
-$tagnames = array_map($pull, $tags);
+$tagnames = array_map(create_function('$e', 'return $e["name"] ;'), $tags);
 $options = array_combine($tagnames,$tagnames);
 
 ?>
