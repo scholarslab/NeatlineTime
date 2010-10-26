@@ -3,10 +3,10 @@
  * 
  */
 
-echo "Viewing" . $item->id;
+echo "Viewing " . $item->id;
 
 
 
 foreach ($element_names as $element_name) {
-	item('Dublin Core', $element_name, array(), $item);
+	echo $element_name . " " . item('Dublin Core', $element_name, array(), $item);
 }
