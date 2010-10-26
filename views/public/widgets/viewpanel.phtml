@@ -8,6 +8,6 @@ echo "Viewing " . $item->id;
 
 echo "<dl>";
 foreach ($element_names as $element_name) {
-	echo "<dt>" . $element_name . "</dt> : <dd>" . item('Dublin Core', $element_name, array(), $item) . "</dd>";
+	echo "<dt>" . $element_name . "</dt><dd>" . item('Dublin Core', $element_name, array(), $item) . "</dd>";
 }
 echo "</dl>";
