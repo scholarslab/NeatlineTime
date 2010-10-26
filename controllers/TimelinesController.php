@@ -18,7 +18,7 @@ class Timeline_TimelinesController extends Omeka_Controller_Action
 		$this->view->item = $this->findById();
 	}
 
-	public function editpanelAction() {
+	public function panelAction() {
 		$this->view->item = $this->findById();
 		
 	}
