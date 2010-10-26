@@ -6,11 +6,11 @@
 
 $elements_names = array("Title", "Description", "Date");
 
-if ( true /*isAdmin()*/){
-	echo partial("widgets/editpanel.phtml",array("item"=>$item,"element_names"=>$element_names));
+if ( false /*isAdmin()*/){
+	echo $this->partial("widgets/editpanel.phtml",array("item"=>$item,"element_names"=>$element_names));
 }
 else {
-	echo partial("widgets/viewpanel.phtml",array("item"=>$item,"element_names"=>$element_names));
+	echo $this->partial("widgets/viewpanel.phtml",array("item"=>$item,"element_names"=>$element_names));
 }
 
 ?>
