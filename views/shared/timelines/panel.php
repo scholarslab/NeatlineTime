@@ -4,7 +4,7 @@
  * has clicked. Also defines the elements that should be displayed or edited.
  */
 
-$elements_names = array("Title", "Description", "Date");
+$element_names = array("Title", "Description", "Date");
 
 if ( false /*isAdmin()*/){
 	echo $this->partial("widgets/editpanel.phtml",array("item"=>$item,"element_names"=>$element_names));

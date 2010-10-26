@@ -5,7 +5,7 @@
 echo "Editing" . $item->id;
 
 $elements_table = get_db()->getTable('Elements');
-foreach ($elements_names as $element_name) {
+foreach ($element_names as $element_name) {
 	echo display_form_input_for_element(
 		$elements_table->findByElementSetNameAndElementName('Dublin Core', $element_name),
 		$item);
