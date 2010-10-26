@@ -55,7 +55,7 @@ EOT;
 	echo implode(',',$tmp);
 
 	echo "	];
-			Omeka.Timeline.history[Omeka.Timeline.history.length] = TLtmp;	
+			Omeka.Timeline.history.push(TLtmp);	
 			jQuery(document).ready(function () { Omeka.Timeline.createTimeline(TLtmp) } );	
 			delete(TLtmp);
 			jQuery(document.body).resize(Omeka.Timeline.onResize);
