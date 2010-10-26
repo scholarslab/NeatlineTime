@@ -1,0 +1,12 @@
+<?php
+/* simple viewing panel to be swapped in over a presented timeline
+ * 
+ */
+
+echo "Viewing" . $item;
+
+
+
+foreach ($elements_names as $element_name) {
+	item('Dublin Core', $element_name, array(), $item);
+}
