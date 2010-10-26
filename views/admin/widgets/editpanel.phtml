@@ -2,7 +2,7 @@
 /* simple edit panel widget to be swapped in when an editable event 
  * is clicken in a Timeline
  */
-echo "Editing" . $item;
+echo "Editing" . $item->id;
 
 $elements_table = get_db()->getTable('Elements');
 foreach ($elements_names as $element_name) {
