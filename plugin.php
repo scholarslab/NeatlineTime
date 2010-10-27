@@ -64,7 +64,7 @@ function timeline_header()
 			$j =  js('createTimeline');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
-<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=false"></script>
+<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js?bundle=false"></script>
 $j
 <!-- end Timeline plugin scripts -->
 EOT;
