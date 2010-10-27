@@ -37,7 +37,6 @@ function createTimeline($div, $items = array(), $captionElementSet = "Dublin Cor
 	$mets = array($captionElementSet, $captionElement, $dateElementSet, $dateElement);
 	echo <<<EOT
 	<script type="text/javascript" charset="utf-8">
-			jQuery.noConflict();
 			var TLtmp = new Object();	
 			TLtmp.timelinediv = document.getElementById('$div');	
 			TLtmp.events = [ 
@@ -54,12 +53,12 @@ EOT;
 	
 	echo implode(',',$tmp);
 
-	echo "	];
+	echo '	];
 			Omeka.Timeline.history.push(TLtmp);	
-			jQuery(document).ready(function () { Omeka.Timeline.createTimeline(TLtmp) } );	
+			$j(document).ready(function () { Omeka.Timeline.createTimeline(TLtmp) } );	
 			delete(TLtmp);
-			jQuery(document.body).resize(Omeka.Timeline.onResize);
+			$j(document.body).resize(Omeka.Timeline.onResize);
 		</script>
-"; 
+'; 
 }
 ?>

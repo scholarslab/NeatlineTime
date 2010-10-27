@@ -14,6 +14,8 @@ defined('TIMELINE_DIR') || define(
     'TIMELINE_DIR', dirname(dirname(__FILE__))
 );
 
+require_once('Timeline_ViewTestCase.php');
+
 class Timeline_AllTests extends PHPUnit_Framework_TestSuite
 {
 

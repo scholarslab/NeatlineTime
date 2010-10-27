@@ -13,7 +13,7 @@
 
         PEAR Channels:
 
-        You will need to have the following channels to ensure all the PEAR
+        You will need to have the following channels to ensure all the d
         packages can be installed
 
         sudo pear channel-discover pear.phpunit.de

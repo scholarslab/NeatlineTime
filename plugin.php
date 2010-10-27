@@ -64,6 +64,11 @@ function timeline_header()
 			$j =  js('createTimeline');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+    var $j = jQuery;
+</script>
 <script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js?bundle=false"></script>
 $j
 <!-- end Timeline plugin scripts -->
