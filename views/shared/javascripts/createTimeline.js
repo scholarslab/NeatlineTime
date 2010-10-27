@@ -18,8 +18,7 @@ if (!Omeka.Timeline.history) {
 Omeka.Timeline.createTimeline = function(config) {
 	// we must override this method to provide for our Javascript behaviors on
 	// events
-	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url,
-			base) {
+	Timeline.DefaultEventSource.prototype._resolveRelativeURL = function(url, base) {
 		if (url == null || url == '') {
 			return url;
 		} else if (url.indexOf('://') > 0 || url.indexOf('javascript:') == 0) {
