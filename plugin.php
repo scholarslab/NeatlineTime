@@ -22,25 +22,24 @@ define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
 
 function timeline_install()
 {
-	set_option('timeline_version', TIMELINE_PLUGIN_VERSION);
+    set_option('timeline_version', TIMELINE_PLUGIN_VERSION);
 
-	# now we add 'Timeline' item type
-	$timelinemitemtype = array(
-     'name'       => "Timeline", 
-      'description' => "Timeline composed of items in this repository"
-      );
+    # now we add 'Timeline' item type
+    $timelinemitemtype = array(
+        'name'       => "Timeline",
+        'description' => "Timeline composed of items in this repository"
+        );
+    $timelinemitemtypemetadata =
+        array(array('name' => "Tag",
+            'description' => "Items with this tag should be included in the timeline"
+            ));
+    try {
+        $itemtype = insert_item_type($timelinemitemtype,$timelinemitemtypemetadata);
+        define("TIMELINE_ITEMTYPE",$itemtype->id);
 
-      $timelinemitemtypemetadata =
-      array(array('name'        => "Tag",
-              'description' => "Items with this tag should be included in the timeline"             
-              ));
-              try {
-              	$itemtype = insert_item_type($timelinemitemtype,$timelinemitemtypemetadata);
-              	define("TIMELINE_ITEMTYPE",$itemtype->id);
-              }
-              catch (Exception $e) {
-              	debug("Unable to install Timeline Itemtype: " . $e->getMessage() );
-              }
+        } catch (Exception $e) {
+            debug("Unable to install Timeline Itemtype: " . $e->getMessage() );
+    }
 }
 
 function timeline_uninstall()
@@ -62,14 +61,16 @@ function timeline_header()
 		case 'show' :
 		case 'edit' :
 			$j =  js('createTimeline');
+                        $timeLine = src('createTimeline', 'javascripts', 'js');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
     jQuery.noConflict();
-    var $j = jQuery;
+    var jq = jQuery;
+    var Timeline_urlPrefix = 'http://static.simile.mit.edu/timeline/api-2.3.1/';
 </script>
-<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js?bundle=false"></script>
+<script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js"></script>
 $j
 <!-- end Timeline plugin scripts -->
 EOT;
@@ -79,44 +80,49 @@ EOT;
 }
 
 function timeline_show_item_in_page($html, $item, $options = array()) {
-	if ($item->getItemType()->name == "Timeline") {
-		$CONFIG = array(
-			'id' =>	'timelinediv',
-			'class' =>	'',
-			'height' =>	'200px'
-			);
-			$CONFIG = array_merge($CONFIG, $options);
-			$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
-			$things = get_items(array('tags' => $tags));
-			echo '<div id="timelinediv' . $item->id . '" style="height:200px"></div>';
-			createTimeline("timelinediv" . $item->id,$things);
-			return ""  ;
-	}
-	else return $html;
+    if ($item->getItemType()->name == "Timeline") {
+        $CONFIG = array(
+            'id'     =>	'timelinediv',
+            'class'  =>	'',
+            'height' =>	'200px'
+            );
+
+        $CONFIG = array_merge($CONFIG, $options);
+        $tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
+        $things = get_items(array('tags' => $tags));
+
+        echo '<div id="timelinediv' . $item->id . '" style="height:200px"></div>';
+        createTimeline("timelinediv" . $item->id,$things);
+        return ""  ;
+
+        }
+
+     else return $html;
 }
 
 function timeline_item_has_thumbnail($thumb, $item) {
-	return true;
+    return true;
 }
 
 function timeline_item_square_thumbnail($thumb, $item) {
-	$item = $item ? $item : get_item_by_id(item('ID'));
-	if ($item->getItemType()->name == "Timeline") {
-		return "<img src=" . img('timeline.png') . " />";
-	}
-	else {
-		return $thumb;
-	}
+    $item = $item ? $item : get_item_by_id(item('ID'));
+
+    if ($item->getItemType()->name == "Timeline") {
+        return "<img src=" . img('timeline.png') . " />";
+    } else {
+        return $thumb;
+    }
 }
 
-function timeline_tag_widget($html,$inputNameStem,$value,$options,$record,$element) {
-	$div = __v()->partial('widgets/tag.phtml', array("inputNameStem" =>$inputNameStem, "value" => $value, "options" => $options, "record" => $record, "element" => $element));
-	return $div;
+function timeline_tag_widget($html,$inputNameStem,$value,$options,$record,$element)
+{
+    $div = __v()->partial('widgets/tag.phtml', array("inputNameStem" =>$inputNameStem, "value" => $value, "options" => $options, "record" => $record, "element" => $element));
+    return $div;
 }
 
 // Add the routes from routes.ini in this plugin folder.
 function timeline_routes($router)
 {
-	$router->addConfig(new Zend_Config_Ini(TIMELINE_PLUGIN_DIR .
-	DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
+    $router->addConfig(new Zend_Config_Ini(TIMELINE_PLUGIN_DIR .
+    DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
 }
