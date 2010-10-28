@@ -61,13 +61,11 @@ function timeline_header()
 		case 'show' :
 		case 'edit' :
 			$j =  js('createTimeline');
-                        $timeLine = src('createTimeline', 'javascripts', 'js');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
     jQuery.noConflict();
-    var jq = jQuery;
     var Timeline_urlPrefix = 'http://static.simile.mit.edu/timeline/api-2.3.1/';
 </script>
 <script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js"></script>
