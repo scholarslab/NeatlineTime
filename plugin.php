@@ -8,7 +8,7 @@
  * This plugin requires that {@link http://www.jquery.org jQuery} be
  * loaded in your theme (preferably in the head element).
  *
- * @author    Scholars Lab 
+ * @author    Scholars' Lab
  * @copyright 2010 The Board and Visitors of the University of Virginia
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
  * @version   $Id$
@@ -22,11 +22,13 @@ add_plugin_hook('initialize', 'timeline_initialize');
 add_plugin_hook('define_routes', 'timeline_routes');
 add_plugin_hook('public_theme_header', 'timeline_header');
 
-add_filter("show_item_in_page","timeline_show_item_in_page");
-add_filter("item_square_thumbnail","timeline_item_square_thumbnail");
-add_filter("item_has_thumbnail","timeline_item_has_thumbnail");
+add_filter("show_item_in_page", "timeline_show_item_in_page");
+add_filter("item_square_thumbnail", "timeline_item_square_thumbnail");
+add_filter("item_has_thumbnail", "timeline_item_has_thumbnail");
 
-add_filter(array('Form','Item','Item Type Metadata','Tag'),"timeline_tag_widget");
+add_filter(array(
+    'Form', 'Item', 'Item Type Metadata', 'Tag'
+    ), "timeline_tag_widget");
 
 define('TIMELINE_PLUGIN_VERSION', get_plugin_ini('Timeline', 'version'));
 define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
