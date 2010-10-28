@@ -1,18 +1,20 @@
+
+
 if (typeof (Omeka) == 'undefined') {
-	Omeka = new Object();
+    Omeka = new Object();
 }
 
 if (!Omeka.Timeline) {
-	Omeka.Timeline = new Array();
+    Omeka.Timeline = new Array();
 }
 
 if (!Omeka.Timeline.behavior) {
-	Omeka.Timeline.behavior = function(id) {
-	}
+    Omeka.Timeline.behavior = function(id) {
+    }
 }
 
 if (!Omeka.Timeline.history) {
-	Omeka.Timeline.history = new Array();
+    Omeka.Timeline.history = new Array();
 }
 
 Omeka.Timeline.createTimeline = function(config) {
