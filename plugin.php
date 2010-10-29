@@ -86,8 +86,13 @@ function timeline_header()
 			$timelineFile =  js('createTimeline');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 <script type="text/javascript">
+    // remap $ to jq
+    var jq = jQuery.noConflict();
+     
     var Timeline_urlPrefix = 'http://static.simile.mit.edu/timeline/api-2.3.1/';
+
 </script>
 <script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.3.1/timeline-api.js"></script>
 $timelineFile
