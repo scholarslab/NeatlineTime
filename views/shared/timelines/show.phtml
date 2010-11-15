@@ -20,7 +20,17 @@ createTimeline("timelinediv" . item('ID'),$thingswithdates);
 	<ul>
 		<?php foreach ($thingswithoutdates as $thing) {?>
 			<li>
-				Thing: <?php echo $thing->id?>
+				<ul>
+					<li>
+						Thing: <?php echo $thing->id?>
+					</li>
+					<li>
+						Title: <?php echo item("Dublin Core", "Title", array(), $thing)?>
+					</li>
+					<li>
+						Description: <?php echo item("Dublin Core", "Description", array(), $thing)?>
+					</li>
+				</ul>
 			</li>
 		<?php } ?>
 	</ul>
