@@ -20,7 +20,7 @@ createTimeline("timelinediv" . item('ID'),$thingswithdates);
 	<ul>
 		<?php foreach ($thingswithoutdates as $thing) {?>
 			<li>
-				<ul>
+				<ul onclick="Omeka.Timeline.behavior(<?php echo $thing->id?>)">
 					<li>
 						Thing: <?php echo $thing->id?>
 					</li>
