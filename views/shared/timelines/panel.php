@@ -6,7 +6,7 @@
 
 $element_names = array("Title", "Description", "Date");
 
-if ( true /*isAdmin()*/){
+if ( has_permission('Items', 'edit')){
 	echo $this->partial("widgets/editpanel.phtml",array("item"=>$item,"element_names"=>$element_names));
 }
 else {

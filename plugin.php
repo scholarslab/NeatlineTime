@@ -80,7 +80,7 @@ function timeline_initialize()
 function timeline_header()
 {
 	$actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
-	switch (Zend_Controller_Front::getInstance()->getRequest()->getActionName()) {
+	switch ($actionName) {
 		case 'show' :
 		case 'edit' :
 			$timelineFile =  js('createTimeline');
@@ -184,3 +184,25 @@ function timeline_routes($router)
     $router->addConfig(new Zend_Config_Ini(TIMELINE_PLUGIN_DIR .
     DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
 }
+/*
+function timeline_user_can_edit($timeline = null, $user = null)
+{
+	$controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+    if (!$timeline) {
+        $timeline = $item;
+    }
+    if (!$user) { 
+        $user = current_user();
+    }
+    $acl = get_acl();
+    if (version_compare(OMEKA_VERSION, '2.0-dev', '>=')) {
+        $canEditSelf = $acl->isAllowed($user, 'ExhibitBuilder_Exhibits', 'editSelf');
+        $canEditOthers = $acl->isAllowed($user, 'ExhibitBuilder_Exhibits', 'editAll');
+    } else {
+        $canEditSelf = $acl->checkUserPermission('ExhibitBuilder_Exhibits', 'editSelf');
+        $canEditOthers = $acl->checkUserPermission('ExhibitBuilder_Exhibits', 'editAll');
+    }
+    
+    return (($exhibit->wasAddedBy($user) && $canEditSelf) || $canEditOthers);    
+}
+*/
