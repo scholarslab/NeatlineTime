@@ -59,9 +59,9 @@ EOT;
 
     echo '	];
         Omeka.Timeline.history.push(TLtmp);
-        jq(document).ready(function () { Omeka.Timeline.createTimeline(TLtmp) } );
+        Omeka.jQuery(document).ready(function () { Omeka.Timeline.createTimeline(TLtmp) } );
         delete(TLtmp);
-        jq(document.body).resize(Omeka.Timeline.onResize);
+        Omeka.jQuery(document.body).resize(Omeka.Timeline.onResize);
     </script>
 '; 
 }
