@@ -3,17 +3,39 @@
  * 
  */
 
-echo "Viewing " . $item->id;
-
-
-echo "<dl>";
-foreach ($element_names as $element_name) {
-	echo "<dt>" . $element_name . "</dt><dd>" . item('Dublin Core', $element_name, array(), $item) . "</dd>";
-}
-echo "</dl>";
+?>
+<div class="simileAjax-bubble-container simileAjax-bubble-container-pngTranslucent" style="width: 360px; height: 175px; left: 247px; top: 192px;">
+	<div class="simileAjax-bubble-innerContainer simileAjax-bubble-innerContainer-pngTranslucent">
+		<div class="simileAjax-bubble-innerContainer simileAjax-bubble-innerContainer-pngTranslucent">
+			<div style="position: static; width: 360px">
+				<img src="" />
+				<div class="timeline-event-bubble-title">
+					<?php echo link_to_item(); ?>
+				</div>
+				<?php foreach($element as $element_name):?>
+				<div class="timeline-event-bubble-body">
+					<?php item('Dublin Core', $element_name, array(), $item); ?>
+				</div>
+				<?php endforeach; ?>
+				<div style="display: inline;" class="timeline-event-bubble-wiki">
+					<a href="">Locate</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php 
+// echo "Viewing " . $item->id;
+// 
+// 
+// echo "<dl>";
+// foreach ($element_names as $element_name) {
+// 	echo "<dt>" . $element_name . "</dt><dd>" . item('Dublin Core', $element_name, array(), $item) . "</dd>";
+// }
+// echo "</dl>";
 ?>
 
-<div>
-	<?php echo link_to_item("Metadata",array(),"show",$item)?>
+<!-- <div>
+	<?php //echo link_to_item("Metadata",array(),"show",$item)?>
 	<a href="">Locate</a>
-</div>
+</div> -->
