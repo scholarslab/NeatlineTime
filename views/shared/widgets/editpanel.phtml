@@ -19,7 +19,7 @@ foreach ($element_names as $element_name) {
 			<?php foreach($element_names as $element_name): ?>
 				
 				<dt class="timeline-metadata-term timeline-metadata-<?php echo $element_name?>"><?php echo $element_name ?></dt>
-				<dd class="timeline-metadata-def timeline-metadata-<?php echo $element_name?> timeline-line-editable"></dd>
+				<dd class="timeline-metadata-def timeline-metadata-<?php echo $element_name?> timeline-line-editable"><?php echo item('Dublin Core', $element_name, array(), $item); ?></dd>
 			<?php endforeach; ?>
 		</dl>
 	</div>
