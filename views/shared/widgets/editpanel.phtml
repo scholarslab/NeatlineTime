@@ -11,8 +11,39 @@ foreach ($element_names as $element_name) {
 		$item);
 }
 ?>
-<div>
-	<?php echo link_to_item("Edit",array(),"edit",$item)?>
-	<a href="">Illustrate</a>
-	<a href="javascript:zoom_only()">Locate</a>
+
+
+<div id="timeline-edit-panel" class="timeline-panel" style="display:none;"> 
+	<div id="timeline-metadata-container" class="timeline-panel-section"> 
+		<dl id="timeline-metadata"> 
+			<?php foreach($element_names as $element_name): ?>
+				
+				<dt class="timeline-metadata-term timeline-metadata-<?php echo $element_name?>"><?php echo $element_name ?></dt>
+				<dd class="timeline-metadata-def timeline-metadata-<?php echo $element_name?> timeline-line-editable"></dd>
+			<?php endforeach; ?>
+		</dl>
+	</div>
+	<div id="timeline-metadata-utils">
+		<button class="timeline-button timeline-locate-item" onclick="javascript:zoom_only()">Locate</button>
+		
+		<button class="timeline-button timeline-record-item">
+		<button class="timeline-button timeline-save-item">Save</button> 
+		<button class="timeline-button timeline-cancel-item">Cancel</button>
+		<?php echo link_to_item("Edit",array(),"edit",$item)?>
+		<a href="">Illustrate</a>
+		
+	</div>
 </div>
+	
+			<!-- <dt class="timeline-metadata-term timeline-metadata-title">Title</dt> 
+											<dd class="timeline-metadata-def timeline-metadata-title timeline-line-editable">Item title</dd> 
+									
+											<dt class="timeline-metadata-term timeline-metadata-desc">Description</dt> 
+											<dd class="timeline-metadata-def timeline-metadata-desc timeline-area-editable">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</dd> 
+									
+											<dt class="timeline-metadata-term timeline-metadata-time">Time</dt> 
+											<dd class="timeline-metadata-def timeline-metadata-time timeline-line-editable">1908-01-01</dd> 
+										</dl> 
+									</div>  -->
+							
+
