@@ -117,13 +117,14 @@ function timeline_show_item_in_page($html, $displayFilesOptions, $linkProperties
             'height' =>	'200px'
             );
 
-        //$CONFIG = array_merge($CONFIG, $options);
-        $tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
+        return __v()->partial('timelines/show.phtml',array("item" => $item ));
+            
+        /*$tags =  item("Item Type Metadata","Tag",array("delimiter" => ','));
         $things = get_items(array('tags' => $tags));
 
         echo '<div id="timelinediv' . $item->id . '" style="height:200px"></div>';
         createTimeline("timelinediv" . $item->id, $things);
-        return ""  ;
+        return ""  ;*/
 
         }
 
