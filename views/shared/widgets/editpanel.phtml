@@ -1,9 +1,12 @@
 <?php
 /* simple edit panel widget to be swapped in when an editable event 
  * is clicken in a Timeline
- */
+ */ ?>
+ 
+<form method="post" enctype="multipart/form-data" id="item-form" action="">
+<? 
 echo "Editing" . $item->id;
-
+   
 $elements_table = get_db()->getTable('Element');
 foreach ($element_names as $element_name) {
 	echo display_form_input_for_element(
@@ -11,8 +14,11 @@ foreach ($element_names as $element_name) {
 		$item);
 }
 ?>
-
-
+	<!-- submit button for metadata form elements -->
+	<div>
+    		<?php echo submit(array('name'=>'submit', 'id'=>'save-changes', 'class'=>'submit submit-medium'), 'Save Changes'); ?>
+    </div>
+</form>
 <div id="timeline-edit-panel" class="timeline-panel" style="display:none;"> 
 	<div id="timeline-metadata-container" class="timeline-panel-section"> 
 		<dl id="timeline-metadata"> 
@@ -23,6 +29,7 @@ foreach ($element_names as $element_name) {
 			<?php endforeach; ?>
 		</dl>
 	</div>
+
 	<div id="timeline-metadata-utils">
 		<button class="timeline-button timeline-locate-item" onclick="javascript:zoom_only()">Locate</button>
 		
