@@ -8,11 +8,11 @@ $thingswithdates = array();
 $thingswithoutdates = array();
 foreach ($things as $thing) {
 	if ( count(item('Dublin Core', 'Date', array('all' => true), $thing)) > 0 ) {
-		echo("Timeline: Item with dates: " . item('Dublin Core', 'Date', array('all' => true), $thing));
+		//echo("Timeline: Item with dates: " . item('Dublin Core', 'Date', array('all' => true), $thing));
 		array_push($thingswithdates,$thing);
 	}
 	else {
-		echo("Timeline: Item with no dates. ");
+		//echo("Timeline: Item with no dates. ");
 		array_push($thingswithoutdates,$thing);
 	}
 }
