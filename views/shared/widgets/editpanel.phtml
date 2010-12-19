@@ -1,3 +1,4 @@
+<div>
 <?php
 /* simple edit panel widget to be swapped in when an editable event 
  * is clicken in a Timeline
@@ -42,7 +43,7 @@ foreach ($element_names as $element_name) {
 		<button class="timeline-button timeline-save-item">Save</button> 
 		<button class="timeline-button timeline-cancel-item">Cancel</button>
 		<?php echo link_to_item("Edit",array(),"edit",$item)?>
-		<a href="">Illustrate</a>
+		<a href="javascript:("illustrate",<?php echo $item->id?>,)">Illustrate</a>
 		
 	</div>
 </div>
@@ -58,4 +59,4 @@ foreach ($element_names as $element_name) {
 										</dl> 
 									</div>  -->
 							
-
+</div>
