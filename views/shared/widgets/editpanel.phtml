@@ -4,8 +4,8 @@
  * is clicken in a Timeline
  */ 
 
-//echo js('tiny_mce/tiny_mce'); 
-//echo js('items'); 
+echo js('tiny_mce/tiny_mce'); 
+echo js('items'); 
 ?>
  
 <form method="post" enctype="multipart/form-data" id="item-form" action="">
@@ -25,7 +25,8 @@ foreach ($element_names as $element_name) {
     		<?php echo submit(array('name'=>'submit', 'id'=>'save-changes', 'class'=>'submit submit-medium'), 'Save Changes'); ?>
     </div>
 </form>
-<div id="timeline-edit-panel" class="timeline-panel" style="display:none;"> 
+<div id="timeline-edit-panel" class="timeline-panel"> 
+<!-- 
 	<div id="timeline-metadata-container" class="timeline-panel-section"> 
 		<dl id="timeline-metadata"> 
 			<?php foreach($element_names as $element_name): ?>
@@ -35,7 +36,7 @@ foreach ($element_names as $element_name) {
 			<?php endforeach; ?>
 		</dl>
 	</div>
-
+ -->
 	<div id="timeline-metadata-utils">
 		<button class="timeline-button timeline-locate-item" onclick="javascript:zoom_only()">Locate</button>
 		
