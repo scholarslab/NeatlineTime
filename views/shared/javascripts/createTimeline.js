@@ -65,6 +65,7 @@ Omeka.Timeline.createTimeline = function(config) {
 					.parseGregorianDateTime(s))
 		});
 	}
+	console.log("Emitting Omeka.Timeline.timelinecreated");
 	jq_neatlinemaps(config.timelinediv).trigger("Omeka.Timeline.timelinecreated",[config.timelinediv]);
 	
 }
