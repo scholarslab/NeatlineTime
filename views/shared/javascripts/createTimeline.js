@@ -65,6 +65,8 @@ Omeka.Timeline.createTimeline = function(config) {
 					.parseGregorianDateTime(s))
 		});
 	}
+	jq_neatlinemaps(config.timelinediv).trigger("Omeka.Timeline.timelinecreated",[config.timelinediv]);
+	
 }
 
 var resizeTimerID = null;
