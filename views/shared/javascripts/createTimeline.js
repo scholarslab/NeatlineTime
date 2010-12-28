@@ -66,7 +66,7 @@ Omeka.Timeline.createTimeline = function(config) {
 		});
 	}
 	console.log("Emitting timelinecreated");
-	jq_neatlineexhibit('body').trigger("timelinecreated",[config.timelinediv]);
+	jq_neatlineexhibit(config.timelinediv).trigger("timelinecreated");
 	
 }
 
