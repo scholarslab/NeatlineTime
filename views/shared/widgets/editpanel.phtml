@@ -38,13 +38,13 @@ foreach ($element_names as $element_name) {
 	</div>
  -->
 	<div id="timeline-metadata-utils">
-		<button class="timeline-button timeline-locate-item" onclick="javascript:zoom_only()">Locate</button>
+		<button class="timeline-button timeline-locate-item" onclick="javascript:Omeka.Neatline.jQuery('body').neatline('zoom_only',<?php echo $item->id ?>),">Locate</button>
 		
 		<button class="timeline-button timeline-record-item">
 		<button class="timeline-button timeline-save-item">Save</button> 
 		<button class="timeline-button timeline-cancel-item">Cancel</button>
 		<?php echo link_to_item("Edit",array(),"edit",$item)?>
-		<a href="javascript:('illustrate',<?php echo $item->id?>,)">Illustrate</a>
+		<a href="javascript:javascript:Omeka.Neatline.jQuery('body').neatline('illustrate',<?php echo $item->id ?>,)">Illustrate</a>
 		
 	</div>
 </div>
