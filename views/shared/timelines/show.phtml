@@ -22,7 +22,7 @@ createTimeline("timelinediv" . item('ID'),$thingswithdates);
 	<ul>
 		<?php foreach ($thingswithoutdates as $thing) {?>
 			<li>
-				<ul style="neatline-timeless-item" onclick="Omeka.Timeline.behavior(<?php echo $thing->id?>)">
+				<ul class="neatline-timeless-item" onclick="Omeka.Timeline.behavior(<?php echo $thing->id?>)">
 					<li>
 						Thing: <?php echo $thing->id?>
 					</li>
