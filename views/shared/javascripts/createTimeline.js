@@ -7,6 +7,7 @@ if (typeof (Omeka) == 'undefined') {
 if (Omeka.Neatline) { 
 	if (!Omeka.Neatline.jQuery) {
 		Omeka.Neatline.jQuery = jQuery.noConflict();
+	}
 }
 else {
 	Omeka.Neatline = new Object();
