@@ -67,7 +67,7 @@ Omeka.Timeline.createTimeline = function(config) {
 	config.eventSource.loadJSON( {
 		"events" : config.events
 	}, document.location.href);
-	Omeka.Timeline[Omeka.Timeline.length - 1].setCenter = function(s) {
+	Omeka.Timeline[Omeka.Timeline.length-1].setCenter = function(s) {
 		this._bands.each(function(i) {
 			i.setCenterVisibleDate(SimileAjax.DateTime
 					.parseGregorianDateTime(s))
