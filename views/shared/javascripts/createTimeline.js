@@ -73,7 +73,7 @@ Omeka.Timeline.createTimeline = function(config) {
 					.parseGregorianDateTime(s))
 		});
 	}
-	Omeka.Neatline.jQuery("body").trigger("Omeka.Timeline.timelinecreated");
+	Omeka.Neatline.jQuery(config.timelinediv).trigger("Omeka.Timeline.timelinecreated");
 	
 }
 
