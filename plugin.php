@@ -87,7 +87,7 @@ function timeline_header()
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
 <script type="text/javascript">
-    jQuery = jQuery.noConflict();    
+    // jQuery = jQuery.noConflict();    
     var Timeline_urlPrefix = 'http://static.simile.mit.edu/timeline/api-2.3.1/';
     var Timeline_parameters = "bundle=true";
 

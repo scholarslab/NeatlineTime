@@ -4,6 +4,15 @@ if (typeof (Omeka) == 'undefined') {
     Omeka = new Object();
 }
 
+if (Omeka.Neatline) { 
+	if (!Omeka.Neatline.jQuery) {
+		Omeka.Neatline.jQuery = jQuery.noConflict();
+}
+else {
+	Omeka.Neatline = new Object();
+	Omeka.Neatline.jQuery = jQuery.noConflict();
+}
+
 if (!Omeka.Timeline) {
     Omeka.Timeline = new Array();
 }
@@ -66,7 +75,7 @@ Omeka.Timeline.createTimeline = function(config) {
 		});
 	}
 	console.log("Emitting timelinecreated");
-	jq_neatlineexhibit(config.timelinediv).trigger("timelinecreated");
+	Omeka.Neatline.jQuery(config.timelinediv).trigger("timelinecreated");
 	
 }
 
