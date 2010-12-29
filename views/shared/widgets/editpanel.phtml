@@ -43,7 +43,9 @@ foreach ($element_names as $element_name) {
 		<button class="timeline-button timeline-record-item">
 		<button class="timeline-button timeline-save-item">Save</button> 
 		<button class="timeline-button timeline-cancel-item">Cancel</button>
-		<?php echo link_to_item("Edit",array(),"edit",$item)?>
+		<?php set_theme_base_uri('admin');
+       echo link_to_item("Edit", array(), 'edit');
+       revert_theme_base_uri();?>
 		<a href="javascript:Omeka.Neatline.jQuery('body').neatline('illustrate',<?php echo $item->id ?>)">Illustrate</a>
 		
 	</div>
