@@ -16,9 +16,9 @@
 				</div>
 				<?php foreach ($element_names as $element_name):?>
 				<div class="timeline-event-bubble-body">
-					<?php echo $element_name ?>
+					<label for="viewpanel-<?php echo $element_name ?>"><?php echo $element_name ?>:</label>
 					
-					<?php echo item('Dublin Core', $element_name, array(), $item); ?>
+					<span id="viewpanel-<?php echo $element_name ?>"><?php echo item('Dublin Core', $element_name, array(), $item); ?></span>
 				</div>
 				<?php endforeach; ?>
 				<div style="display: inline;" class="timeline-event-bubble-wiki">
