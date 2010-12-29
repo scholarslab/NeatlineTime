@@ -4,30 +4,28 @@
  */
 
 ?>
-<div style="width: 360px; height: 175px; left: 247px; top: 192px;">
-	<div>
-		<div>
-			<div style="position: static; width: 360px">
-				<?php if (item_has_thumbnail()): ?>
-					<?php echo link_to_item(item_square_thumbnail()); ?>
-				<?php endif; ?>
-				<div class="timeline-event-bubble-title">
-					<?php echo link_to_item(); ?>
-				</div>
-				<?php foreach ($element_names as $element_name):?>
-				<div class="timeline-event-bubble-body">
-					<label for="viewpanel-<?php echo $element_name ?>"><?php echo $element_name ?>:</label>
-					
-					<span id="viewpanel-<?php echo $element_name ?>"><?php echo item('Dublin Core', $element_name, array(), $item); ?></span>
-				</div>
-				<?php endforeach; ?>
-				<div style="display: inline;" class="timeline-event-bubble-wiki">
-					<a href="">Locate</a>
-				</div>
-			</div>
+
+	<div style="position: static; width: 360px">
+		<?php if (item_has_thumbnail()): ?>
+			<?php echo link_to_item(item_square_thumbnail()); ?>
+		<?php endif; ?>
+		<div class="timeline-event-bubble-title">
+			<?php echo link_to_item(); ?>
+		</div>
+		<?php foreach ($element_names as $element_name):?>
+		<div class="timeline-event-bubble-body">
+		<dl>
+			<dt><label for="viewpanel-<?php echo $element_name ?>"><?php echo $element_name ?>:</label></dt>
+			
+			<dd><span id="viewpanel-<?php echo $element_name ?>"><?php echo item('Dublin Core', $element_name, array(), $item); ?></span></dd>
+		</dl>
+		</div>
+		<?php endforeach; ?>
+		<div style="display: inline;" class="timeline-event-bubble-wiki">
+			<a href="">Locate</a>
 		</div>
 	</div>
-</div>
+
 <?php 
 // echo "Viewing " . $item->id;
 // 
