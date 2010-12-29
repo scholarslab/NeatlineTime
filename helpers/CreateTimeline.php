@@ -51,7 +51,7 @@ EOT;
         array_push($tmp,"{ 'title' : " . getMet($item, $mets[0], $mets[1]) . ",
             'start' : " . getMet($item, $mets[2], $mets[3]) . ",
             'description' : " . getMet($item, "Dublin Core", "Description") . ",
-            'durationEvent':false , 'eventID' : " . $id . ", " .
+            'durationEvent':false , 'eventID' : " . $id . ", 'classname': 'neatline-item-" . $id . "', " .
             "'link' : 'javascript:Omeka.Timeline.behavior(" . $id . ")'" . "}");
 	}
 	
