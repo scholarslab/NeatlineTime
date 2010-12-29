@@ -21,8 +21,8 @@
 		</dl>
 		</div>
 		<?php endforeach; ?>
-		<div style="display: inline;" class="timeline-event-bubble-wiki">
-			<a href="">Locate</a>
+		<div id="timeline-metadata-utils">
+			<button class="timeline-button timeline-locate-item" onclick="Omeka.Neatline.jQuery('body').neatline('zoom_only',<?php echo $item->id ?>)">Locate</button>
 		</div>
 	</div>
 
