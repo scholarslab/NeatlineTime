@@ -83,6 +83,7 @@ function timeline_header()
 	switch ($actionName) {
 		case 'show' :
 		case 'edit' :
+			echo js('ba-debug.min');
 			$timelineFile =  js('createTimeline');
 			print <<<EOT
 <!-- begin Timeline plugin scripts -->
