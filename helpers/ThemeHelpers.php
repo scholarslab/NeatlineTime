@@ -99,6 +99,7 @@ function get_timeline_json_for_item($item = null) {
         $html = "{'title' : " . js_escape(item('Dublin Core', 'Title', array(), $item)) . ","
               . " 'start' : " . js_escape(date('r', strtotime(item('Dublin Core', 'Date', array(), $item)))) . ","
               . " 'description' : " . js_escape(item('Dublin Core', 'Description', array(), $item)) . ","
+              . " 'link' : " . js_escape(abs_item_uri($item)) . ","
               . " 'durationEvent' : false ,"
               . " 'eventID' : " . $item->id . ","
               . " 'classname': 'neatline-item-" . $item->id . "'"
