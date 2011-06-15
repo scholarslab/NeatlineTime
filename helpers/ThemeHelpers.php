@@ -17,38 +17,40 @@
  * @return string HTML
  *
  */
-function display_timeline_for_item($item = null) {
+function display_timeline_for_item($timelineHeight = '200px;', $echo = false, $item = null) {
     if (!$item) {
         $item = get_current_item();
     }
-    
+
     $html = '';
-    
     if ($timelineItems = get_items_for_timeline($item)) {
         $div = 'timelinediv'.$item->id;
-        $html = '<div id="'.$div.'" style="height:200px"></div>'
-              . '<script type="text/javascript" charset="utf-8">'
+
+        $html = '<div id="'.$div.'" style="height: '.$timelineHeight. '"></div>'
+              . '<script>'
+              . 'SimileAjax.History.enabled = false;'
               . 'var TLtmp = new Object();'
-              . 'TLtmp.timelinediv = $("'.$div.'");'
-              . 'alert("'.$div.'");'
+              . 'TLtmp.timelinediv = "'.$div.'";'
               . 'TLtmp.events = [';
 
         $tmp = array();
-        foreach ($timelineItems as $item) {
-            array_push($tmp, get_timeline_json_for_item($item));
-    	}
-	
-        $html .= implode(',',$tmp);
 
-        $html = $html
-              . '];'
+        foreach ($timelineItems as $timelineItem) {
+            array_push($tmp, get_timeline_json_for_item($timelineItem));
+        }
+
+        $json = implode(',',$tmp);
+
+        $html = $html . $json;
+
+        $html = $html . '];'
               . '$(document).ready(function() {'
               . 'Omeka.Timeline.createTimeline(TLtmp);'
               . '});'
-              // . 'jQuery(window).resize(Omeka.Timeline.onResize);'
+              . '$(window).resize(Omeka.Timeline.onResize);'
               . '</script>';
     }
-    echo $html;
+    return $html;
 }
 
 /**

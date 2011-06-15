@@ -11,13 +11,13 @@ if (!Omeka.Timeline.history) {
 }
 
 Omeka.Timeline.createTimeline = function(config) {
-    
+
     if (!config.eventSource) {
         config.eventSource = new Timeline.DefaultEventSource();
     }
-    
+
+    // If the config doesn't include any timeline band information, set some.
     if (!config.bandInfos) {
-        
         config.bandInfos = [
                 Timeline.createBandInfo( {
                     width : "70%",
@@ -37,12 +37,15 @@ Omeka.Timeline.createTimeline = function(config) {
         config.bandInfos[1].syncWith = 0;
         config.bandInfos[1].highlight = true;
     }
+
+    // Load our events, stored in config.events.
     config.eventSource.loadJSON( {
         "events" : config.events
-        }, 
+        },
         document.location.href
     );
 
+    // Create our timeline.
     Omeka.Timeline[Omeka.Timeline.length] = Timeline.create(document.getElementById(config.timelinediv),
             config.bandInfos);
 
@@ -51,7 +54,7 @@ Omeka.Timeline.createTimeline = function(config) {
             i.setCenterVisibleDate(SimileAjax.DateTime
                     .parseGregorianDateTime(s))
         });
-    }   
+    }
 }
 
 var resizeTimerID = null;
