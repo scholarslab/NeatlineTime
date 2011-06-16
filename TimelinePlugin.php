@@ -1,7 +1,7 @@
 <?php
 /**
 * @author    Scholars' Lab
-* @copyright 2010 The Board and Visitors of the University of Virginia
+* @copyright 2010-2011 The Board and Visitors of the University of Virginia
 * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
 * @version   $Id$
 * @package   Timeline
@@ -18,7 +18,6 @@ class TimelinePlugin
     private static $_hooks = array(
         'install',
         'uninstall',
-        'upgrade',
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
@@ -26,10 +25,11 @@ class TimelinePlugin
     );
 
     private static $_filters = array(
-        'item_square_thumbnail',
-        'item_has_thumbnail',
-        );
-
+        'admin_navigation_main',
+        'define_response_contexts',
+        'define_action_contexts'
+    );
+    
     private $_db;
 
     /**
@@ -50,16 +50,11 @@ class TimelinePlugin
             $functionName = Inflector::variablize($hookName);
             add_plugin_hook($hookName, array($this, $functionName));
         }
-
+        
         foreach (self::$_filters as $filterName) {
             $functionName = Inflector::variablize($filterName);
             add_filter($filterName, array($this, $functionName));
         }
-        
-        // Add the tag dropdown filter separately.
-        add_filter(array(
-            'Form', 'Item', 'Item Type Metadata', 'Tag'
-            ), array($this, 'timelineTagSelect'));
     }
 
     /**
@@ -67,23 +62,26 @@ class TimelinePlugin
      */
     public function install()
     {
-	    # now we add 'Timeline' item type
-	    $timelinemitemtype = array(
-	        'name'       => "Timeline",
-	        'description' => "Timeline composed of items in this repository"
-	        );
-	    $timelinemitemtypemetadata =
-	        array(array('name' => "Tag",
-	            'description' => "Items with this tag should be included in the timeline"
-	            ));
-	    try {
-	        
-			$itemtype = insert_item_type($timelinemitemtype,$timelinemitemtypemetadata);
-	        define("TIMELINE_ITEMTYPE",$itemtype->id);
-
-		} catch (Exception $e) {
-	            debug("Unable to install Timeline Itemtype: " . $e->getMessage() );
-	    }
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timelines` (
+            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+            `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+            `creator_id` INT UNSIGNED NOT NULL,
+            `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+            `featured` TINYINT(1) NOT NULL DEFAULT '0',
+            `added` timestamp NOT NULL default '0000-00-00 00:00:00',
+            `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+            ) ENGINE=MyISAM;";
+        $this->_db->query($sql);
+        
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
+            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `table_id` INT UNSIGNED NOT NULL,
+            `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=MyISAM;";
+        $this->_db->query($sql);
     }
 
     /**
@@ -91,51 +89,82 @@ class TimelinePlugin
      */
     public function uninstall()
     {
-		delete_option('timeline_plugin_version');
-    }
-
-    public function upgrade($oldVersion, $newVersion)
-    {
-        // Catch-all for pre-2.0 versions
-        if (version_compare($oldVersion, '2.0-dev', '<=')) {
-
-        }
+        $sql = "DROP TABLE IF EXISTS
+            `{$this->_db->prefix}timelines`,
+            `{$this->_db->prefix}timeline_entries`;";
+        $this->_db->query($sql);
     }
 
     /**
      * Timeline define_acl hook
-     * Restricts access to admin-only controllers and actions.
      */
     public function defineAcl($acl)
     {
+        $acl->loadResourceList(
+            array('Timeline_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'delete', 'deleteSelf', 'deleteAll'))
+        );
+
+        // All everyone access to browse and show.
+        $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
         
+        // Allow contributors everything but editAll and deleteAll.
+        $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
+        $acl->allow('contributor', 'Timeline_Timelines');
     }
 
     /**
      * Timeline define_routes hook
-     * Defines public-only routes that set the Timeline controller as the
-     * only accessible one.
      */
     public function defineRoutes($router)
     {
         $router->addRoute(
-            'timelineDefault',
+            'timelineActionRoute',
             new Zend_Controller_Router_Route(
                 'timelines/:action/:id',
                 array(
-                    'module'     => 'timeline',
-                    'controller' => 'timelines',
-                    'action'     => 'show'
+                    'module'        => 'timeline',
+                    'controller'    => 'timelines'
+                    ),
+                array( 'id'         => '\d+')
+                )
+            );
+
+        $router->addRoute(
+            'timelineDefaultRoute',
+            new Zend_Controller_Router_Route(
+                'timelines/:action',
+                array(
+                    'module'        => 'timeline',
+                    'controller'    => 'timelines'
                     )
+                )
+            );
+
+        $router->addRoute(
+            'timelinePaginationRoute',
+            new Zend_Controller_Router_Route(
+                'timelines/:page',
+                array(
+                    'module'        => 'timeline',
+                    'controller'    => 'timelines',
+                    'action'        => 'browse',
+                    'page'          => '1'
+                    ),
+                array( 'page'       => '\d+')
                 )
             );
     }
 
+    /**
+     * Timeline admin_append_to_plugin_uninstall_message hook
+     */
     public function adminAppendToPluginUninstallMessage()
     {
-
+        echo '<p><strong>Warning</strong>: Uninstalling the Timeline plugin
+            will remove all custom Timeline records, and will remove the
+            ability to browse items on a timeline.';
     }
-    
+
     /**
      * Deal with Timeline-specific search terms.
      *
@@ -145,49 +174,39 @@ class TimelinePlugin
     public function itemBrowseSql($select, $params)
     {
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
-
+            
         }
     }
     
     /**
+     * Timeline admin_navigation_main filter.
      *
-     * @param <type> $thumb
-     * @param <type> $item
-     * @return <type>
-     */
-    function itemHasThumbnail($thumb, $item) {
-        return true;
-    }
-
-    /**
+     * Adds a button to the admin's main navigation.
      *
-     * @param <type> $thumb
-     * @param <type> $item
-     * @return <type> 
+     * @param array $nav
+     * @return array
      */
-    function itemSquareThumbnail($thumb, $item) {
-        $item = $item ? $item : get_item_by_id(item('ID'));
-
-        if ($item->getItemType()->name == "Timeline") {
-            return "<img src=" . img('timeline.png') . " />";
-        } else {
-            return $thumb;
-        }
-    }
-    
-    /**
-     *
-     * @param <type> $html
-     * @param <type> $inputNameStem
-     * @param <type> $value
-     * @param <type> $options
-     * @param <type> $record
-     * @param <type> $element
-     * @return <type> 
-     */
-    function timelineTagSelect($html,$inputNameStem,$value,$options,$record,$element)
+    public function adminNavigationMain($nav)
     {
-        $div = __v()->partial('widgets/tag.phtml', array("inputNameStem" =>$inputNameStem, "value" => $value, "options" => $options, "record" => $record, "element" => $element));
-        return $div;
+        $nav['Timelines'] = uri('timelines');
+        return $nav;
+    }
+    
+    public function defineResponseContexts($context)
+    {
+        $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
+                                'headers' => array('Content-Type' => 'text/javascript'));
+        
+        return $context;
+    }
+
+    public function defineActionContexts($context, $controller)
+    {
+        if ($controller instanceof Timeline_TimelinesController || $controller instanceof ItemsController) {
+            $context['browse'][] = 'timeglider-json';
+            $context['show'][] = 'timeglider-json';
+        }
+
+        return $context;
     }
 }
