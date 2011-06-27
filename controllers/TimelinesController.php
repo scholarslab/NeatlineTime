@@ -1,17 +1,21 @@
 <?php
-
 /**
- * Timeline Controller responds to actions from the Omeka framework
- *
- * @author      Scholars' Lab
- * @author      Jeremy Boggs
- * @copyright   2010 The Board and Visitors of the University of Virginia
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version     $Id$
- * @package     Timeline
- * @link        http://omeka.org/codex/Plugins/Timeline
+ * @author Scholars' Lab
+ * @copyright 2010 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
  */
 
+/**
+ * Timelines Controller
+ *
+ * @since 1.0
+ * @author Scholars' Lab
+ * @package Timeline
+ * @subpackage  Controllers
+ */
 class Timeline_TimelinesController extends Omeka_Controller_Action
 {
     // Add our timeglider-json output contexts

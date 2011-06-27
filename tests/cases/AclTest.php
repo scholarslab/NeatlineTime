@@ -1,16 +1,20 @@
 <?php
 /**
- * @author      Scholars' Lab
- * @copyright   2010-2011 The Board and Visitors of the University of Virginia
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version     $Id$
- * @package     Timeline
- * @link        http://omeka.org/codex/Plugins/Timeline
+ * @author Scholars' Lab
+ * @copyright 2010-2011 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
  */
 
 /**
- * @package     Timeline
- * @copyright   2010-2011 The Board and Visitors of the University of Virginia
+ * Test the Timeline ACL.
+ *
+ * @since 1.0
+ * @author Scholars' Lab
+ * @package Timeline
+ * @subpackage Tests
  */
 class Timeline_AclTest extends Omeka_Test_AppTestCase
 {

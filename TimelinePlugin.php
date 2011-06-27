@@ -1,11 +1,11 @@
 <?php
 /**
-* @author    Scholars' Lab
-* @copyright 2010-2011 The Board and Visitors of the University of Virginia
-* @license   http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
-* @version   $Id$
-* @package   Timeline
-* @link      http://omeka.org/codex/Plugins/Timeline
+ * @author Scholars' Lab
+ * @copyright 2011 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
  */
 
 /**
@@ -50,7 +50,7 @@ class TimelinePlugin
             $functionName = Inflector::variablize($hookName);
             add_plugin_hook($hookName, array($this, $functionName));
         }
-        
+
         foreach (self::$_filters as $filterName) {
             $functionName = Inflector::variablize($filterName);
             add_filter($filterName, array($this, $functionName));
@@ -191,7 +191,10 @@ class TimelinePlugin
         $nav['Timelines'] = uri('timelines');
         return $nav;
     }
-    
+
+    /**
+     * Adds the timeglider-json context to response contexts.
+     */
     public function defineResponseContexts($context)
     {
         $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
@@ -200,6 +203,10 @@ class TimelinePlugin
         return $context;
     }
 
+    /**
+     * Adds timeglider-json context to the 'browse' and 'show' actions for the
+     * Items and Timeline_Timelines controllers.
+     */
     public function defineActionContexts($context, $controller)
     {
         if ($controller instanceof Timeline_TimelinesController || $controller instanceof ItemsController) {

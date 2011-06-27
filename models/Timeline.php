@@ -1,14 +1,20 @@
 <?php
 /**
+ * @author Scholars' Lab
+ * @copyright 2011 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
+ */
+
+/**
  * Timeline record.
  *
- * @author      Scholars' Lab
- * @author      Jeremy Boggs
- * @copyright   2011 The Board and Visitors of the University of Virginia
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version     $Id$
- * @package     Timeline
- * @link        http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
+ * @author Scholars' Lab
+ * @package Timeline
+ * @subpackage Models
  */
 class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
@@ -33,6 +39,7 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
      *
      * Set the creator_id to the current user.
      *
+     * @since 1.0
      * @return void
      */
     protected function beforeInsert()
@@ -46,6 +53,7 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
      *
      * Explicitly set the modified timestamp.
      *
+     * @since 1.0
      * @return void
      */
     protected function beforeSave()
@@ -58,6 +66,7 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
      *
      * Identifies Timeline records as relating to the Timelines ACL resource.
      *
+     * @since 1.0
      * @return string
      */
     public function getResourceId()

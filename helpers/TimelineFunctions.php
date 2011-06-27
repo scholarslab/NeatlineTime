@@ -2,18 +2,20 @@
 /**
  * Timeline helper functions
  *
- * @author    Scholars' Lab
- * @copyright 2010-2011 The Board and Visitors of the University of Virginia
- * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version   $Id$
- * @package   Timeline
- * @link      http://omeka.org/codex/Plugins/Timeline
+ * @author Scholars' Lab
+ * @copyright 2011 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
  */
 
 /**
- * Returns Timeglider-specific JSON string for a given item.
+ * Returns <a href="http://timeglider.com/jquery/?p=json">Timeglider-specific
+ * JSON string</a> for a given item.
  *
- * @param Item
+ * @since 1.0
+ * @param Item|null
  * @return string JSON string.
  */
 function get_timeline_json_for_item($item = null) {
@@ -35,7 +37,7 @@ function get_timeline_json_for_item($item = null) {
  * @since 1.0
  * @param string
  * @param array $options
- * @param Timeline|null $timeline Check for this specific timeline record (current timeline if null).
+ * @param Timeline|null
  * @return string|array
  */
 function timeline($fieldName, $options=array(), $timeline = null)
@@ -82,7 +84,7 @@ function timeline($fieldName, $options=array(), $timeline = null)
             break;
     }
 
-    // Apply any options to it.
+    // Apply the snippet option if passed.
     if (isset($options['snippet'])) {
         $text = snippet($text, 0, (int)$options['snippet']);
     }
@@ -111,6 +113,7 @@ function get_current_timeline()
 /**
  * Sets the current timeline.
  *
+ * @since 1.0
  * @param Timeline|null
  * @return void
  */
@@ -124,8 +127,7 @@ function set_current_timeline($timeline = null)
  * permalinks.
  *
  * @since 1.0
- * @param Timeline|null Check for this specific timeline record (current
- * timeline if null).
+ * @param Timeline|null
  * @return void
  */
 function abs_timeline_uri($timeline = null)
@@ -138,9 +140,10 @@ function abs_timeline_uri($timeline = null)
 }
 
 /**
- * Sets the simple pages for loop
+ * Sets the timelines for loop
  *
- * @param array $simplePages
+ * @since 1.0
+ * @param array $timelines
  * @return void
  */
 function set_timelines_for_loop($timelines)
@@ -151,6 +154,7 @@ function set_timelines_for_loop($timelines)
 /**
  * Get the set of timelines for the current loop.
  *
+ * @since 1.0
  * @return array
  */
 function get_timelines_for_loop()
@@ -161,6 +165,7 @@ function get_timelines_for_loop()
 /**
  * Loops through timelines assigned to the view.
  *
+ * @since 1.0
  * @return mixed
  */
 function loop_timelines()
@@ -171,6 +176,7 @@ function loop_timelines()
 /**
  * Determine whether or not there are any timelines in the database.
  *
+ * @since 1.0
  * @return boolean
  */
 function has_timelines()
@@ -180,6 +186,8 @@ function has_timelines()
 
 /**
  * Determines whether there are any timelines for loop.
+ *
+ * @since 1.0
  * @return boolean
  */
 function has_timelines_for_loop()
@@ -191,6 +199,7 @@ function has_timelines_for_loop()
 /**
  * Returns the total number of timelines in the database
  *
+ * @since 1.0
  * @return integer
  */
 function total_timelines()
@@ -199,11 +208,9 @@ function total_timelines()
 }
 
 /**
- * @since 1.0 Function signature has changed so that the item to link to can be
- * determined by the context of the function call.  Also, text passed to the link
- * must be valid HTML (will not be automatically escaped because any HTML can be
- * passed in, e.g. an <img /> or the like).
+ * Returns a link to a specific timeline.
  *
+ * @since 1.0
  * @param string HTML for the text of the link.
  * @param array Attributes for the <a> tag. (optional)
  * @param string The action for the link. Default is 'show'.

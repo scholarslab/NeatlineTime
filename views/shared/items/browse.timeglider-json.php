@@ -1,13 +1,12 @@
-[
-{
-    "id": "items-browse",
-    "title": <?php echo js_escape(settings('site_title') . "Items | Timeline"); ?>,
-    "focus_date": "2011-06-01 12:00:00",
-    "initial_zoom": "40",
-    "events": [
-    <?php while ( loop_items() ) : ?>
-        <?php echo get_timeline_json_for_item(); ?>
-    <?php endwhile; ?>
-    ]
-}
-]
+<?php
+/**
+ * The shared timeglider-json browse view for Items
+ *
+ * @author Scholars' Lab
+ * @copyright 2011 The Board and Visitors of the University of Virginia
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
+ * @package Timeline
+ * @subpackage Views
+ * @link http://omeka.org/codex/Plugins/Timeline
+ * @since 1.0
+ */
