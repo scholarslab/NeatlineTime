@@ -19,27 +19,14 @@ class Timeline_IntegrationHelper
     const PLUGIN_NAME = 'Timeline';
     
     public function setUpPlugin()
-    {        
+    {
         $pluginHelper = new Omeka_Test_Helper_Plugin;
-        $this->addPluginHooksAndFilters($pluginHelper->pluginBroker, self::PLUGIN_NAME);
+        $pluginHelper->pluginBroker->setCurrentPluginDirName(self::PLUGIN_NAME);
+
+        if(class_exists('TimelinePlugin')) {
+            new TimelinePlugin;
+        }
+
         $pluginHelper->setUp(self::PLUGIN_NAME);
-    }
-        
-    public function addPluginHooksAndFilters($pluginBroker, $pluginName)
-    {   
-        // Set the current plugin so the add_plugin_hook function works
-        $pluginBroker->setCurrentPluginDirName($pluginName);
-
-        // Add plugin hooks
-        add_plugin_hook('install', 'TimelinePlugin::install');
-        add_plugin_hook('uninstall', 'TimelinePlugin::uninstall');
-        add_plugin_hook('define_acl', 'TimelinePlugin::defineAcl');
-        add_plugin_hook('define_routes', 'TimelinePlugin::defineRoutes');
-        add_plugin_hook('admin_append_to_plugin_uninstall_message', 'TimelinePlugin::adminAppendToPluginUninstallMessage');
-
-        // Add plugin filters
-        add_filter('admin_navigation_main', 'TimelinePlugin::adminNavigationMain');
-        add_filter('define_response_contexts', 'TimelinePlugin::defineResponseContexts');     
-        add_filter('define_action_contexts', 'TimelinePlugin::defineActionContexts');     
     }
 }

@@ -8,11 +8,6 @@
  * @link        http://omeka.org/codex/Plugins/Timeline
  */
 
- // check if the plugin_dir has been defined; if not, set it
-defined('TIMELINE_DIR') || define(
-    'TIMELINE_DIR', dirname(dirname(__FILE__))
-);
-
 require_once 'IntegrationHelper.php';
 
 /**

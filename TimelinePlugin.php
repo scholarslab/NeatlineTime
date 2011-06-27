@@ -38,7 +38,7 @@ class TimelinePlugin
     public function __construct()
     {
         $this->_db = get_db();
-        self::addHooksAndFilters();
+        $this->addHooksAndFilters();
     }
 
     /**
@@ -108,8 +108,8 @@ class TimelinePlugin
         $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
         
         // Allow contributors everything but editAll and deleteAll.
-        $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
         $acl->allow('contributor', 'Timeline_Timelines');
+        $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
     }
 
     /**
