@@ -11,6 +11,9 @@
  * @since 1.0
  */
 
+queue_js('tiny_mce/tiny_mce');
+queue_js('timeglider-0.0.9.min');
+queue_css('timeglider');
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape('Timelines | Edit a Timeline'));
 head($head);
@@ -18,5 +21,12 @@ head($head);
 <h1><?php echo $head['title']; ?></h1>
 <div id="primary">
 <?php echo $form; ?>
+
+<script>
+jQuery(document).ready(function($){
+    Omeka.wysiwyg();
+});
+</script>
+
 </div>
 <?php foot(); ?>
