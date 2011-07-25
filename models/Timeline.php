@@ -71,4 +71,12 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
     {
         return 'Timeline_Timelines';
     }
+
+    /**
+     * @return null|array
+     */
+    public function getTimelineEntries()
+    {
+        return $this->getTable('TimelineEntry')->findByTimeline($this);
+    }
 }
