@@ -227,3 +227,19 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 
 	return link_to($timeline, $action, $text, $props);
 }
+
+/**
+ * Returns the URL for the Timeglider JSON output of a specific timeline
+ *
+ * @since 1.0
+ * @param Timeline|null
+ * @return string URL
+ */
+function timeline_json_output_url($timeline = null)
+{
+    if(!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    return uri(array('controller'=>'timelines', 'action'=>'show', 'id' => $timeline->id), 'id', array('output' => 'timeglider-json'));
+}
