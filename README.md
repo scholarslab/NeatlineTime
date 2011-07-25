@@ -6,8 +6,8 @@ platform. It uses the [TimeGlider jQuery plugin][3].
 
 ## Installation
 
-1. Upload the Timeline plugin directory to your server. See See: [Installing a
-Plugin][4].
+1. Upload the Timeline plugin directory to your Omeka installation's 'plugins'
+directory. See [Installing a Plugin][4].
 
 2. Activate the plugin from the admin → Settings → Plugins page.
 
