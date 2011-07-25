@@ -77,7 +77,7 @@ class TimelinePlugin
         
         $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            `table_id` INT UNSIGNED NOT NULL,
+            `timeline_id` INT UNSIGNED NOT NULL,
             `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`)
             ) ENGINE=MyISAM;";
