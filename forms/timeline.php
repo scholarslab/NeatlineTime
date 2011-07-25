@@ -28,15 +28,13 @@ class Timeline_Form_Timeline extends Omeka_Form
         // Title
         $this->addElement('text', 'title', array(
             'label'       => 'Title',
-            'description' => 'A title for your timeline.',
-            'value'       => $timeline->title
+            'description' => 'A title for your timeline.'
         ));
         
         // Description
         $this->addElement('textarea', 'description', array(
             'label'       => 'Description',
             'description' => 'A description for your timeline.',
-            'value'       => $timeline->description,
             'attribs'     => array('class' => 'html-editor', 'rows' => '15')
         ));
         
