@@ -39,7 +39,7 @@ head($head);
         <tr>
             <td><?php echo $timeline->id; ?></td>
             <td><?php echo $timeline->title; ?></td>
-            <td><?php echo $timeline->description; ?></td>
+            <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
             <?php if (has_permission($timeline, 'edit')): ?>
             <td><?php echo link_to($timeline, 'edit', 'Edit', array('class'=>'edit')); ?></td>
             <?php endif; ?>     
