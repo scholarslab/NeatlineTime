@@ -26,11 +26,8 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
     public $added;
     public $modified;
 
-    protected $_related = array('Tags'=>'getTags');
-
     protected function _initializeMixins()
     {
-        $this->_mixins[] = new Taggable($this);
         $this->_mixins[] = new PublicFeatured($this);
     }
 
