@@ -23,11 +23,11 @@ head($head);
     <script>
     jQuery(document).ready(function($){
         $('#timeglider')
-            .css({'height': '300px', 'margin-bottom': '20px'})
+            .css({'height': '400px', 'margin-bottom': '20px'})
             .timeline({
-                "data_source":"http://omeka.dev/admin/items/browse?search=&advanced%5B0%5D%5Belement_id%5D=40&advanced%5B0%5D%5Btype%5D=is+not+empty&advanced%5B0%5D%5Bterms%5D=&range=&collection=&type=&user=&tags=&public=&featured=&contributed=&submit_search=Search&output=timeglider-json",
-                "min_zoom":1,
-                "max_zoom":50,
+                "data_source": <?php echo js_escape(abs_timeline_uri().'?output=timeglider-json'); ?>,
+                "min_zoom":5,
+                "max_zoom":60,
                 "show_footer": false
             });
     });
