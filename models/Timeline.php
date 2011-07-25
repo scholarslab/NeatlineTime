@@ -64,7 +64,8 @@ class Timeline extends Omeka_Record implements Zend_Acl_Resource_Interface
     /**
      * Required by Zend_Acl_Resource_Interface.
      *
-     * Identifies Timeline records as relating to the Timelines ACL resource.
+     * Identifies Timeline records as relating to the Timeline_Timelines ACL
+     * resource.
      *
      * @since 1.0
      * @return string

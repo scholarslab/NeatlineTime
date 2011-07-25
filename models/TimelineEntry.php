@@ -24,7 +24,8 @@ class TimelineEntry extends Omeka_Record implements Zend_Acl_Resource_Interface
     /**
      * Required by Zend_Acl_Resource_Interface.
      *
-     * Identifies Timeline Entry records as relating to the Timeline_Entries ACL resource.
+     * Identifies Timeline Entry records as relating to the
+     * Timeline_TimelineEntry ACL resource.
      *
      * @since 1.0
      * @return string
