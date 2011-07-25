@@ -51,7 +51,7 @@ head($head);
     </tbody>
 </table>
 <?php else : ?>
-    <p>There are no timelines!</p>
+    <p>There are no timelines. <?php if (has_permission('Timeline_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('timelines/add')); ?>">Add a new Timeline.</a><?php endif; ?></p>
 <?php endif; ?>
 </div>
 <?php foot(); ?>
