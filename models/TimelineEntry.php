@@ -19,7 +19,6 @@
 class TimelineEntry extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
     public $timeline_id;
-    public $type;
     public $data;
     
     /**
