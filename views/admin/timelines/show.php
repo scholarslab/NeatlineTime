@@ -10,7 +10,7 @@
  * @link http://omeka.org/codex/Plugins/Timeline
  * @since 1.0
  */
- 
+
 queue_js('timeglider-0.0.9.min');
 queue_css('timeglider');
 $head = array('bodyclass' => 'timelines primary', 
@@ -20,8 +20,6 @@ head($head);
 <h1><?php echo $timeline->title; ?></h1>
 
 <div id="primary">
-    <?php echo $timeline->description; ?>
-    
     <script>
     jQuery(document).ready(function($){
         $('#timeglider')
@@ -35,5 +33,8 @@ head($head);
     });
     </script>
     <div id="timeglider"></div>
+
+    <?php echo $timeline->description; ?>
+
 </div>
 <?php foot(); ?>
