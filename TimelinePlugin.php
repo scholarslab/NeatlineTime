@@ -26,6 +26,7 @@ class TimelinePlugin
 
     private static $_filters = array(
         'admin_navigation_main',
+        'public_navigation_main',
         'define_response_contexts',
         'define_action_contexts'
     );
@@ -177,7 +178,7 @@ class TimelinePlugin
             
         }
     }
-    
+
     /**
      * Timeline admin_navigation_main filter.
      *
@@ -187,6 +188,20 @@ class TimelinePlugin
      * @return array
      */
     public function adminNavigationMain($nav)
+    {
+        $nav['Timelines'] = uri('timelines');
+        return $nav;
+    }
+
+    /**
+     * Timeline public_navigation_main filter.
+     *
+     * Adds a button to the public theme's main navigation.
+     *
+     * @param array $nav
+     * @return array
+     */
+    public function publicNavigationMain($nav)
     {
         $nav['Timelines'] = uri('timelines');
         return $nav;
