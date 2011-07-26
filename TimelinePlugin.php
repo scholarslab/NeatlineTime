@@ -203,7 +203,7 @@ class TimelinePlugin
      */
     public function publicNavigationMain($nav)
     {
-        $nav['Timelines'] = uri('timelines');
+        $nav['Browse Timelines'] = uri('timelines');
         return $nav;
     }
 
