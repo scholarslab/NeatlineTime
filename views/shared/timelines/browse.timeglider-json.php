@@ -10,10 +10,9 @@
  * @link http://omeka.org/codex/Plugins/Timeline
  * @since 1.0
  */
- 
-$timelineArray = array();
+
 foreach ($timelines as $timeline) {
-    $timelineArray[] = $timeline->toArray();
+    $timelineJsonArray[] = timeglider_json_for_timeline($timeline);
 }
-$json = Zend_Json::encode($timelineArray);
-    echo Zend_Json::prettyPrint($json);
+
+echo json_encode($timelineJsonArray);

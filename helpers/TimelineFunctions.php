@@ -89,13 +89,6 @@ function timeline($fieldName, $options=array(), $timeline = null)
         $text = snippet($text, 0, (int)$options['snippet']);
     }
 
-    // Escape it for display as HTML.
-    if (!is_array($text)) {
-        $text = html_escape($text);
-    } else {
-        $text = array_map('html_escape', $text);
-    }
-
     return $text;
 }
 
@@ -242,4 +235,66 @@ function timeline_json_output_url($timeline = null)
     }
 
     return uri(array('controller'=>'timelines', 'action'=>'show', 'id' => $timeline->id), 'id', array('output' => 'timeglider-json'));
+}
+
+function timeglider_json_for_timeline($timeline = null)
+{
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $timegliderJsonArray = array(
+        'id' => 'timeline-'.$timeline->id,
+        'title' => $timeline->title,
+        'initial_zoom' => '40',
+        'focus_date' => '2011-04-01 12:00:00'
+    );
+
+    if ($timelineDescription = $timeline->description) {
+        $timegliderJsonArray['description'] = $timelineDescription;
+    }
+
+    $timegliderJsonEventsArray = array();
+
+    // Retrieve all TimelineEntry records for the current Timeline.
+    $timelineEntries = $timeline->getTimelineEntries();
+
+    foreach ($timelineEntries as $entry) {
+
+        // If the entry has stuff in its data column.
+        if ($data = $entry->data) {
+
+            // If $data is numeric, we'll check to see if we can get an Item with
+            // that ID number.
+            if (is_numeric($data) && $item = get_item_by_id($data)) {
+
+                $jsonData = array(
+                    'title' => item('Dublin Core', 'Title', array(), $item),
+                    'startdate'     => date('Y-m-d H:m:s', strtotime(item('Dublin Core', 'Date', array(), $item))),
+                    'importance' => 40
+                );
+
+            } else {
+
+                $jsonData = unserialize($data);
+
+            }
+
+            // Set a unique ID for the timeglider JSON entry.
+            $jsonData['id'] = 'timeline-entry-'.$entry->id;
+
+            // Add the jsonData to the Timeglider JSON events array.
+            $timegliderJsonEventsArray[] = $jsonData;
+        }
+    }
+
+    // If the Timeglider JSON events array isn't empty, add it to the overall array.
+    if (!empty($timegliderJsonEventsArray)) {
+
+        $timegliderJsonArray['events'] = $timegliderJsonEventsArray;
+
+    }
+
+    // Roll that beautiful bean footage.
+    return json_encode($timegliderJsonArray);
 }
