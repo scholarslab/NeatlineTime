@@ -8,17 +8,19 @@
  * @since 1.0
  */
 
-define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
-define('TIMELINE_HELPERS_DIR', TIMELINE_PLUGIN_DIR
-                              . DIRECTORY_SEPARATOR
-                              . 'helpers');
-define('TIMELINE_FORMS_DIR', TIMELINE_PLUGIN_DIR
-                            . DIRECTORY_SEPARATOR
-                            . 'forms');
+if (!defined('TIMELINE_PLUGIN_DIR')) {
+    define('TIMELINE_PLUGIN_DIR', dirname(__FILE__));
+}
 
-require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR
-        . 'TimelinePlugin.php';
-require_once TIMELINE_HELPERS_DIR . DIRECTORY_SEPARATOR
-        . 'TimelineFunctions.php';
+if (!defined('TIMELINE_HELPERS_DIR')) {
+    define('TIMELINE_HELPERS_DIR', TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers');
+}
+
+if (!defined('TIMELINE_FORMS_DIR')) {
+    define('TIMELINE_FORMS_DIR', TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'forms');
+}
+
+require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'TimelinePlugin.php';
+require_once TIMELINE_HELPERS_DIR . DIRECTORY_SEPARATOR . 'TimelineFunctions.php';
 
 new TimelinePlugin;
