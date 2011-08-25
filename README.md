@@ -1,12 +1,12 @@
-# Timeline plugin for Omeka
+# Neatline Time plugin for Omeka
 
-The Timeline plugin, by the [Scholars' Lab][1] at the University of
+The Neatline Time plugin, by the [Scholars' Lab][1] at the University of
 Virginia Library, allows you to create timelines for the [Omeka][2] publishing
 platform. It uses the [TimeGlider jQuery plugin][3].
 
 ## Installation
 
-1. Upload the Timeline plugin directory to your Omeka installation's 'plugins'
+1. Upload the Neatline Time plugin directory to your Omeka installation's 'plugins'
 directory. See [Installing a Plugin][4].
 
 2. Activate the plugin from the admin → Settings → Plugins page.
