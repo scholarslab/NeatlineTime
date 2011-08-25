@@ -9,7 +9,7 @@
  */
 
 /**
- * Timeline test integration helper.
+ * NeatlineTime test integration helper.
  *
  * @since 1.0
  * @author Scholars' Lab
@@ -19,7 +19,7 @@
 class Timeline_IntegrationHelper
 {
     const PLUGIN_NAME = 'Timeline';
-    
+
     public function setUpPlugin()
     {
         $pluginHelper = new Omeka_Test_Helper_Plugin;

@@ -13,14 +13,14 @@ if (!defined('NEATLINE_TIME_PLUGIN_DIR')) {
 }
 
 if (!defined('NEATLINE_TIME_HELPERS_DIR')) {
-    define('NEALTINE_TIME_HELPERS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/helpers');
+    define('NEATLINE_TIME_HELPERS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/helpers');
 }
 
 if (!defined('NEATLINE_TIME_FORMS_DIR')) {
     define('NEATLINE_TIME_FORMS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/forms');
 }
 
-require_once NEATLINE_TIME_PLUGIN_DIR . '/TimelinePlugin.php';
-require_once NEATLINE_TIME_PLUGIN_DIR . '/TimelineFunctions.php';
+require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
+require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
 
-new NeatlineTimePlugin;
+// new NeatlineTimePlugin;

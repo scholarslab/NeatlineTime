@@ -30,7 +30,7 @@ class NeatlineTimePlugin
         'define_response_contexts',
         'define_action_contexts'
     );
-  
+
     private $_db;
 
     /**
@@ -47,6 +47,7 @@ class NeatlineTimePlugin
      */
     public function addHooksAndFilters()
     {
+
         foreach (self::$_hooks as $hookName) {
             $functionName = Inflector::variablize($hookName);
             add_plugin_hook($hookName, array($this, $functionName));
@@ -56,6 +57,7 @@ class NeatlineTimePlugin
             $functionName = Inflector::variablize($filterName);
             add_filter($filterName, array($this, $functionName));
         }
+
     }
 
     /**
@@ -63,7 +65,7 @@ class NeatlineTimePlugin
      */
     public function install()
     {
-        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timelines` (
+        $this->_db->query("CREATE TABLE IF NOT EXISTS `$this->_db->NeatlineTimeline` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -73,16 +75,16 @@ class NeatlineTimePlugin
             `added` timestamp NOT NULL default '0000-00-00 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM;";
-        $this->_db->query($sql);
-        
-        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
+            ) ENGINE=MyISAM"
+        );
+
+        $this->_db->query("CREATE TABLE IF NOT EXISTS `$this->_db->NeatlineTimelineEntry` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
             `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM;";
-        $this->_db->query($sql);
+            ) ENGINE=MyISAM"
+        );
     }
 
     /**
@@ -91,8 +93,8 @@ class NeatlineTimePlugin
     public function uninstall()
     {
         $sql = "DROP TABLE IF EXISTS
-            `{$this->_db->prefix}timelines`,
-            `{$this->_db->prefix}timeline_entries`;";
+            `$this->_db->NeatlineTimeline`,
+            `$this->_db->NeatlineTimelineEntry`;";
         $this->_db->query($sql);
     }
 
@@ -102,12 +104,12 @@ class NeatlineTimePlugin
     public function defineAcl($acl)
     {
         $acl->loadResourceList(
-            array('Timeline_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'delete', 'deleteSelf', 'deleteAll'))
+            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'delete', 'deleteSelf', 'deleteAll'))
         );
 
         // All everyone access to browse and show.
-        $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
-        
+        $acl->allow(null, 'NeatlineTime', array('show', 'browse'));
+
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'Timeline_Timelines');
         $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
@@ -175,7 +177,7 @@ class NeatlineTimePlugin
     public function itemBrowseSql($select, $params)
     {
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
-            
+
         }
     }
 
@@ -214,7 +216,7 @@ class NeatlineTimePlugin
     {
         $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
                                 'headers' => array('Content-Type' => 'text/javascript'));
-        
+
         return $context;
     }
 

@@ -39,7 +39,7 @@ class Timeline_TimelinesController extends Omeka_Controller_Action
     public function addAction()
     {
         $timeline = new Timeline;
-    
+
         try {
             if ($timeline->saveForm($_POST)) {
                 $successMessage = $this->_getAddSuccessMessage($timeline);
@@ -52,7 +52,7 @@ class Timeline_TimelinesController extends Omeka_Controller_Action
             $this->flashValidationErrors($e);
         }
 
-        require TIMELINE_FORMS_DIR . DIRECTORY_SEPARATOR . 'Timeline.php';
+        require NEATLINE_TIME_FORMS_DIR . '/Timeline.php';
         $form = new Timeline_Form_Timeline;
 
         $this->view->form = $form;
@@ -74,7 +74,7 @@ class Timeline_TimelinesController extends Omeka_Controller_Action
             $this->flashValidationErrors($e);
         }
 
-        require TIMELINE_FORMS_DIR . DIRECTORY_SEPARATOR . 'Timeline.php';
+        require NEATLINE_TIME_FORMS_DIR . '/Timeline.php';
         $form = new Timeline_Form_Timeline;
         $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public));
 
