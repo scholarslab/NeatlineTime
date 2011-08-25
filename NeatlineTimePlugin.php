@@ -3,17 +3,17 @@
  * @author Scholars' Lab
  * @copyright 2011 The Board and Visitors of the University of Virginia
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @package Timeline
- * @link http://omeka.org/codex/Plugins/Timeline
+ * @package Neatline Time
+ * @link http://omeka.org/codex/Plugins/NeatlineTime
  * @since 1.0
  */
 
 /**
- * Timeline plugin class
+ * NeatlineTime plugin class
  *
- * @package Timeline
+ * @package NeatlineTime
  */
-class TimelinePlugin
+class NeatlineTimePlugin
 {
     private static $_hooks = array(
         'install',
@@ -30,7 +30,7 @@ class TimelinePlugin
         'define_response_contexts',
         'define_action_contexts'
     );
-    
+  
     private $_db;
 
     /**
@@ -161,7 +161,7 @@ class TimelinePlugin
      */
     public function adminAppendToPluginUninstallMessage()
     {
-        echo '<p><strong>Warning</strong>: Uninstalling the Timeline plugin
+        echo '<p><strong>Warning</strong>: Uninstalling the Neatline Time plugin
             will remove all custom Timeline records, and will remove the
             ability to browse items on a timeline.';
     }
@@ -189,7 +189,7 @@ class TimelinePlugin
      */
     public function adminNavigationMain($nav)
     {
-        $nav['Timelines'] = uri('timelines');
+        $nav['Neatline Time'] = uri('timelines');
         return $nav;
     }
 

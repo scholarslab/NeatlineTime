@@ -23,4 +23,4 @@ if (!defined('NEATLINE_TIME_FORMS_DIR')) {
 require_once NEATLINE_TIME_PLUGIN_DIR . '/TimelinePlugin.php';
 require_once NEATLINE_TIME_PLUGIN_DIR . '/TimelineFunctions.php';
 
-new TimelinePlugin;
+new NeatlineTimePlugin;
