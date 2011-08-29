@@ -18,6 +18,7 @@
  */
 class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
+
     public $title;
     public $description;
     public $creator_id;

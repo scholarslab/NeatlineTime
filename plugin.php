@@ -4,7 +4,7 @@
  * @copyright 2010-2011 The Board and Visitors of the University of Virginia
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
  * @package Neatline Time
- * @link http://omeka.org/codex/Plugins/Timeline
+ * @link http://omeka.org/codex/Plugins/NeatlineTime
  * @since 1.0
  */
 

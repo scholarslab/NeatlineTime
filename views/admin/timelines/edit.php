@@ -7,7 +7,7 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
  * @package Timeline
  * @subpackage Views
- * @link http://omeka.org/codex/Plugins/Timeline
+ * @link http://omeka.org/codex/Plugins/NeatlineTime
  * @since 1.0
  */
 
