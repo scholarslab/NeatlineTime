@@ -65,7 +65,11 @@ class NeatlineTimePlugin
      */
     public function install()
     {
-        $this->_db->query("CREATE TABLE IF NOT EXISTS `$this->_db->NeatlineTimeline` (
+
+        // $db = $this->_db;
+
+        $sqlNeatlineTimeline = 
+            "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -75,16 +79,19 @@ class NeatlineTimePlugin
             `added` timestamp NOT NULL default '0000-00-00 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM"
-        );
+            ) ENGINE=MyISAM";
 
-        $this->_db->query("CREATE TABLE IF NOT EXISTS `$this->_db->NeatlineTimelineEntry` (
+        $sqlNeatlineTimelineEntry = 
+            "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
             `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM"
-        );
+            ) ENGINE=MyISAM";
+
+        $this->_db->query($sqlNeatlineTimeline);
+        $this->_db->query($sqlNeatlineTimelineEntry);
+
     }
 
     /**
@@ -92,10 +99,14 @@ class NeatlineTimePlugin
      */
     public function uninstall()
     {
+
+        // $db = $this->_db;
+
         $sql = "DROP TABLE IF EXISTS
-            `$this->_db->NeatlineTimeline`,
-            `$this->_db->NeatlineTimelineEntry`;";
+            `{$this->_db->prefix}neatline_time_timelines`,
+            `{$this->_db->prefix}neatline_time_timeline_entries`;";
         $this->_db->query($sql);
+
     }
 
     /**
@@ -108,11 +119,11 @@ class NeatlineTimePlugin
         );
 
         // All everyone access to browse and show.
-        $acl->allow(null, 'NeatlineTime', array('show', 'browse'));
+        $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
 
         // Allow contributors everything but editAll and deleteAll.
-        $acl->allow('contributor', 'Timeline_Timelines');
-        $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
+        $acl->allow('contributor', 'NeatlineTime_Timelines');
+        $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll'));
     }
 
     /**
@@ -125,7 +136,7 @@ class NeatlineTimePlugin
             new Zend_Controller_Router_Route(
                 'timelines/:action/:id',
                 array(
-                    'module'        => 'timeline',
+                    'module'        => 'neatline-time',
                     'controller'    => 'timelines'
                     ),
                 array( 'id'         => '\d+')
@@ -137,7 +148,7 @@ class NeatlineTimePlugin
             new Zend_Controller_Router_Route(
                 'timelines/:action',
                 array(
-                    'module'        => 'timeline',
+                    'module'        => 'neatline-time',
                     'controller'    => 'timelines'
                     )
                 )

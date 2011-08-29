@@ -3,8 +3,8 @@
  * @author Scholars' Lab
  * @copyright 2011 The Board and Visitors of the University of Virginia
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @package Timeline
- * @link http://omeka.org/codex/Plugins/Timeline
+ * @package Neatline Time
+ * @link http://omeka.org/codex/Plugins/NeatlineTime
  * @since 1.0
  */
 
@@ -13,10 +13,10 @@
  *
  * @since 1.0
  * @author Scholars' Lab
- * @package Timeline
+ * @package Neatline Time
  * @subpackage Models
  */
-class TimelineEntry extends Omeka_Record implements Zend_Acl_Resource_Interface
+class NeatlineTimeTimelineEntry extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
     public $timeline_id;
     public $data;
