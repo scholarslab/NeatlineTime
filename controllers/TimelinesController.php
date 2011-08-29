@@ -16,6 +16,7 @@
  * @package Neatline Time
  * @subpackage  Controllers
  */
+
 class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 {
     // Add our timeglider-json output contexts
@@ -26,7 +27,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 
     public function init()
     {
-        $modelName = 'Timeline';
+        $modelName = 'NeatlineTimeTimeline';
         if (version_compare(OMEKA_VERSION, '2.0-dev', '>=')) {
             $this->_helper->db->setDefaultModelName($modelName);
         } else {
@@ -38,7 +39,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 
     public function addAction()
     {
-        $timeline = new Timeline;
+        $timeline = new NeatlineTimeTimeline;
 
         try {
             if ($timeline->saveForm($_POST)) {
@@ -52,7 +53,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
             $this->flashValidationErrors($e);
         }
 
-        require NEATLINE_TIME_FORMS_DIR . '/Timeline.php';
+        require NEATLINE_TIME_FORMS_DIR . '/timeline.php';
         $form = new Timeline_Form_Timeline;
 
         $this->view->form = $form;
@@ -87,7 +88,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
     protected function _getAddSuccessMessage($record)
     {
         $timeline = $record;
-        return 'The timeline "' . $timeline->title . '" was successfully added!';        
+        return 'The timeline "' . $timeline->title . '" was successfully added!';
     }
 
     /**
@@ -96,7 +97,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
     protected function _getEditSuccessMessage($record)
     {
         $timeline = $record;
-        return 'The timeline "' . $timeline->title . '" was successfully changed!';        
+        return 'The timeline "' . $timeline->title . '" was successfully changed!';
     }
 
     /**
@@ -105,7 +106,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
     protected function _getDeleteSuccessMessage($record)
     {
         $timeline = $record;
-        return 'The timeline "' . $timeline->title . '" was successfully deleted!';        
+        return 'The timeline "' . $timeline->title . '" was successfully deleted!';
     }
 
     /**

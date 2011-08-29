@@ -202,7 +202,7 @@ class NeatlineTimePlugin
      */
     public function adminNavigationMain($nav)
     {
-        $nav['Neatline Time'] = uri('timelines');
+        $nav['Neatline Time'] = uri('neatline-time/timelines');
         return $nav;
     }
 

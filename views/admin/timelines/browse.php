@@ -16,7 +16,7 @@ $head = array('bodyclass' => 'timelines primary',
 head($head);
 ?>
 <h1><?php echo $head['title']; ?></h1>
-<p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('timelines/add')); ?>">Add a Timeline</a></p>
+<p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a Timeline</a></p>
 <div id="primary">
 <?php if ($timelines) : ?>
 <div class="pagination"><?php echo pagination_links(); ?></div>
@@ -26,10 +26,10 @@ head($head);
             <th>ID</th>
             <th>Title</th>
             <th>Description</th>
-            <?php if (has_permission('Timeline_Timelines', 'edit')): ?>
+            <?php if (has_permission('NeatlineTime_Timelines', 'edit')): ?>
             <th>Edit</th>
             <?php endif; ?>
-            <?php if (has_permission('Timeline_Timelines', 'delete')): ?>
+            <?php if (has_permission('NeatlineTime_Timelines', 'delete')): ?>
             <th>Delete</th>
             <?php endif; ?>
         </tr>
@@ -42,7 +42,7 @@ head($head);
             <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
             <?php if (has_permission($timeline, 'edit')): ?>
             <td><?php echo link_to($timeline, 'edit', 'Edit', array('class'=>'edit')); ?></td>
-            <?php endif; ?>     
+            <?php endif; ?>
             <?php if (has_permission($timeline, 'delete')): ?>
             <td><?php echo delete_button($timeline); ?></td>
             <?php endif; ?>
@@ -51,7 +51,7 @@ head($head);
     </tbody>
 </table>
 <?php else : ?>
-    <p>There are no timelines. <?php if (has_permission('Timeline_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('timelines/add')); ?>">Add a new Timeline.</a><?php endif; ?></p>
+    <p>There are no timelines. <?php if (has_permission('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a new Timeline.</a><?php endif; ?></p>
 <?php endif; ?>
 </div>
 <?php foot(); ?>

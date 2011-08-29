@@ -18,10 +18,14 @@
  */
 class NeatlineTimeTimelineEntryTable extends Omeka_Db_Table
 {
+
     public function findByTimeline(Omeka_Record $timeline)
     {
+
         $select = $this->getSelect();
         $select->where('`timeline_id` = ?', (int)$timeline->id);
         return $this->fetchObjects($select);
+
     }
+
 }
