@@ -284,20 +284,16 @@ function link_to_edit_timeline($timeline = null)
  *
  * @return string The link.
  **/
-function timeline_delete_button($timeline = null)
+function timeline_delete_button($action = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
 {
 
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    ?>
-        <form action="timelines/delete-confirm/<?php echo $timeline->id; ?>" method="post" class="button-form">
-            <fieldset>
-                <input type="submit" name="" value="Delete" class="delete-confirm">
-            </fieldset>
-        </form>
-    <?php
+    return button_to(
+        'timelines/delete-confirm/' . $action->id,
+        $name,
+        $value,
+        array('class' => 'delete-confirm'),
+        $formName,
+        $formAttribs);
 
 }
 
