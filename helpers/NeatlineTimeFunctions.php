@@ -251,9 +251,7 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
         $timeline = get_current_timeline();
     }
 
-    $text = (!empty($text) ? $text : strip_formatting(timeline('Title', array(), $timeline)));
-
-    return link_to($timeline, $action, $text, $props);
+    return '<a href="timelines/show/' . $timeline->id . '" class="edit">' . $timeline->title . '</a>';
 
 }
 
@@ -284,11 +282,15 @@ function link_to_edit_timeline($timeline = null)
  *
  * @return string The link.
  **/
-function timeline_delete_button($action = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
+function timeline_delete_button($timeline = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
 {
 
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
     return button_to(
-        'timelines/delete-confirm/' . $action->id,
+        'timelines/delete-confirm/' . $timeline->id,
         $name,
         $value,
         array('class' => 'delete-confirm'),
