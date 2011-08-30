@@ -30,7 +30,7 @@ class TimelinePlugin
         'define_response_contexts',
         'define_action_contexts'
     );
-    
+
     private $_db;
 
     /**
@@ -75,7 +75,7 @@ class TimelinePlugin
             PRIMARY KEY (`id`)
             ) ENGINE=MyISAM;";
         $this->_db->query($sql);
-        
+
         $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
@@ -107,7 +107,7 @@ class TimelinePlugin
 
         // All everyone access to browse and show.
         $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
-        
+
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'Timeline_Timelines');
         $acl->deny('contributor', 'Timeline_Timelines', array('editAll', 'deleteAll'));
@@ -175,7 +175,7 @@ class TimelinePlugin
     public function itemBrowseSql($select, $params)
     {
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
-            
+
         }
     }
 
@@ -214,7 +214,7 @@ class TimelinePlugin
     {
         $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
                                 'headers' => array('Content-Type' => 'text/javascript'));
-        
+
         return $context;
     }
 

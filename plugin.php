@@ -13,14 +13,14 @@ if (!defined('TIMELINE_PLUGIN_DIR')) {
 }
 
 if (!defined('TIMELINE_HELPERS_DIR')) {
-    define('TIMELINE_HELPERS_DIR', TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'helpers');
+    define('TIMELINE_HELPERS_DIR', TIMELINE_PLUGIN_DIR . '/helpers');
 }
 
 if (!defined('TIMELINE_FORMS_DIR')) {
-    define('TIMELINE_FORMS_DIR', TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'forms');
+    define('TIMELINE_FORMS_DIR', TIMELINE_PLUGIN_DIR . '/forms');
 }
 
-require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'TimelinePlugin.php';
-require_once TIMELINE_HELPERS_DIR . DIRECTORY_SEPARATOR . 'TimelineFunctions.php';
+require_once TIMELINE_PLUGIN_DIR . '/TimelinePlugin.php';
+require_once TIMELINE_HELPERS_DIR . '/TimelineFunctions.php';
 
 new TimelinePlugin;
