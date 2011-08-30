@@ -134,7 +134,7 @@ class NeatlineTimePlugin
         $router->addRoute(
             'timelineActionRoute',
             new Zend_Controller_Router_Route(
-                'timelines/:action/:id',
+                'neatline-time/timelines/:action/:id',
                 array(
                     'module'        => 'neatline-time',
                     'controller'    => 'timelines'
@@ -146,7 +146,7 @@ class NeatlineTimePlugin
         $router->addRoute(
             'timelineDefaultRoute',
             new Zend_Controller_Router_Route(
-                'timelines/:action',
+                'neatline-time/timelines/:action',
                 array(
                     'module'        => 'neatline-time',
                     'controller'    => 'timelines'
@@ -157,7 +157,7 @@ class NeatlineTimePlugin
         $router->addRoute(
             'timelinePaginationRoute',
             new Zend_Controller_Router_Route(
-                'timelines/:page',
+                'neatline-time/timelines/:page',
                 array(
                     'module'        => 'timeline',
                     'controller'    => 'timelines',
