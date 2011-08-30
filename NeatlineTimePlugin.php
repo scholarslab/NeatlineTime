@@ -224,7 +224,7 @@ class NeatlineTimePlugin
     public function publicNavigationMain($nav)
     {
 
-        $nav['Browse Timelines'] = uri('timelines');
+        $nav['Browse Timelines'] = uri('neatline-time/timelines');
         return $nav;
 
     }
