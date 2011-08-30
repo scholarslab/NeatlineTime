@@ -38,8 +38,10 @@ class NeatlineTimePlugin
      */
     public function __construct()
     {
+
         $this->_db = get_db();
         $this->addHooksAndFilters();
+
     }
 
     /**
@@ -66,8 +68,7 @@ class NeatlineTimePlugin
     public function install()
     {
 
-        $sqlNeatlineTimeline =
-            "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
+        $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -79,8 +80,7 @@ class NeatlineTimePlugin
             PRIMARY KEY (`id`)
             ) ENGINE=MyISAM";
 
-        $sqlNeatlineTimelineEntry =
-            "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
+        $sqlNeatlineTimelineEntry = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
             `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
@@ -101,6 +101,7 @@ class NeatlineTimePlugin
         $sql = "DROP TABLE IF EXISTS
             `{$this->_db->prefix}neatline_time_timelines`,
             `{$this->_db->prefix}neatline_time_timeline_entries`;";
+
         $this->_db->query($sql);
 
     }
@@ -110,6 +111,7 @@ class NeatlineTimePlugin
      */
     public function defineAcl($acl)
     {
+
         $acl->loadResourceList(
             array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'delete', 'deleteSelf', 'deleteAll'))
         );
@@ -120,6 +122,7 @@ class NeatlineTimePlugin
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'NeatlineTime_Timelines');
         $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll'));
+
     }
 
     /**
@@ -127,6 +130,7 @@ class NeatlineTimePlugin
      */
     public function defineRoutes($router)
     {
+
         $router->addRoute(
             'timelineActionRoute',
             new Zend_Controller_Router_Route(
@@ -163,6 +167,7 @@ class NeatlineTimePlugin
                 array('page'        => '\d+')
                 )
             );
+
     }
 
     /**
@@ -170,9 +175,11 @@ class NeatlineTimePlugin
      */
     public function adminAppendToPluginUninstallMessage()
     {
+
         echo '<p><strong>Warning</strong>: Uninstalling the Neatline Time plugin
             will remove all custom Timeline records, and will remove the
             ability to browse items on a timeline.';
+
     }
 
     /**
@@ -183,9 +190,11 @@ class NeatlineTimePlugin
      */
     public function itemBrowseSql($select, $params)
     {
+
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
 
         }
+
     }
 
     /**
@@ -198,8 +207,10 @@ class NeatlineTimePlugin
      */
     public function adminNavigationMain($nav)
     {
+
         $nav['Neatline Time'] = uri('neatline-time/timelines');
         return $nav;
+
     }
 
     /**
@@ -212,8 +223,10 @@ class NeatlineTimePlugin
      */
     public function publicNavigationMain($nav)
     {
+
         $nav['Browse Timelines'] = uri('timelines');
         return $nav;
+
     }
 
     /**
@@ -221,10 +234,14 @@ class NeatlineTimePlugin
      */
     public function defineResponseContexts($context)
     {
-        $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
-                                'headers' => array('Content-Type' => 'text/javascript'));
+
+        $context['timeglider-json'] = array(
+            'suffix'  => 'timeglider-json',
+            'headers' => array('Content-Type' => 'text/javascript')
+        );
 
         return $context;
+
     }
 
     /**
@@ -233,11 +250,14 @@ class NeatlineTimePlugin
      */
     public function defineActionContexts($context, $controller)
     {
-        if ($controller instanceof Timeline_TimelinesController || $controller instanceof ItemsController) {
+
+        if ($controller instanceof NeatlineTime_TimelinesController || $controller instanceof ItemsController) {
             $context['browse'][] = 'timeglider-json';
             $context['show'][] = 'timeglider-json';
         }
 
         return $context;
+
     }
+
 }
