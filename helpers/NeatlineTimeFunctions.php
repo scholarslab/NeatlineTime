@@ -248,13 +248,32 @@ function total_timelines()
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
 
-  if (!$timeline) {
-      $timeline = get_current_timeline();
-  }
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
 
-	$text = (!empty($text) ? $text : strip_formatting(timeline('Title', array(), $timeline)));
+    $text = (!empty($text) ? $text : strip_formatting(timeline('Title', array(), $timeline)));
 
-	return link_to($timeline, $action, $text, $props);
+    return link_to($timeline, $action, $text, $props);
+
+}
+
+/**
+ * Constructs a link to the edit page for the timeline.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function link_to_edit($timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    return '<a href="timelines/edit/' . $timeline->id . '" class="edit">Edit</a>';
 
 }
 

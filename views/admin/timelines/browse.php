@@ -41,7 +41,7 @@ head($head);
             <td><?php echo $timeline->title; ?></td>
             <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
             <?php if (has_permission($timeline, 'edit')): ?>
-            <td><?php echo link_to($timeline, 'edit', 'Edit', array('class'=>'edit')); ?></td>
+            <td><?php echo link_to_edit($timeline); ?></td>
             <?php endif; ?>
             <?php if (has_permission($timeline, 'delete')): ?>
             <td><?php echo delete_button($timeline); ?></td>
