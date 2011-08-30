@@ -111,7 +111,7 @@ function timeline($fieldName, $options=array(), $timeline = null)
 function get_current_timeline()
 {
 
-    return __v()->timeline;
+    return __v()->neatlinetimetimeline;
 
 }
 
@@ -126,7 +126,7 @@ function get_current_timeline()
 function set_current_timeline($timeline = null)
 {
 
-    __v()->timeline = $timeline;
+    __v()->neatlinetimetimeline = $timeline;
 
 }
 
@@ -175,7 +175,7 @@ function set_timelines_for_loop($timelines)
 function get_timelines_for_loop()
 {
 
-    return __v()->timelines;
+    return __v()->neatlinetimetimelines;
 
 }
 
@@ -218,7 +218,7 @@ function has_timelines_for_loop()
 {
 
     $view = __v();
-    return ($view->timelines and count($view->timelines));
+    return ($view->neatlinetimetimelines and count($view->neatlinetimetimelines));
 
 }
 
