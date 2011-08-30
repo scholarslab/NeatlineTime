@@ -10,7 +10,7 @@
  * @link http://omeka.org/codex/Plugins/NeatlineTime
  * @since 1.0
  */
- 
+
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape('Timelines | Browse'));
 head($head);
@@ -18,7 +18,7 @@ head($head);
 <h1><?php echo $head['title']; ?></h1>
 <p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a Timeline</a></p>
 <div id="primary">
-<?php if ($timelines) : ?>
+<?php if ($neatlinetimetimelines) : ?>
 <div class="pagination"><?php echo pagination_links(); ?></div>
 <table>
     <thead id="timelines-table-head">
@@ -35,7 +35,7 @@ head($head);
         </tr>
     </thead>
     <tbody id="types-table-body">
-<?php foreach ($timelines as $timeline) : ?>
+<?php foreach ($neatlinetimetimelines as $timeline) : ?>
         <tr>
             <td><?php echo $timeline->id; ?></td>
             <td><?php echo $timeline->title; ?></td>
