@@ -146,8 +146,7 @@ function abs_timeline_uri($timeline = null)
         $timeline = get_current_timeline();
     }
 
-    return abs_uri(array('controller'=>'timelines', 'action'=>'show', 'id'=>$timeline->id), 'id');
-
+    return abs_uri('neatline-time/timelines/show/' . $timeline->id);
 }
 
 /**
@@ -293,7 +292,7 @@ function timeline_delete_button($timeline = null)
     }
 
     ?>
-        <form action="delete-confirm/<?php echo $timeline->id; ?>" method="post" class="button-form">
+        <form action="timelines/delete-confirm/<?php echo $timeline->id; ?>" method="post" class="button-form">
             <fieldset>
                 <input type="submit" name="" value="Delete" class="delete-confirm">
             </fieldset>
