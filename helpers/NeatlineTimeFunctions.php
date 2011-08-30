@@ -258,14 +258,14 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 }
 
 /**
- * Constructs a link to the edit page for the timeline.
+ * Build link to the edit page for the timeline.
  *
  * @since 1.0
  * @param Timeline|null
  *
  * @return string The link.
  **/
-function link_to_edit($timeline = null)
+function link_to_edit_timeline($timeline = null)
 {
 
     if (!$timeline) {
