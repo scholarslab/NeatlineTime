@@ -98,9 +98,9 @@ function timeline($fieldName, $options=array(), $timeline = null)
  * @since 1.0
  * @return Timeline|null
  */
-function get_current_neatlinetimetimelines()
+function get_current_timeline()
 {
-    return __v()->neatlinetimetimelines;
+    return __v()->timeline;
 }
 
 /**
@@ -110,9 +110,9 @@ function get_current_neatlinetimetimelines()
  * @param Timeline|null
  * @return void
  */
-function set_current_neatlinetimetimelines($timeline = null)
+function set_current_timeline($timeline = null)
 {
-    __v()->neatlinetimetimelines = $timeline;
+    __v()->timeline = $timeline;
 }
 
 /**
@@ -139,7 +139,7 @@ function abs_timeline_uri($timeline = null)
  * @param array $timelines
  * @return void
  */
-function set_neatlinetimetimelines_for_loop($timelines)
+function set_timelines_for_loop($timelines)
 {
     __v()->timelines = $timelines;
 }
@@ -150,7 +150,7 @@ function set_neatlinetimetimelines_for_loop($timelines)
  * @since 1.0
  * @return array
  */
-function get_neatlinetimetimelines_for_loop()
+function get_timelines_for_loop()
 {
     return __v()->timelines;
 }
@@ -172,7 +172,7 @@ function loop_timelines()
  * @since 1.0
  * @return boolean
  */
-function has_neatlinetimetimelines()
+function has_timelines()
 {
     return (total_timelines() > 0);
 }
