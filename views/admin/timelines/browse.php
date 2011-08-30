@@ -44,7 +44,7 @@ head($head);
             <td><?php echo link_to_edit($timeline); ?></td>
             <?php endif; ?>
             <?php if (has_permission($timeline, 'delete')): ?>
-            <td><?php echo delete_button($timeline); ?></td>
+            <td><?php echo timeline_delete_button($timeline); ?></td>
             <?php endif; ?>
         </tr>
 <?php endforeach; ?>

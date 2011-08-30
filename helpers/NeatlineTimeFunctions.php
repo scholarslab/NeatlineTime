@@ -278,6 +278,31 @@ function link_to_edit($timeline = null)
 }
 
 /**
+ * Build the delete button.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function timeline_delete_button($timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    ?>
+        <form action="delete-confirm/<?php echo $timeline->id; ?>" method="post" class="button-form">
+            <fieldset>
+                <input type="submit" name="" value="Delete" class="delete-confirm">
+            </fieldset>
+        </form>
+    <?php
+
+}
+
+/**
  * Returns the URL for the Timeglider JSON output of a specific timeline
  *
  * @since 1.0
