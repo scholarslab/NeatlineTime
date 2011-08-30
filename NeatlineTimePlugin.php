@@ -66,9 +66,7 @@ class NeatlineTimePlugin
     public function install()
     {
 
-        // $db = $this->_db;
-
-        $sqlNeatlineTimeline = 
+        $sqlNeatlineTimeline =
             "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -81,7 +79,7 @@ class NeatlineTimePlugin
             PRIMARY KEY (`id`)
             ) ENGINE=MyISAM";
 
-        $sqlNeatlineTimelineEntry = 
+        $sqlNeatlineTimelineEntry =
             "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
@@ -99,8 +97,6 @@ class NeatlineTimePlugin
      */
     public function uninstall()
     {
-
-        // $db = $this->_db;
 
         $sql = "DROP TABLE IF EXISTS
             `{$this->_db->prefix}neatline_time_timelines`,
@@ -139,7 +135,7 @@ class NeatlineTimePlugin
                     'module'        => 'neatline-time',
                     'controller'    => 'timelines'
                     ),
-                array( 'id'         => '\d+')
+                array('id'          => '\d+')
                 )
             );
 
@@ -159,12 +155,12 @@ class NeatlineTimePlugin
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:page',
                 array(
-                    'module'        => 'timeline',
+                    'module'        => 'neatline-time',
                     'controller'    => 'timelines',
                     'action'        => 'browse',
                     'page'          => '1'
                     ),
-                array( 'page'       => '\d+')
+                array('page'        => '\d+')
                 )
             );
     }
