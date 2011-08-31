@@ -1,4 +1,4 @@
-/* Changes to the relative paths in the background images */
+/* Changes to the hardcoded relative paths in the background images */
 
 .timeglider-pan-left {
   background-image:url("../javascripts/timeglider/js/timeglider/buttons/pan_left.png");

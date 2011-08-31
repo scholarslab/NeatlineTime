@@ -442,6 +442,7 @@ function queue_timeline_assets()
     queue_js('timeglider/js/timeglider/timeglider.timeline.widget');
 
     queue_css('timeglider');
-    queue_css('timeglider_override');
+    queue_css('timeglider_overrides');
+    queue_css('timeglider_changes');
 
 }
