@@ -38,7 +38,7 @@ head($head);
 <?php foreach ($neatlinetimetimelines as $timeline) : ?>
         <tr>
             <td><?php echo $timeline->id; ?></td>
-            <td><?php echo $timeline->title; ?></td>
+            <td><?php echo link_to_show_timeline($timeline); ?></td>
             <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
             <?php if (has_permission($timeline, 'edit')): ?>
             <td><?php echo link_to_edit_timeline($timeline); ?></td>

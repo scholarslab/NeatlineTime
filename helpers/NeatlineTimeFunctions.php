@@ -277,6 +277,27 @@ function link_to_edit_timeline($timeline = null)
 }
 
 /**
+ * Build link to the show page for the timeline.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function link_to_show_timeline($timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $uri = uri('neatline-time/timelines/show/' . $timeline->id);
+
+    return '<a href="' . $uri . '">' . $timeline->title . '</a>';
+
+}
+
+/**
  * Build the delete button.
  *
  * @since 1.0
