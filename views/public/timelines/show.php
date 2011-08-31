@@ -28,7 +28,6 @@ head($head);
                 "data_source":<?php echo js_escape(abs_timeline_uri().'?output=timeglider-json'); ?>,
                 "min_zoom":5,
                 "max_zoom":60,
-                "show_footer": false
             });
     });
     </script>

@@ -402,8 +402,8 @@ function timeglider_json_for_timeline($timeline = null)
 function queue_timeline_assets()
 {
 
-    // queue_js('timeglider/js/timeglider-0.0.9.min');
-
+    queue_js('timeglider/js/jquery-ui-1.8.9.custom.min');
+    queue_js('timeglider/js/jquery.tmpl');
     queue_js('timeglider/js/underscore-min');
     queue_js('timeglider/js/backbone-min');
     queue_js('timeglider/js/ba-debug.min');
@@ -421,5 +421,6 @@ function queue_timeline_assets()
     queue_js('timeglider/js/timeglider/timeglider.timeline.widget');
 
     queue_css('timeglider');
+    queue_css('timeglider_override');
 
 }
