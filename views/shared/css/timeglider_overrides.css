@@ -30,14 +30,14 @@
 	background-image:url(../javascripts/timeglider/js/timeglider/buttons/close.png);
 }
 
-.timeglider-menu-modal-point-right {
-    width:20px;
-    height:20px;
-    background-image:url("img/menu-pointer-right.png");
-    background-repeat:no-repeat;
-    position:absolute;
-    bottom:-20px;
-    right:6px;
+.close-button-remove, .close-button-filter, .close-button-toggleMenu {
+	cursor:pointer;
+	width:30px;
+	height:30px;
+	background-image:url(../javascripts/timeglider/js/timeglider/buttons/close.png);
+	position:absolute;
+	top:-16px;
+	right:-16px;
 }
 
 .timeglider-tick {
