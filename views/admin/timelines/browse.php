@@ -12,7 +12,7 @@
  */
 
 $head = array('bodyclass' => 'timelines primary', 
-              'title' => html_escape('Timelines | Browse'));
+              'title' => html_escape('Neatline Time | Timelines'));
 head($head);
 ?>
 <h1><?php echo $head['title']; ?></h1>

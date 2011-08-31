@@ -13,7 +13,7 @@
 
 queue_timeline_assets();
 $head = array('bodyclass' => 'timelines primary', 
-              'title' => html_escape('Timelines | Show'));
+              'title' => html_escape('Neatline Time | Show'));
 head($head);
 ?>
 <h1><?php echo $neatlinetimetimeline->title; ?></h1>
