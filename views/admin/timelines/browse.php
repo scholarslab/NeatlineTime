@@ -18,6 +18,7 @@ head($head);
 <h1><?php echo $head['title']; ?></h1>
 <p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a Timeline</a></p>
 <div id="primary">
+<?php echo flash(); ?>
 <?php if ($neatlinetimetimelines) : ?>
 <div class="pagination"><?php echo pagination_links(); ?></div>
 <table>
