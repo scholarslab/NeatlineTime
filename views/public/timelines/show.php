@@ -11,8 +11,7 @@
  * @since 1.0
  */
 
-queue_js('timeglider-0.0.9.min');
-queue_css('timeglider');
+queue_timeline_assets();
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape('Timelines | Show'));
 head($head);
@@ -29,7 +28,6 @@ head($head);
                 "data_source":<?php echo js_escape(abs_timeline_uri().'?output=timeglider-json'); ?>,
                 "min_zoom":5,
                 "max_zoom":60,
-                "show_footer": false
             });
     });
     </script>

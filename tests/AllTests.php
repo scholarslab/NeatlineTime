@@ -30,7 +30,7 @@ class Timeline_AllTests extends PHPUnit_Framework_TestSuite
     {
         $suite = new Timeline_AllTests('Timeline Tests');
         $testCollector = new PHPUnit_Runner_IncludePathTestCollector(
-                array(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cases')
+                array(dirname(__FILE__) . '/cases')
         );
 
         $suite->addTestFiles($testCollector->collectTests());

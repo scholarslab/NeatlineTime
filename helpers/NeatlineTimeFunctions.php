@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Timeline helper functions
  *
@@ -16,10 +17,13 @@
  *
  * @since 1.0
  * @param Item|null
+ *
  * @return string JSON string.
  */
 function get_timeline_json_for_item($item = null) {
+
     $html = '';
+
     if ($item) {
         $html = "{'title' : " . js_escape(item('Dublin Core', 'Title', array(), $item)) . ","
               . " 'startdate' : " . js_escape(date('r', strtotime(item('Dublin Core', 'Date', array(), $item)))) . ","
@@ -28,7 +32,9 @@ function get_timeline_json_for_item($item = null) {
               . " 'id' : '" . $item->id . "'"
               . "}";
     }
+
     return $html;
+
 }
 
 /**
@@ -38,10 +44,12 @@ function get_timeline_json_for_item($item = null) {
  * @param string
  * @param array $options
  * @param Timeline|null
+ *
  * @return string|array
  */
 function timeline($fieldName, $options=array(), $timeline = null)
 {
+
     if (!$timeline) {
         $timeline = get_current_timeline();
     }
@@ -90,17 +98,21 @@ function timeline($fieldName, $options=array(), $timeline = null)
     }
 
     return $text;
+
 }
 
 /**
  * Returns the current timeline.
  *
  * @since 1.0
+ *
  * @return Timeline|null
  */
 function get_current_timeline()
 {
-    return __v()->timeline;
+
+    return __v()->neatlinetimetimeline;
+
 }
 
 /**
@@ -108,11 +120,14 @@ function get_current_timeline()
  *
  * @since 1.0
  * @param Timeline|null
+ *
  * @return void
  */
 function set_current_timeline($timeline = null)
 {
-    __v()->timeline = $timeline;
+
+    __v()->neatlinetimetimeline = $timeline;
+
 }
 
 /**
@@ -121,15 +136,17 @@ function set_current_timeline($timeline = null)
  *
  * @since 1.0
  * @param Timeline|null
+ *
  * @return void
  */
 function abs_timeline_uri($timeline = null)
 {
+
     if (!$timeline) {
         $timeline = get_current_timeline();
     }
 
-    return abs_uri(array('controller'=>'timelines', 'action'=>'show', 'id'=>$timeline->id), 'id');
+    return abs_uri('neatline-time/timelines/show/' . $timeline->id);
 }
 
 /**
@@ -137,67 +154,83 @@ function abs_timeline_uri($timeline = null)
  *
  * @since 1.0
  * @param array $timelines
+ *
  * @return void
  */
 function set_timelines_for_loop($timelines)
 {
+
     __v()->timelines = $timelines;
+
 }
 
 /**
  * Get the set of timelines for the current loop.
  *
  * @since 1.0
+ * 
  * @return array
  */
 function get_timelines_for_loop()
 {
-    return __v()->timelines;
+
+    return __v()->neatlinetimetimelines;
+
 }
 
 /**
  * Loops through timelines assigned to the view.
  *
  * @since 1.0
+ * 
  * @return mixed
  */
 function loop_timelines()
 {
-    return loop_records('timelines', get_timelines_for_loop(), 'set_current_timeline');
+
+    return loop_records('neatlinetimetimelines', get_timelines_for_loop(), 'set_current_timeline');
+
 }
 
 /**
  * Determine whether or not there are any timelines in the database.
  *
  * @since 1.0
+ *
  * @return boolean
  */
 function has_timelines()
 {
+
     return (total_timelines() > 0);
+
 }
 
 /**
  * Determines whether there are any timelines for loop.
  *
  * @since 1.0
+ *
  * @return boolean
  */
 function has_timelines_for_loop()
 {
+
     $view = __v();
-    return ($view->timelines and count($view->timelines));
+    return ($view->neatlinetimetimelines and count($view->neatlinetimetimelines));
+
 }
 
 /**
  * Returns the total number of timelines in the database
  *
  * @since 1.0
+ *
  * @return integer
  */
 function total_timelines()
 {
-    return get_db()->getTable('Timeline')->count();
+    return get_db()->getTable('NeatlineTimeTimeline')->count();
 }
 
 /**
@@ -208,17 +241,85 @@ function total_timelines()
  * @param array Attributes for the <a> tag. (optional)
  * @param string The action for the link. Default is 'show'.
  * @param Timeline|null
+ *
  * @return string HTML
  **/
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
-    if(!$timeline) {
+
+    if (!$timeline) {
         $timeline = get_current_timeline();
     }
 
-	$text = (!empty($text) ? $text : strip_formatting(timeline('Title', array(), $timeline)));
+    return '<a href="timelines/show/' . $timeline->id . '" class="edit">' . $timeline->title . '</a>';
 
-	return link_to($timeline, $action, $text, $props);
+}
+
+/**
+ * Build link to the edit page for the timeline.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function link_to_edit_timeline($timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $uri = uri('neatline-time/timelines/edit/' . $timeline->id);
+
+    return '<a href="' . $uri . '" class="edit">Edit</a>';
+
+}
+
+/**
+ * Build link to the show page for the timeline.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function link_to_show_timeline($timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $uri = uri('neatline-time/timelines/show/' . $timeline->id);
+
+    return '<a href="' . $uri . '">' . $timeline->title . '</a>';
+
+}
+
+/**
+ * Build the delete button.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function timeline_delete_button($timeline = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    return button_to(
+        uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
+        $name,
+        $value,
+        array('class' => 'delete-confirm'),
+        $formName,
+        $formAttribs);
+
 }
 
 /**
@@ -226,19 +327,31 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
  *
  * @since 1.0
  * @param Timeline|null
+ *
  * @return string URL
  */
 function timeline_json_output_url($timeline = null)
 {
+
     if(!$timeline) {
         $timeline = get_current_timeline();
     }
 
     return uri(array('controller'=>'timelines', 'action'=>'show', 'id' => $timeline->id), 'id', array('output' => 'timeglider-json'));
+
 }
 
+/**
+ * Generate the json for TimeGlider.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string string JSON
+ */
 function timeglider_json_for_timeline($timeline = null)
 {
+
     if (!$timeline) {
         $timeline = get_current_timeline();
     }
@@ -297,4 +410,40 @@ function timeglider_json_for_timeline($timeline = null)
 
     // Roll that beautiful bean footage.
     return json_encode($timegliderJsonArray);
+
+}
+
+/**
+ * Queues the Timeglider JavaScript and CSS in the page header.
+ *
+ * @since 1.0
+ *
+ * @return void.
+ */
+function queue_timeline_assets()
+{
+
+    queue_js('timeglider/js/jquery-ui-1.8.9.custom.min');
+    queue_js('timeglider/js/jquery.tmpl');
+    queue_js('timeglider/js/underscore-min');
+    queue_js('timeglider/js/backbone-min');
+    queue_js('timeglider/js/ba-debug.min');
+    queue_js('timeglider/js/jquery.mousewheel.min');
+    queue_js('timeglider/js/raphael-min');
+    queue_js('timeglider/js/jquery.global');
+    queue_js('timeglider/js/ba-tinyPubSub');
+
+    queue_js('timeglider/js/timeglider/TG_Date');
+    queue_js('timeglider/js/timeglider/TG_Org');
+    queue_js('timeglider/js/timeglider/TG_Timeline');
+    queue_js('timeglider/js/timeglider/TG_TimelineView');
+    queue_js('timeglider/js/timeglider/TG_Mediator');
+
+    queue_js('timeglider/js/timeglider/timeglider.timeline.widget');
+
+    queue_css('timeglider');
+    queue_css('timeglider_overrides');
+    queue_css('timeglider_changes');
+    queue_css('jquery-ui');
+
 }
