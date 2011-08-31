@@ -11,7 +11,7 @@
  * @since 1.0
  */
 
-queue_js('timeglider-0.0.9.min');
+queue_js('timeglider/js/timeglider-0.0.9.min');
 queue_css('timeglider');
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape('Timelines | Show'));

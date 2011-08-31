@@ -389,3 +389,18 @@ function timeglider_json_for_timeline($timeline = null)
     return json_encode($timegliderJsonArray);
 
 }
+
+/**
+ * Queues the Timeglider JavaScript and CSS in the page header.
+ *
+ * @since 1.0
+ *
+ * @return void.
+ */
+function queue_timeline_assets()
+{
+
+    queue_js('timeglider/js/timeglider-0.0.9.min');
+    queue_css('timeglider');
+
+}
