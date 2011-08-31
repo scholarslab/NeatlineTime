@@ -270,7 +270,9 @@ function link_to_edit_timeline($timeline = null)
         $timeline = get_current_timeline();
     }
 
-    return '<a href="timelines/edit/' . $timeline->id . '" class="edit">Edit</a>';
+    $uri = uri('neatline-time/timelines/edit/' . $timeline->id);
+
+    return '<a href="' . $uri . '" class="edit">Edit</a>';
 
 }
 
