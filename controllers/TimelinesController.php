@@ -47,7 +47,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
                 if ($successMessage != '') {
                     $this->flashSuccess($successMessage);
                 }
-                $this->_redirect('neatline-time/timelines/show/' . $timeline->id);
+                $this->_redirect('neatline-time/timelines');
             }
         } catch (Omeka_Validator_Exception $e) {
             $this->flashValidationErrors($e);
@@ -69,7 +69,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
                 if ($successMessage != '') {
                     $this->flashSuccess($successMessage);
                 }
-                $this->_redirect('neatline-time/timelines/show/' . $timeline->id);
+                $this->_redirect('neatline-time/timelines');
             }
         } catch (Omeka_Validator_Exception $e) {
             $this->flashValidationErrors($e);
