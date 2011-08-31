@@ -444,5 +444,6 @@ function queue_timeline_assets()
     queue_css('timeglider');
     queue_css('timeglider_overrides');
     queue_css('timeglider_changes');
+    queue_css('jquery-ui');
 
 }
