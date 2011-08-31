@@ -11,9 +11,8 @@
  * @since 1.0
  */
 
+queue_timeline_assets();
 queue_js('tiny_mce/tiny_mce');
-queue_js('timeglider-0.0.9.min');
-queue_css('timeglider');
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape('Timelines | Edit a Timeline'));
 head($head);
