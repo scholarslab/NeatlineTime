@@ -290,7 +290,7 @@ function timeline_delete_button($timeline = null, $name = null, $value = 'Delete
     }
 
     return button_to(
-        'timelines/delete-confirm/' . $timeline->id,
+        uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
         $name,
         $value,
         array('class' => 'delete-confirm'),
