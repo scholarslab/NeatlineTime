@@ -21,7 +21,8 @@ class NeatlineTimePlugin
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
-        'item_browse_sql'
+        'item_browse_sql',
+        'admin_theme_header'
     );
 
     private static $_filters = array(
@@ -193,6 +194,23 @@ class NeatlineTimePlugin
 
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
 
+        }
+
+    }
+
+    /**
+     * Include the the neatline CSS changes in the admin header.
+     *
+     * @return void
+     */
+    public function adminThemeHeader()
+    {
+
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+
+        // Queue CSS.
+        if ($request->getModuleName() == 'neatline-time') {
+            queue_css('neatline-admin');
         }
 
     }
