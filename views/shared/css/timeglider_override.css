@@ -39,3 +39,24 @@
     bottom:-20px;
     right:6px;
 }
+
+.timeglider-tick {
+  /* defaults on arrival in ticks */
+	position:absolute;
+	height:30px;
+	font-size:11px;
+	background-color:#75a3c7; 
+	/* A line as bg doesn't alter the width of the div!*/
+	background-image:url("../javascripts/timeglider/js/timeglider/img/dotted.png");
+	background-repeat:no-repeat;
+}
+
+.timeglider-menu-modal-point-right {
+    width:20px;
+    height:20px;
+    background-image:url("../javascripts/timeglider/js/timeglider/img/menu-pointer-right.png");
+    background-repeat:no-repeat;
+    position:absolute;
+    bottom:-20px;
+    right:6px;
+}
