@@ -156,6 +156,17 @@ class NeatlineTimePlugin
             );
 
         $router->addRoute(
+            'timelineRedirectRoute',
+            new Zend_Controller_Router_Route(
+                'neatline-time',
+                array(
+                    'module'        => 'neatline-time',
+                    'controller'    => 'timelines'
+                    )
+                )
+            );
+
+        $router->addRoute(
             'timelinePaginationRoute',
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:page',
@@ -226,7 +237,7 @@ class NeatlineTimePlugin
     public function adminNavigationMain($nav)
     {
 
-        $nav['Neatline Time'] = uri('neatline-time/timelines');
+        $nav['Neatline Time'] = uri('neatline-time');
         return $nav;
 
     }

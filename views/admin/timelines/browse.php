@@ -24,7 +24,6 @@ head($head);
 <table>
     <thead id="timelines-table-head">
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Description</th>
             <?php if (has_permission('NeatlineTime_Timelines', 'edit')): ?>
@@ -38,8 +37,7 @@ head($head);
     <tbody id="types-table-body">
 <?php foreach ($neatlinetimetimelines as $timeline) : ?>
         <tr>
-            <td><?php echo $timeline->id; ?></td>
-            <td><?php echo link_to_show_timeline($timeline); ?></td>
+            <td class="timeline-title"><?php echo link_to_show_timeline($timeline); ?></td>
             <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
             <?php if (has_permission($timeline, 'edit')): ?>
             <td><?php echo link_to_edit_timeline($timeline); ?></td>
