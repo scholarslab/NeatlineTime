@@ -293,7 +293,7 @@ function link_to_show_timeline($timeline = null)
 
     $uri = uri('neatline-time/timelines/show/' . $timeline->id);
 
-    return '<a href="' . $uri . '">' . $timeline->title . '</a>';
+    return '<strong><a href="' . $uri . '">' . $timeline->title . '</a></strong>';
 
 }
 

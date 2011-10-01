@@ -21,7 +21,8 @@ class NeatlineTimePlugin
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
-        'item_browse_sql'
+        'item_browse_sql',
+        'admin_theme_header'
     );
 
     private static $_filters = array(
@@ -166,6 +167,17 @@ class NeatlineTimePlugin
             );
 
         $router->addRoute(
+            'timelineRedirectRoute',
+            new Zend_Controller_Router_Route(
+                'neatline-time',
+                array(
+                    'module'        => 'neatline-time',
+                    'controller'    => 'timelines'
+                    )
+                )
+            );
+
+        $router->addRoute(
             'timelinePaginationRoute',
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:page',
@@ -209,6 +221,23 @@ class NeatlineTimePlugin
     }
 
     /**
+     * Include the the neatline CSS changes in the admin header.
+     *
+     * @return void
+     */
+    public function adminThemeHeader()
+    {
+
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+
+        // Queue CSS.
+        if ($request->getModuleName() == 'neatline-time') {
+            queue_css('neatline-admin');
+        }
+
+    }
+
+    /**
      * Timeline admin_navigation_main filter.
      *
      * Adds a button to the admin's main navigation.
@@ -219,7 +248,7 @@ class NeatlineTimePlugin
     public function adminNavigationMain($nav)
     {
 
-        $nav['Neatline Time'] = uri('neatline-time/timelines');
+        $nav['Neatline Time'] = uri('neatline-time');
         return $nav;
 
     }

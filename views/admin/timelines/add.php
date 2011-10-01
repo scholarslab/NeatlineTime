@@ -13,7 +13,7 @@
 
 queue_js('tiny_mce/tiny_mce');
 $head = array('bodyclass' => 'timelines primary', 
-              'title' => html_escape('Timelines | Add a Timeline'));
+              'title' => html_escape('Neatline Time | Add a Timeline'));
 head($head);
 ?>
 <h1><?php echo $head['title']; ?></h1>
