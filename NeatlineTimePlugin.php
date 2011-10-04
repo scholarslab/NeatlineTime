@@ -31,7 +31,7 @@ class NeatlineTimePlugin
         'define_response_contexts',
         'define_action_contexts'
     );
-
+    
     private $_db;
 
     /**
@@ -82,7 +82,7 @@ class NeatlineTimePlugin
 <<<<<<< HEAD:TimelinePlugin.php
             ) ENGINE=MyISAM;";
         $this->_db->query($sql);
-
+        
         $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
 =======
             ) ENGINE=MyISAM";
@@ -127,10 +127,14 @@ class NeatlineTimePlugin
         // All everyone access to browse and show.
 <<<<<<< HEAD:TimelinePlugin.php
         $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
+<<<<<<< HEAD:NeatlineTimePlugin.php
 =======
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
 >>>>>>> rename:NeatlineTimePlugin.php
 
+=======
+        
+>>>>>>> parent of eef36ff... got rid of DIR_SEPARATORS:TimelinePlugin.php
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'NeatlineTime_Timelines');
         $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll'));
@@ -215,7 +219,7 @@ class NeatlineTimePlugin
     {
 
         if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
-
+            
         }
 
     }
@@ -277,6 +281,7 @@ class NeatlineTimePlugin
 <<<<<<< HEAD:TimelinePlugin.php
         $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
                                 'headers' => array('Content-Type' => 'text/javascript'));
+<<<<<<< HEAD:NeatlineTimePlugin.php
 =======
 
         $context['timeglider-json'] = array(
@@ -285,6 +290,9 @@ class NeatlineTimePlugin
         );
 >>>>>>> rename:NeatlineTimePlugin.php
 
+=======
+        
+>>>>>>> parent of eef36ff... got rid of DIR_SEPARATORS:TimelinePlugin.php
         return $context;
 
     }
