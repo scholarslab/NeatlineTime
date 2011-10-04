@@ -1,3 +1,0 @@
-[submodule "views/shared/javascripts/timeglider"]
-	path = views/shared/javascripts/timeglider
-	url = https://github.com/timeglider/jquery_widget.git
