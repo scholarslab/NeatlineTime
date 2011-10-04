@@ -29,17 +29,7 @@ if (!defined('TIMELINE_FORMS_DIR')) {
     define('TIMELINE_FORMS_DIR', TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'forms');
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-require_once TIMELINE_PLUGIN_DIR . '/TimelinePlugin.php';
-require_once TIMELINE_HELPERS_DIR . '/TimelineFunctions.php';
-=======
 require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
 require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
->>>>>>> rename
-=======
-require_once TIMELINE_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'TimelinePlugin.php';
-require_once TIMELINE_HELPERS_DIR . DIRECTORY_SEPARATOR . 'TimelineFunctions.php';
->>>>>>> parent of eef36ff... got rid of DIR_SEPARATORS
 
 new NeatlineTimePlugin;
