@@ -69,6 +69,8 @@ class NeatlineTimePlugin
     public function install()
     {
 
+
+
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -79,16 +81,9 @@ class NeatlineTimePlugin
             `added` timestamp NOT NULL default '0000-00-00 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
-<<<<<<< HEAD:TimelinePlugin.php
-            ) ENGINE=MyISAM;";
-        $this->_db->query($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}timeline_entries` (
-=======
             ) ENGINE=MyISAM";
 
         $sqlNeatlineTimelineEntry = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
->>>>>>> rename:NeatlineTimePlugin.php
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `timeline_id` INT UNSIGNED NOT NULL,
             `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
@@ -125,11 +120,7 @@ class NeatlineTimePlugin
         );
 
         // All everyone access to browse and show.
-<<<<<<< HEAD:TimelinePlugin.php
-        $acl->allow(null, 'Timeline_Timelines', array('show', 'browse'));
-=======
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
->>>>>>> rename:NeatlineTimePlugin.php
 
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'NeatlineTime_Timelines');
@@ -274,16 +265,11 @@ class NeatlineTimePlugin
      */
     public function defineResponseContexts($context)
     {
-<<<<<<< HEAD:TimelinePlugin.php
-        $context['timeglider-json'] = array('suffix'  => 'timeglider-json', 
-                                'headers' => array('Content-Type' => 'text/javascript'));
-=======
 
         $context['timeglider-json'] = array(
             'suffix'  => 'timeglider-json',
             'headers' => array('Content-Type' => 'text/javascript')
         );
->>>>>>> rename:NeatlineTimePlugin.php
 
         return $context;
 
