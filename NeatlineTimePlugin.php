@@ -223,7 +223,7 @@ class NeatlineTimePlugin
 
         // Queue CSS.
         if ($request->getModuleName() == 'neatline-time') {
-            queue_css('neatline-admin');
+            queue_css('neatline-time-admin');
         }
 
     }
