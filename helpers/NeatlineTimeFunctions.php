@@ -12,32 +12,6 @@
  */
 
 /**
- * Returns <a href="http://timeglider.com/jquery/?p=json">Timeglider-specific
- * JSON string</a> for a given item.
- *
- * @since 1.0
- * @param Item|null
- *
- * @return string JSON string.
- */
-function get_timeline_json_for_item($item = null) {
-
-    $html = '';
-
-    if ($item) {
-        $html = "{'title' : " . js_escape(item('Dublin Core', 'Title', array(), $item)) . ","
-              . " 'startdate' : " . js_escape(date('r', strtotime(item('Dublin Core', 'Date', array(), $item)))) . ","
-              . " 'description' : " . js_escape(item('Dublin Core', 'Description', array(), $item)) . ","
-              . " 'link' : " . js_escape(abs_item_uri($item)) . ","
-              . " 'id' : '" . $item->id . "'"
-              . "}";
-    }
-
-    return $html;
-
-}
-
-/**
  * Return specific field for a timeline record.
  *
  * @since 1.0
@@ -323,98 +297,7 @@ function timeline_delete_button($timeline = null, $name = null, $value = 'Delete
 }
 
 /**
- * Returns the URL for the Timeglider JSON output of a specific timeline
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return string URL
- */
-function timeline_json_output_url($timeline = null)
-{
-
-    if(!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    return uri(array('controller'=>'timelines', 'action'=>'show', 'id' => $timeline->id), 'id', array('output' => 'timeglider-json'));
-
-}
-
-/**
- * Generate the json for TimeGlider.
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return string string JSON
- */
-function timeglider_json_for_timeline($timeline = null)
-{
-
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    $timegliderJsonArray = array(
-        'id' => 'timeline-'.$timeline->id,
-        'title' => $timeline->title,
-        'initial_zoom' => '40',
-        'focus_date' => '2011-04-01 12:00:00'
-    );
-
-    if ($timelineDescription = $timeline->description) {
-        $timegliderJsonArray['description'] = $timelineDescription;
-    }
-
-    $timegliderJsonEventsArray = array();
-
-    // Retrieve all TimelineEntry records for the current Timeline.
-    $timelineEntries = $timeline->getTimelineEntries();
-
-    foreach ($timelineEntries as $entry) {
-
-        // If the entry has stuff in its data column.
-        if ($data = $entry->data) {
-
-            // If $data is numeric, we'll check to see if we can get an Item with
-            // that ID number.
-            if (is_numeric($data) && $item = get_item_by_id($data)) {
-
-                $jsonData = array(
-                    'title' => item('Dublin Core', 'Title', array(), $item),
-                    'startdate'     => date('Y-m-d H:m:s', strtotime(item('Dublin Core', 'Date', array(), $item))),
-                    'importance' => 40
-                );
-
-            } else {
-
-                $jsonData = unserialize($data);
-
-            }
-
-            // Set a unique ID for the timeglider JSON entry.
-            $jsonData['id'] = 'timeline-entry-'.$entry->id;
-
-            // Add the jsonData to the Timeglider JSON events array.
-            $timegliderJsonEventsArray[] = $jsonData;
-        }
-    }
-
-    // If the Timeglider JSON events array isn't empty, add it to the overall array.
-    if (!empty($timegliderJsonEventsArray)) {
-
-        $timegliderJsonArray['events'] = $timegliderJsonEventsArray;
-
-    }
-
-    // Roll that beautiful bean footage.
-    return json_encode($timegliderJsonArray);
-
-}
-
-/**
- * Queues the Timeglider JavaScript and CSS in the page header.
+ * Queues JavaScript and CSS for NeatlineTime in the page header.
  *
  * @since 1.0
  *
@@ -422,28 +305,5 @@ function timeglider_json_for_timeline($timeline = null)
  */
 function queue_timeline_assets()
 {
-
-    queue_js('timeglider/js/jquery-ui-1.8.9.custom.min');
-    queue_js('timeglider/js/jquery.tmpl');
-    queue_js('timeglider/js/underscore-min');
-    queue_js('timeglider/js/backbone-min');
-    queue_js('timeglider/js/ba-debug.min');
-    queue_js('timeglider/js/jquery.mousewheel.min');
-    queue_js('timeglider/js/raphael-min');
-    queue_js('timeglider/js/jquery.global');
-    queue_js('timeglider/js/ba-tinyPubSub');
-
-    queue_js('timeglider/js/timeglider/TG_Date');
-    queue_js('timeglider/js/timeglider/TG_Org');
-    queue_js('timeglider/js/timeglider/TG_Timeline');
-    queue_js('timeglider/js/timeglider/TG_TimelineView');
-    queue_js('timeglider/js/timeglider/TG_Mediator');
-
-    queue_js('timeglider/js/timeglider/timeglider.timeline.widget');
-
-    queue_css('timeglider');
-    queue_css('timeglider_overrides');
-    queue_css('timeglider_changes');
-    queue_css('jquery-ui');
 
 }

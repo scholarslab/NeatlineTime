@@ -27,9 +27,7 @@ class NeatlineTimePlugin
 
     private static $_filters = array(
         'admin_navigation_main',
-        'public_navigation_main',
-        'define_response_contexts',
-        'define_action_contexts'
+        'public_navigation_main'
     );
 
     private $_db;
@@ -257,37 +255,6 @@ class NeatlineTimePlugin
 
         $nav['Browse Timelines'] = uri('neatline-time/timelines');
         return $nav;
-
-    }
-
-    /**
-     * Adds the timeglider-json context to response contexts.
-     */
-    public function defineResponseContexts($context)
-    {
-
-        $context['timeglider-json'] = array(
-            'suffix'  => 'timeglider-json',
-            'headers' => array('Content-Type' => 'text/javascript')
-        );
-
-        return $context;
-
-    }
-
-    /**
-     * Adds timeglider-json context to the 'browse' and 'show' actions for the
-     * Items and Timeline_Timelines controllers.
-     */
-    public function defineActionContexts($context, $controller)
-    {
-
-        if ($controller instanceof NeatlineTime_TimelinesController || $controller instanceof ItemsController) {
-            $context['browse'][] = 'timeglider-json';
-            $context['show'][] = 'timeglider-json';
-        }
-
-        return $context;
 
     }
 

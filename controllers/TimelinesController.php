@@ -19,12 +19,6 @@
 
 class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 {
-    // Add our timeglider-json output contexts
-    public $contexts = array(
-            'browse' => array('timeglider-json'),
-            'show'   => array('timeglider-json')
-    );
-
     public function init()
     {
         $modelName = 'NeatlineTimeTimeline';

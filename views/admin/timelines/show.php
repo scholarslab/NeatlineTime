@@ -19,18 +19,6 @@ head($head);
 <h1><?php echo $neatlinetimetimeline->title; ?></h1>
 
 <div id="primary">
-    <script>
-    jQuery(document).ready(function($){
-        $('#timeglider')
-            .css({'height': '400px', 'margin-bottom': '20px'})
-            .timeline({
-                "data_source": <?php echo js_escape(abs_timeline_uri().'?output=timeglider-json'); ?>,
-                "min_zoom":5,
-                "max_zoom":60,
-            });
-    });
-    </script>
-    <div id="timeglider"></div>
 
     <?php echo $neatlinetimetimeline->description; ?>
 

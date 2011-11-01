@@ -20,17 +20,5 @@ head($head);
 
 <div id="primary">
     <?php echo timeline('description'); ?>
-    <script>
-    jQuery(document).ready(function($){
-        $('#timeglider')
-            .css({'height': '400px'})
-            .timeline({
-                "data_source":<?php echo js_escape(abs_timeline_uri().'?output=timeglider-json'); ?>,
-                "min_zoom":5,
-                "max_zoom":60,
-            });
-    });
-    </script>
-    <div id="timeglider"></div>
 </div>
 <?php foot(); ?>
