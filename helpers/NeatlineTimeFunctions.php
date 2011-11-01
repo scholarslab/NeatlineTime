@@ -305,5 +305,7 @@ function timeline_delete_button($timeline = null, $name = null, $value = 'Delete
  */
 function queue_timeline_assets()
 {
+    $simileTimelineUri = 'http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true';
 
+    __v()->headScript()->appendFile($simileTimelineUri);
 }
