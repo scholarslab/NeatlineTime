@@ -300,12 +300,28 @@ function timeline_delete_button($timeline = null, $name = null, $value = 'Delete
  * Queues JavaScript and CSS for NeatlineTime in the page header.
  *
  * @since 1.0
- *
  * @return void.
  */
 function queue_timeline_assets()
 {
-    $simileTimelineUri = 'http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true';
+    $headScript = __v()->headScript();
 
-    __v()->headScript()->appendFile($simileTimelineUri);
+    // Check useInternalJavascripts in config.ini.
+    $config = Omeka_Context::getInstance()->getConfig('basic');
+    $useInternalJs = isset($config->theme->useInternalJavascripts)
+            ? (bool) $config->theme->useInternalJavascripts
+            : false;
+
+    if ($useInternalJs) {
+        $timelineVariables = 'Timeline_ajax_url="'.src('simile-ajax-api.js', 'javascripts/simile/ajax-api').'"; '
+                           . 'Timeline_urlPrefix="'.dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')).'/"; '
+                           . 'Timeline_parameters="bundle=true";';
+
+        $headScript->appendScript($timelineVariables);
+        $headScript->appendFile(src('timeline-api.js', 'javascripts/simile/timeline-api'));
+    } else {
+        $headScript->appendFile('http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+    }
+
+    $headScript->appendScript('window.jQuery = SimileAjax.jQuery');
 }
