@@ -67,12 +67,11 @@ class NeatlineTimePlugin
     public function install()
     {
 
-
-
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+            `query` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `creator_id` INT UNSIGNED NOT NULL,
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
@@ -81,15 +80,7 @@ class NeatlineTimePlugin
             PRIMARY KEY (`id`)
             ) ENGINE=MyISAM";
 
-        $sqlNeatlineTimelineEntry = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timeline_entries` (
-            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            `timeline_id` INT UNSIGNED NOT NULL,
-            `data` TEXT COLLATE utf8_unicode_ci NOT NULL,
-            PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM";
-
         $this->_db->query($sqlNeatlineTimeline);
-        $this->_db->query($sqlNeatlineTimelineEntry);
 
     }
 
@@ -100,8 +91,7 @@ class NeatlineTimePlugin
     {
 
         $sql = "DROP TABLE IF EXISTS
-            `{$this->_db->prefix}neatline_time_timelines`,
-            `{$this->_db->prefix}neatline_time_timeline_entries`;";
+            `{$this->_db->prefix}neatline_time_timelines`";
 
         $this->_db->query($sql);
 

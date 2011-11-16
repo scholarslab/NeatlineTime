@@ -21,6 +21,7 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
 
     public $title;
     public $description;
+    public $query;
     public $creator_id;
     public $public = 0;
     public $featured = 0;
@@ -71,13 +72,5 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
     public function getResourceId()
     {
         return 'NeatlineTime_Timelines';
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getTimelineEntries()
-    {
-        return $this->getTable('NeatlineTimeTimelineEntry')->findByTimeline($this);
     }
 }
