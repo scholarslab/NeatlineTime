@@ -237,7 +237,7 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
  *
  * @return string The link.
  **/
-function link_to_edit_timeline($timeline = null)
+function link_to_edit_timeline($text = 'Edit', $timeline = null)
 {
 
     if (!$timeline) {
@@ -246,7 +246,28 @@ function link_to_edit_timeline($timeline = null)
 
     $uri = uri('neatline-time/timelines/edit/' . $timeline->id);
 
-    return '<a href="' . $uri . '" class="edit">Edit</a>';
+    return '<a href="' . $uri . '" class="edit">'.$text.'</a>';
+
+}
+
+/**
+ * Build link to the edit page for the timeline.
+ *
+ * @since 1.0
+ * @param Timeline|null
+ *
+ * @return string The link.
+ **/
+function link_to_edit_timeline_query($text = 'Edit Query', $timeline = null)
+{
+
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $uri = uri('neatline-time/timelines/query/' . $timeline->id);
+
+    return '<a href="' . $uri . '" class="edit">'.$text.'</a>';
 
 }
 

@@ -19,7 +19,7 @@ head($head);
 <p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a Timeline</a></p>
 <div id="primary">
 <?php echo flash(); ?>
-<?php if ($neatlinetimetimelines) : ?>
+<?php if (has_timelines_for_loop()) : ?>
 <div class="pagination"><?php echo pagination_links(); ?></div>
 <table>
     <thead id="timelines-table-head">
@@ -27,7 +27,8 @@ head($head);
             <th>Title</th>
             <th>Description</th>
             <?php if (has_permission('NeatlineTime_Timelines', 'edit')): ?>
-            <th>Edit</th>
+            <th>Edit Metadata</th>
+            <th>Edit Item Query</th>
             <?php endif; ?>
             <?php if (has_permission('NeatlineTime_Timelines', 'delete')): ?>
             <th>Delete</th>
@@ -35,18 +36,19 @@ head($head);
         </tr>
     </thead>
     <tbody id="types-table-body">
-<?php foreach ($neatlinetimetimelines as $timeline) : ?>
+<?php while (loop_timelines()) : ?>
         <tr>
-            <td class="timeline-title"><?php echo link_to_show_timeline($timeline); ?></td>
-            <td><?php echo snippet_by_word_count($timeline->description, '50'); ?></td>
-            <?php if (has_permission($timeline, 'edit')): ?>
-            <td><?php echo link_to_edit_timeline($timeline); ?></td>
+            <td class="timeline-title"><?php echo link_to_show_timeline(); ?></td>
+            <td><?php echo snippet_by_word_count(timeline('description'), '50'); ?></td>
+            <?php if (has_permission(get_current_timeline(), 'edit')): ?>
+            <td><?php echo link_to_edit_timeline('Edit Metadata'); ?></td>
+            <td><?php echo link_to_edit_timeline_query('Edit Query'); ?></td>
             <?php endif; ?>
-            <?php if (has_permission($timeline, 'delete')): ?>
-            <td><?php echo timeline_delete_button($timeline); ?></td>
+            <?php if (has_permission(get_current_timeline(), 'delete')): ?>
+            <td><?php echo timeline_delete_button(get_current_timeline()); ?></td>
             <?php endif; ?>
         </tr>
-<?php endforeach; ?>
+<?php endwhile; ?>
     </tbody>
 </table>
 <?php else : ?>

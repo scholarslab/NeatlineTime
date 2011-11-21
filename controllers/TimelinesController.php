@@ -76,6 +76,25 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
         $this->view->form = $form;
     }
 
+    public function queryAction()
+    {
+        $timeline = $this->findById();
+
+        if(isset($_GET['search'])) {
+            $timeline->query = serialize($_GET);
+            $timeline->forceSave();
+            $this->redirect->goto('index');
+        }
+        else {
+            $queryArray = unserialize($timeline->query);
+            // Some parts of the advanced search check $_GET, others check
+            // $_REQUEST, so we set both to be able to edit a previous query.
+            $_GET = $queryArray;
+            $_REQUEST = $queryArray;
+            $this->view->timeline = $timeline;
+        }
+    }
+
     /**
      * Sets the add success message
      */

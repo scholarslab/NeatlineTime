@@ -104,7 +104,7 @@ class NeatlineTimePlugin
     {
 
         $acl->loadResourceList(
-            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'delete', 'deleteSelf', 'deleteAll'))
+            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query','delete', 'deleteSelf', 'deleteAll'))
         );
 
         // All everyone access to browse and show.
@@ -112,7 +112,7 @@ class NeatlineTimePlugin
 
         // Allow contributors everything but editAll and deleteAll.
         $acl->allow('contributor', 'NeatlineTime_Timelines');
-        $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll'));
+        $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll', 'query'));
 
     }
 
