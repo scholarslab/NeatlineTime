@@ -13,8 +13,8 @@ function loadTimeline(timelineId, timelineData) {
         Timeline.createBandInfo({
             overview:       true,
             eventSource:    eventSource,
-            width:          "30%", 
-            intervalUnit:   Timeline.DateTime.YEAR, 
+            width:          "30%",
+            intervalUnit:   Timeline.DateTime.YEAR,
             intervalPixels: 200
         })
     ];

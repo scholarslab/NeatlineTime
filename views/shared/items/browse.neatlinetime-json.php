@@ -25,7 +25,7 @@ while (loop_items()) {
             // $neatlineTimeEvent['isDuration'] = 'true';
             $neatlineTimeEvent['title'] = item('Dublin Core', 'Title');
             $neatlineTimeEvent['description'] = item('Dublin Core', 'Description');
-            $neatlineTimeEvent['link'] = link_to_item();
+            $neatlineTimeEvent['link'] = abs_item_uri();
 
             $neatlineTimeEvents[] = $neatlineTimeEvent;
         }
