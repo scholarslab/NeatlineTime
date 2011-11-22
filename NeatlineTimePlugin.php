@@ -27,7 +27,9 @@ class NeatlineTimePlugin
 
     private static $_filters = array(
         'admin_navigation_main',
-        'public_navigation_main'
+        'public_navigation_main',
+        'define_response_contexts',
+        'define_action_contexts'
     );
 
     private $_db;
@@ -248,4 +250,34 @@ class NeatlineTimePlugin
 
     }
 
+    /**
+     * Adds the neatlinetime-json context to response contexts.
+     */
+    public function defineResponseContexts($context)
+    {
+
+        $context['neatlinetime-json'] = array(
+            'suffix'  => 'neatlinetime-json',
+            'headers' => array('Content-Type' => 'text/javascript')
+        );
+
+        return $context;
+
+    }
+
+    /**
+     * Adds neatlinetime-json context to the 'browse' and 'show' actions for
+     * the Items controller.
+     */
+    public function defineActionContexts($context, $controller)
+    {
+
+        if ($controller instanceof ItemsController) {
+            $context['browse'][] = 'neatlinetime-json';
+            $context['show'][] = 'neatlinetime-json';
+        }
+
+        return $context;
+
+    }
 }

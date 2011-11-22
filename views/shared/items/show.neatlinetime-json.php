@@ -10,3 +10,30 @@
  * @link http://github.com/scholarslab/NeatlineTime
  * @since 1.0
  */
+
+$neatlineTimeEvents = array();
+
+$itemDates = item('Dublin Core', 'Date', 'all');
+
+if (!empty($itemDates)) {
+    foreach ($itemDates as $itemDate) {
+        $neatlineTimeEvent = array();
+        $neatlineTimeEvent['start'] = date('c', strtotime($itemDate));
+        // $neatlineTimeEvent['end'] = '';
+        // $neatlineTimeEvent['latestStart'] = '';
+        // $neatlineTimeEvent['latestEnd'] = '';
+        // $neatlineTimeEvent['isDuration'] = 'true';
+        $neatlineTimeEvent['title'] = item('Dublin Core', 'Title');
+        $neatlineTimeEvent['description'] = item('Dublin Core', 'Description');
+        $neatlineTimeEvent['link'] = link_to_item();
+
+        $neatlineTimeEvents[] = $neatlineTimeEvent;
+    }
+}
+
+$neatlineTimeArray = array();
+$neatlineTimeArray['events'] = $neatlineTimeEvents;
+
+$neatlinetimeJson = json_encode($neatlineTimeArray);
+
+echo $neatlinetimeJson;

@@ -16,11 +16,17 @@ $head = array('bodyclass' => 'timelines primary',
               'title' => html_escape('Neatline Time | Show'));
 head($head);
 ?>
-<h1><?php echo $neatlinetimetimeline->title; ?></h1>
+<h1><?php echo timeline('title'); ?></h1>
 
 <div id="primary">
 
-    <?php echo $neatlinetimetimeline->description; ?>
+    <?php echo timeline('description'); ?>
+    <script>
+        jQuery(document).ready(function() {
+           loadTimeline('my-timeline', '<?php echo neatlinetime_json_uri_for_timeline(); ?>'); 
+        });
+    </script>
+    <div id="my-timeline" style="height:150px;"></div>
 
 </div>
 <?php foot(); ?>

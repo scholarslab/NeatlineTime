@@ -343,6 +343,29 @@ function queue_timeline_assets()
     } else {
         $headScript->appendFile('http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
     }
+    $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
 
-    $headScript->appendScript('window.jQuery = SimileAjax.jQuery');
+    $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
+}
+
+/**
+ * Returns the URI for a timeline's query
+ *
+ * @since 1.0
+ * @param Timeline
+ * @return string URL
+ */
+function neatlinetime_json_uri_for_timeline($timeline = null)
+{
+    if (!$timeline) {
+        $timeline = get_current_timeline();
+    }
+
+    $query = $timeline->query;
+
+    if ($query) {
+        $params = unserialize($query);
+    }
+
+    return items_output_uri('neatlinetime-json', $params);
 }
