@@ -25,7 +25,7 @@ head($head);
     <?php echo timeline('description'); ?>
     <script>
         jQuery(document).ready(function() {
-           loadTimeline('my-timeline', '<?php echo neatlinetime_json_uri_for_timeline(); ?>'); 
+           NeatlineTime.loadTimeline('my-timeline', '<?php echo neatlinetime_json_uri_for_timeline(); ?>'); 
         });
     </script>
     <div id="my-timeline" style="height:150px;"></div>

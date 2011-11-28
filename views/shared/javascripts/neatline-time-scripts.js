@@ -1,6 +1,16 @@
-var tl;
-function loadTimeline(timelineId, timelineData) {
+var NeatlineTime = {
+  resizeTimerID: null,
+  
+  resizeTimeline: function() {
+     if (resizeTimerID == null) {
+        resizeTimerID = window.setTimeout(function() {
+            resizeTimerID = null;
+            tl.layout();
+        }, 500);
+    }
+  },
 
+  loadTimeline: function(timelineId, timelineData) {
     var eventSource = new Timeline.DefaultEventSource();
 
     var bandInfos = [
@@ -26,15 +36,8 @@ function loadTimeline(timelineId, timelineData) {
     tl.loadJSON(timelineData, function(json, url) {
         eventSource.loadJSON(json, url);
     });
-}
+  },
 
-var resizeTimerID = null;
+};
 
-function resizeTimeline() {
-    if (resizeTimerID == null) {
-        resizeTimerID = window.setTimeout(function() {
-            resizeTimerID = null;
-            tl.layout();
-        }, 500);
-    }
-}
+
