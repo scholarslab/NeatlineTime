@@ -45,11 +45,11 @@
         sudo pear config-set peferred_state stable
 -->
 
-<project name="Plugin Builder" default="usage" basedir=".">
+<project name="NeatlineTime" default="usage" basedir=".">
 
     <description>A simple build file for Omeka plugins</description>
 
-    <property name="project" value="Timeline" />
+    <property name="project.name" value="NeatlineTime" />
     <property name="build" location="build" />
     <property name="dist" location="dist" />
     <tstamp />
