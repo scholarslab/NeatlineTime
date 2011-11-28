@@ -19,55 +19,21 @@
  * @param array $options
  * @param Timeline|null
  *
- * @return string|array
+ * @return string
  */
-function timeline($fieldName, $options=array(), $timeline = null)
+function timeline($fieldname, $options = array(), $timeline = null)
 {
 
-    if (!$timeline) {
-        $timeline = get_current_timeline();
+    $timeline = $timeline ? $timeline : get_current_timeline(); 
+
+    $fieldname = strtolower($fieldname);  
+    $text = $timeline->$fieldname;
+
+    if (strlen($text) == 0){
+        throw new Exception("Field doesn't exist");
     }
 
-    // Retrieve the data to display.
-    switch (strtolower($fieldName)) {
-        case 'id':
-            $text = $timeline->id;
-            break;
-        case 'title':
-            $text = $timeline->title;
-            break;
-        case 'description':
-            $text = $timeline->description;
-            break;
-        case 'public':
-            $text = $timeline->public;
-            break;
-        case 'featured':
-            $text = $timeline->featured;
-            break;
-        case 'added':
-        case 'date added':
-            $text = $timeline->added;
-            break;
-        case 'modified':
-        case 'date modified':
-            $text = $timeline->modified;
-            break;
-        case 'creator id':
-        case 'creator':
-            $text = $timeline->creator_id;
-            break;
-        case 'permalink':
-        case 'url':
-            $text = abs_timeline_uri($timeline);
-        break;
-        default:
-            throw new Exception('"' . $fieldName . '" does not exist for timelines!');
-            break;
-    }
-
-    // Apply the snippet option if passed.
-    if (isset($options['snippet'])) {
+    if(isset($options['snippet'])) {
         $text = snippet($text, 0, (int)$options['snippet']);
     }
 
