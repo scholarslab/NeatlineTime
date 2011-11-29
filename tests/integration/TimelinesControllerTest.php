@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4; */
 
 /**
- * Test Runner.
+ * Timelines controller integration tests.
  *
  * PHP version 5
  *
@@ -15,44 +15,33 @@
  * language governing permissions and limitations under the License.
  *
  * @package     omeka
- * @subpackage  neatlinemaps
+ * @subpackage  neatline
  * @author      Scholars' Lab <>
  * @author      Bethany Nowviskie <bethany@virginia.edu>
  * @author      Adam Soroka <ajs6f@virginia.edu>
  * @author      David McClure <david.mcclure@virginia.edu>
- * @copyright   2010 The Board and Visitors of the University of Virginia
+ * @copyright   2011 The Board and Visitors of the University of Virginia
  * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
- * @version     $Id$
  */
 ?>
 
 <?php
 
-require_once 'NeatlineTime_Test_AppTestCase.php';
-
-class NeatlineTime_AllTests extends PHPUnit_Framework_TestSuite
+class NeatlineTime_TimelinesControllerTest extends Omeka_Test_AppTestCase
 {
 
     /**
-     * Aggregate the tests.
+     * Instantiate the helper class, install the plugins, get the database.
      *
-     * @return NeatlineTime_AllTests $suite The test suite.
+     * @return void.
      */
-    public static function suite()
+    public function setUp()
     {
 
-        $suite = new NeatlineTime_AllTests('Neatline Time Tests');
-
-        $collector = new PHPUnit_Runner_IncludePathTestCollector(
-            array(
-                dirname(__FILE__) . '/integration',
-                dirname(__FILE__) . '/unit'
-            )
-        );
-
-        $suite->addTestFiles($collector->collectTests());
-
-        return $suite;
+        parent::setUp();
+        $this->helper = new NeatlineTime_Test_AppTestCase;
+        $this->helper->setUpPlugin();
+        $this->db = get_db();
 
     }
 
