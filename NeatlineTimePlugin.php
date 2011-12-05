@@ -197,16 +197,23 @@ class NeatlineTimePlugin
     }
 
     /**
-     * Deal with Timeline-specific search terms.
+     * Filter the items_browse_sql to return only items that have a non-empty
+     * value for the DC:Date field, when using the neatlinetime-json context.
+     * Uses the ItemSearch model (models/ItemSearch.php) to add the check for
+     * a non-empty DC:Date.
      *
      * @param Omeka_Db_Select $select
-     * @param array $params
      */
-    public function itemBrowseSql($select, $params)
+    public function itemBrowseSql($select)
     {
 
-        if (($request = Zend_Controller_Front::getInstance()->getRequest())) {
-
+        $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
+        if ($context == 'neatlinetime-json') {
+            $dcDate = $this->_db->getTable('Element')->findByElementSetNameAndElementName('Dublin Core', 'Date');
+            $search = new ItemSearch($select);
+            $newParams[0]['element_id'] = $dcDate->id;
+            $newParams[0]['type'] = 'is not empty';
+            $search->advanced($newParams);
         }
 
     }
