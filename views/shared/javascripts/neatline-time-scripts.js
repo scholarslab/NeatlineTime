@@ -53,8 +53,5 @@ var NeatlineTime = {
     tl.loadJSON(timelineData, function(json, url) {
         eventSource.loadJSON(json, url);
     });
-  },
-
+  }
 };
-
-

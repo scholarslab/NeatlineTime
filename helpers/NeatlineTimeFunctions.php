@@ -315,6 +315,8 @@ function queue_timeline_assets()
     $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
 
     $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
+
+    queue_css('neatlinetime-timeline');
 }
 
 /**
@@ -337,4 +339,28 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
     }
 
     return items_output_uri('neatlinetime-json', $params);
+}
+
+/**
+ * Displays timeline for a given NeatlineTime Timeline record.
+ *
+ * @since 1.0
+ * @param NeatlineTimeTimeline|null
+ * @return string HTML
+ */
+function neatlinetime_display_timeline($timeline = null)
+{
+    $timeline = $timeline ? $timeline : get_current_timeline();
+
+    $timelineId = text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
+
+    $html = '';
+    $html = '<script>'
+          . 'jQuery(document).ready(function() {'
+          . 'NeatlineTime.loadTimeline("'. $timelineId .'", "'. neatlinetime_json_uri_for_timeline() . '");' 
+          . '});'
+          . '</script>'
+          . '<div id="'. $timelineId .'" class="neatlinetime-timeline"></div>';
+
+    return $html;
 }
