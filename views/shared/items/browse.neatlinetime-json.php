@@ -15,19 +15,29 @@
 $neatlineTimeEvents = array();
 
 while (loop_items()) {
-    $itemDates = item('Dublin Core', 'Date', 'all');
+    $itemTitle = item('Dublin Core', 'Title');
+    $itemLink = abs_item_uri();
+    $itemDescription = item('Dublin Core', 'Description');
 
+    $itemDates = item('Dublin Core', 'Date', 'all');
+    if ($file = get_db()->getTable('File')->findWithImages(item('id'), 0)) {
+        $fileUrl = file_display_uri($file, 'square_thumbnail'); 
+    }
     if (!empty($itemDates)) {
         foreach ($itemDates as $itemDate) {
             $neatlineTimeEvent = array();
             $neatlineTimeEvent['start'] = date('c', strtotime($itemDate));
-            // $neatlineTimeEvent['end'] = '';
-            // $neatlineTimeEvent['latestStart'] = '';
-            // $neatlineTimeEvent['latestEnd'] = '';
-            // $neatlineTimeEvent['isDuration'] = 'true';
-            $neatlineTimeEvent['title'] = item('Dublin Core', 'Title');
-            $neatlineTimeEvent['description'] = item('Dublin Core', 'Description');
-            $neatlineTimeEvent['link'] = abs_item_uri();
+
+            $neatlineTimeEvent['title'] = $itemTitle;
+            $neatlineTimeEvent['link'] = $itemLink;
+
+            if ($fileUrl) {
+                $neatlineTimeEvent['image'] = $fileUrl;
+            }
+
+            if ($itemDescription) {
+                $neatlineTimeEvent['description'] = $itemDescription;
+            }
 
             $neatlineTimeEvents[] = $neatlineTimeEvent;
         }

@@ -107,11 +107,15 @@ of whatever you set for width/height, if you want a circle.
     text-decoration:none !important;
 }
 
+.timeline-event-bubble-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
 /* The event description inside an event bubble. */
 .timeline-event-bubble-body {
     font-size: 1.2em !important;
     padding: 10px 0 !important;
-    border: 1px dotted #eee !important;
     border-width: 1px 0 !important;
 }
 
@@ -125,9 +129,56 @@ elements inside the event body.
 
 /* The timestamp at the bottom of an event bubble.*/
 .timeline-event-bubble-time {
-    padding-top: 10px;
     font-weight:bold;
     color: rgba(0,0,0,0.5);
     text-align:right;
     margin-bottom: 0 !important;
+    margin-top: 10px !important;
+    padding:0 !important;
+}
+
+.timeline-event-bubble-title,
+.timeline-event-bubble-body,
+.timeline-event-bubble-time {
+    margin: 20px !important;
+}
+/* Bubble background images. Ugh. */
+.simileAjax-bubble-contentContainer {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.simileAjax-bubble-border-top,
+.simileAjax-bubble-border-left,
+.simileAjax-bubble-border-right,
+.simileAjax-bubble-border-bottom,
+.simileAjax-bubble-border-top-left,
+.simileAjax-bubble-border-top-right,
+.simileAjax-bubble-border-bottom-left,
+.simileAjax-bubble-border-bottom-right {
+    display:none !important;
+}
+
+div.simileAjax-bubble-close {
+    right:      10px !important;
+    top:        10px !important;
+}
+.simileAjax-bubble-close-pngTranslucent {
+    background-image:  url('../images/close-button.png') !important;
+}
+
+.simileAjax-bubble-arrow-point-left-pngTranslucent {
+    background-image:  url('../images/bubble-arrow-point-left.png') !important;
+}
+
+.simileAjax-bubble-arrow-point-right-pngTranslucent {
+    background-image:  url('../images/bubble-arrow-point-right.png') !important;
+}
+
+.simileAjax-bubble-arrow-point-up-pngTranslucent {
+    background-image:  url('../images/bubble-arrow-point-up.png') !important;
+}
+
+.simileAjax-bubble-arrow-point-down-pngTranslucent {
+    background-image:  url('../images/bubble-arrow-point-down.png') !important;
 }
