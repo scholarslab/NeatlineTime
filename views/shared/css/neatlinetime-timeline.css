@@ -100,6 +100,7 @@ of whatever you set for width/height, if you want a circle.
 .timeline-event-bubble-title {
     font-size: 1.5em !important;
     border:none !important;
+    padding: 40px 20px 0 !important;
 }
 
 /* Link inside the title inside an event bubble. */
@@ -110,13 +111,14 @@ of whatever you set for width/height, if you want a circle.
 .timeline-event-bubble-image {
     width: 60px;
     height: 60px;
-    margin-right: 20px;
+    padding-right: 20px;
+    padding-top: 40px;
 }
 /* The event description inside an event bubble. */
 .timeline-event-bubble-body {
     font-size: 1.2em !important;
-    padding: 10px 0 !important;
     border-width: 1px 0 !important;
+    padding:10px 20px !important;
 }
 
 /*
@@ -132,16 +134,9 @@ elements inside the event body.
     font-weight:bold;
     color: rgba(0,0,0,0.5);
     text-align:right;
-    margin-bottom: 0 !important;
-    margin-top: 10px !important;
-    padding:0 !important;
+    padding:0 20px 10px !important;
 }
 
-.timeline-event-bubble-title,
-.timeline-event-bubble-body,
-.timeline-event-bubble-time {
-    margin: 20px !important;
-}
 /* Bubble background images. Ugh. */
 .simileAjax-bubble-contentContainer {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
