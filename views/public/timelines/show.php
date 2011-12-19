@@ -1,6 +1,6 @@
 <?php
 /**
- * The show view for the Timelines administrative panel.
+ * The public show view for Timelines.
  *
  * PHP 5
  *
@@ -14,7 +14,7 @@
  */
 
 queue_timeline_assets();
-$head = array('bodyclass' => 'timelines primary', 
+$head = array('bodyclass' => 'timelines primary',
               'title' => timeline('title')
               );
 head($head);
