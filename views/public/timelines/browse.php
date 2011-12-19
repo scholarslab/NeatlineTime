@@ -13,7 +13,10 @@
  * language governing permissions and limitations under the License.
  */
  
-head(); ?>
+$head = array('bodyclass' => 'timelines primary',
+              'title' => html_escape('Neatline Time | Timelines'));
+head($head);
+?>
 
 <div id="primary" class="timelines">
     <h1>Browse Timelines</h1>
