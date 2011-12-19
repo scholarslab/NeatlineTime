@@ -80,7 +80,7 @@ function set_current_timeline($timeline = null)
 function set_timelines_for_loop($timelines)
 {
 
-    __v()->timelines = $timelines;
+    __v()->neatlinetimetimelines = $timelines;
 
 }
 
