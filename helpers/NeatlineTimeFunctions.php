@@ -184,7 +184,7 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
  *
  * @return string The delete button.
  **/
-function timeline_delete_button($timeline = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
+function timeline_delete_button($timeline = null)
 {
 
     if (!$timeline) {
@@ -193,11 +193,10 @@ function timeline_delete_button($timeline = null, $name = null, $value = 'Delete
 
     return button_to(
         uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
-        $name,
-        $value,
-        array('class' => 'delete-confirm'),
-        $formName,
-        $formAttribs);
+        null,
+        'Delete',
+        array('class' => 'delete-confirm')
+    );
 
 }
 
