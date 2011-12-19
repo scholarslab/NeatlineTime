@@ -73,21 +73,30 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
     /**
      * Create a timeline for testing.
      *
-     * @return void.
+     * @return NeatlineTimeTimeline
      */
-    public function _createTimeline()
+    public function _createTimeline($data = array())
     {
+        if (empty($data)) {
+            $data['title'] = 'Timeline Title';
+            $data['description'] = 'Timeline description.';
+            $data['public'] = '1';
+            $data['featured'] = '1';
+            $data['creator'] = $this->user->id;
+            $data['query'] = array('range' => '1');
+        }
+
         $timeline = new NeatlineTimeTimeline;
-        $timeline->title = 'Timeline Title';
-        $timeline->description = 'Timeline description.';
-        $timeline->public = '1';
-        $timeline->creator = $this->user->id;
 
-        $query = array(
-            'range' => '1'
-        );
+        foreach ($data as $k => $v) {
+            if ($k == 'query') {
+                $v = serialize($v);
+            }
+            $timeline->$k = $v;
+        }
 
-        $timeline->query = serialize($query);
         $timeline->save();
+        return $timeline;
     }
+
 }
