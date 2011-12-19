@@ -74,25 +74,6 @@ function set_current_timeline($timeline = null)
 }
 
 /**
- * Generate an absolute URI to a timeline. Primarily useful for generating
- * permalinks.
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return void
- */
-function abs_timeline_uri($timeline = null)
-{
-
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    return abs_uri('neatline-time/timelines/show/' . $timeline->id);
-}
-
-/**
  * Sets the timelines for loop
  *
  * @since 1.0
