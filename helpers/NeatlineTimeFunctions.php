@@ -194,70 +194,13 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
         $timeline = get_current_timeline();
     }
 
-    return '<a href="timelines/show/' . $timeline->id . '" class="edit">' . $timeline->title . '</a>';
+    $text = $text ? $text : $timeline->title;
 
-}
+    $route = 'neatline-time/timelines/'.$action.'/'.$timeline->id;
+    $uri = uri($route);
+    $props['href'] = $uri;
 
-/**
- * Build link to the edit page for the timeline.
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return string The link.
- **/
-function link_to_edit_timeline($text = 'Edit', $timeline = null)
-{
-
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    $uri = uri('neatline-time/timelines/edit/' . $timeline->id);
-
-    return '<a href="' . $uri . '" class="edit">'.$text.'</a>';
-
-}
-
-/**
- * Build link to the edit page for the timeline.
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return string The link.
- **/
-function link_to_edit_timeline_query($text = 'Edit Query', $timeline = null)
-{
-
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    $uri = uri('neatline-time/timelines/query/' . $timeline->id);
-
-    return '<a href="' . $uri . '" class="edit">'.$text.'</a>';
-
-}
-
-/**
- * Build link to the show page for the timeline.
- *
- * @since 1.0
- * @param Timeline|null
- *
- * @return string The link.
- **/
-function link_to_show_timeline($timeline = null)
-{
-
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
-
-    $uri = uri('neatline-time/timelines/show/' . $timeline->id);
-
-    return '<strong><a href="' . $uri . '">' . $timeline->title . '</a></strong>';
+    return '<a ' . _tag_attributes($props) . '>' . $text . '</a>';
 
 }
 

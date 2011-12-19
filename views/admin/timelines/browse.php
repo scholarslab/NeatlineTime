@@ -40,11 +40,11 @@ head($head);
     <tbody id="types-table-body">
 <?php while (loop_timelines()) : ?>
         <tr>
-            <td class="timeline-title"><?php echo link_to_show_timeline(); ?></td>
+            <td class="timeline-title"><?php echo link_to_timeline(); ?></td>
             <td><?php echo snippet_by_word_count(timeline('description'), '50'); ?></td>
             <?php if (has_permission(get_current_timeline(), 'edit')): ?>
-            <td><?php echo link_to_edit_timeline('Edit Metadata'); ?></td>
-            <td><?php echo link_to_edit_timeline_query('Edit Query'); ?></td>
+            <td><?php echo link_to_timeline('Edit Metadata', array('class' => 'edit'), 'edit'); ?></td>
+            <td><?php echo link_to_timeline('Edit Query', array('class' => 'query'), 'query'); ?></td>
             <?php endif; ?>
             <?php if (has_permission(get_current_timeline(), 'delete')): ?>
             <td><?php echo timeline_delete_button(get_current_timeline()); ?></td>
