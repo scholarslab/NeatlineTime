@@ -2,19 +2,10 @@
 /**
  * Tests for link_to_timeline function
  */
-class LinkToTimelineTest extends Omeka_Test_AppTestCase
+class LinkToTimelineTest extends NeatlineTime_Test_AppTestCase
 {
     protected $_isAdminTest = false;
-    
-    public function setUp()
-    {
-        parent::setUp();
-        $this->helper = new NeatlineTime_Test_AppTestCase;
-        $this->helper->setUpPlugin();
 
-        $timeline = $this->helper->_createTimeline();
-    }
-    
     /**
      * Tests whether link_to_timeline() returns the correct link for a timeline.
      *
@@ -22,6 +13,8 @@ class LinkToTimelineTest extends Omeka_Test_AppTestCase
      */
     public function testLinkToTimeline()
     {
+
+        $timeline = $this->_createTimeline();
 
         $this->dispatch('neatline-time/timelines/show/1');
 

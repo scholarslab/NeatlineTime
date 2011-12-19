@@ -27,23 +27,15 @@
 
 <?php
 
-class NeatlineTime_TimelinesControllerTest extends Omeka_Test_AppTestCase
+class NeatlineTime_TimelinesControllerTest extends NeatlineTime_Test_AppTestCase
 {
 
-    /**
-     * Instantiate the helper class, install the plugins, get the database.
-     *
-     * @return void.
-     */
     public function setUp()
     {
 
         parent::setUp();
-        $this->helper = new NeatlineTime_Test_AppTestCase;
-        $this->helper->setUpPlugin();
-        $this->db = get_db();
+        $timeline = $this->_createTimeline();
 
-        $timeline = $this->helper->_createTimeline();
     }
 
     /**

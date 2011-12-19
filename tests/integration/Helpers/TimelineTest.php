@@ -2,18 +2,9 @@
 /**
  * Tests for timeline function
  */
-class TimelineTest extends Omeka_Test_AppTestCase
+class TimelineTest extends NeatlineTime_Test_AppTestCase
 {
     protected $_isAdminTest = false;
-    
-    public function setUp()
-    {
-        parent::setUp();
-        $this->helper = new NeatlineTime_Test_AppTestCase;
-        $this->helper->setUpPlugin();
-
-        $timeline = $this->helper->_createTimeline();
-    }
 
     /**
      * Tests whether timeline() returns the correct value.
@@ -22,6 +13,8 @@ class TimelineTest extends Omeka_Test_AppTestCase
      **/
     public function testTimelineValue() 
     {
+
+        $timeline = $this->_createTimeline();
 
         $this->dispatch('neatline-time/timelines/show/1');
 
