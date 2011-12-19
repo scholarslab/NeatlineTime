@@ -20,8 +20,7 @@
  * @since 1.0
  * @param string
  * @param array $options
- * @param Timeline|null
- *
+ * @param NeatlineTimeTimeline|null
  * @return string
  */
 function timeline($fieldname, $options = array(), $timeline = null)
@@ -48,8 +47,7 @@ function timeline($fieldname, $options = array(), $timeline = null)
  * Returns the current timeline.
  *
  * @since 1.0
- *
- * @return Timeline|null
+ * @return NeatlineTimeTimeline|null
  */
 function get_current_timeline()
 {
@@ -62,8 +60,7 @@ function get_current_timeline()
  * Sets the current timeline.
  *
  * @since 1.0
- * @param Timeline|null
- *
+ * @param NeatlineTimeTimeline|null
  * @return void
  */
 function set_current_timeline($timeline = null)
@@ -78,7 +75,6 @@ function set_current_timeline($timeline = null)
  *
  * @since 1.0
  * @param array $timelines
- *
  * @return void
  */
 function set_timelines_for_loop($timelines)
@@ -92,7 +88,6 @@ function set_timelines_for_loop($timelines)
  * Get the set of timelines for the current loop.
  *
  * @since 1.0
- * 
  * @return array
  */
 function get_timelines_for_loop()
@@ -106,7 +101,6 @@ function get_timelines_for_loop()
  * Loops through timelines assigned to the view.
  *
  * @since 1.0
- * 
  * @return mixed
  */
 function loop_timelines()
@@ -117,10 +111,9 @@ function loop_timelines()
 }
 
 /**
- * Determine whether or not there are any timelines in the database.
+ * Determines whether there are any timelines in the database.
  *
  * @since 1.0
- *
  * @return boolean
  */
 function has_timelines()
@@ -131,10 +124,9 @@ function has_timelines()
 }
 
 /**
- * Determines whether there are any timelines for loop.
+ * Determines whether there are any timelines to loop on the view.
  *
  * @since 1.0
- *
  * @return boolean
  */
 function has_timelines_for_loop()
@@ -146,10 +138,9 @@ function has_timelines_for_loop()
 }
 
 /**
- * Returns the total number of timelines in the database
+ * Returns the total number of timelines in the database.
  *
  * @since 1.0
- *
  * @return integer
  */
 function total_timelines()
@@ -164,7 +155,7 @@ function total_timelines()
  * @param string HTML for the text of the link.
  * @param array Attributes for the <a> tag. (optional)
  * @param string The action for the link. Default is 'show'.
- * @param Timeline|null
+ * @param NeatlineTimeTimeline|null
  *
  * @return string HTML
  **/
@@ -189,9 +180,9 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
  * Build the delete button.
  *
  * @since 1.0
- * @param Timeline|null
+ * @param NeatlineTimeTimeline|null
  *
- * @return string The link.
+ * @return string The delete button.
  **/
 function timeline_delete_button($timeline = null, $name = null, $value = 'Delete', $attribs = array(), $formName = null, $formAttribs = array())
 {
@@ -244,11 +235,11 @@ function queue_timeline_assets()
 }
 
 /**
- * Returns the URI for a timeline's query
+ * Returns the URI for a timeline's json output.
  *
  * @since 1.0
- * @param Timeline
- * @return string URL
+ * @param NeatlineTimeTimeline|null
+ * @return string URL the items output uri for the neatlinetime-json output.
  */
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
