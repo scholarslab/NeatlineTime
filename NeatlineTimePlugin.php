@@ -122,9 +122,8 @@ class NeatlineTimePlugin
         // All everyone access to browse and show.
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
 
-        // Allow contributors everything but editAll, queryAll, and deleteAll.
-        $acl->allow('contributor', 'NeatlineTime_Timelines');
-        $acl->deny('contributor', 'NeatlineTime_Timelines', array('editAll', 'deleteAll', 'queryAll'));
+        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'deleteSelf'));
+        $acl->allow('contributor', 'NeatlineTime_Timelines', array('edit', 'query', 'delete'), new NeatlineTime_OwnershipAclAssertion());
 
     }
 
@@ -297,4 +296,5 @@ class NeatlineTimePlugin
         return $context;
 
     }
+
 }

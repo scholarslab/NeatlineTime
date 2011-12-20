@@ -31,6 +31,7 @@ if (!defined('NEATLINE_TIME_FORMS_DIR')) {
 }
 
 require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
+require_once NEATLINE_TIME_PLUGIN_DIR . '/OwnershipAclAssertion.php';
 require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
 
 new NeatlineTimePlugin;

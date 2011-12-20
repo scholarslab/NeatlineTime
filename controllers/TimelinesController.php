@@ -28,6 +28,11 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
         }
 
         $this->_browseRecordsPerPage = get_option('per_page_admin');
+
+        try {
+            $this->_table = $this->getTable($modelName);
+            $this->aclResource = $this->findById();
+        } catch (Omeka_Controller_Exception_404 $e) {}
     }
 
     public function addAction()

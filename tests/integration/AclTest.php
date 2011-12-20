@@ -22,6 +22,26 @@ class AclTest extends NeatlineTime_Test_AppTestCase
         $this->assertFalse($this->acl->isAllowed(null, self::RESOURCE, 'query'));
     }
 
+    public function testAclForSuperUsers()
+    {
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'browse'));
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'show'));
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'add'));
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'edit'));
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'delete'));
+        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'query'));
+    }
+
+    public function testAclForAdminUsers()
+    {
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'browse'));
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'show'));
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'add'));
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'edit'));
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'delete'));
+        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'query'));
+    }
+
     public function testAclForResearcherUsers()
     {
         $this->assertTrue($this->acl->isAllowed('researcher', self::RESOURCE, 'browse'));
