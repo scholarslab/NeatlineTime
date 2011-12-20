@@ -31,10 +31,6 @@ function timeline($fieldname, $options = array(), $timeline = null)
     $fieldname = strtolower($fieldname);  
     $text = $timeline->$fieldname;
 
-    if (strlen($text) == 0){
-        throw new Exception("Field doesn't exist");
-    }
-
     if(isset($options['snippet'])) {
         $text = snippet($text, 0, (int)$options['snippet']);
     }
