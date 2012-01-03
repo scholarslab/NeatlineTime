@@ -1,33 +1,70 @@
-# Timeline plugin for Omeka
+# NeatlineTime plugin for Omeka
 
-The Timeline plugin, by the [Scholars' Lab][1] at the University of
-Virginia Library, allows you to create timelines for the [Omeka][2] publishing
-platform. It uses the [TimeGlider jQuery plugin][3].
+The NeatlineTime plugin, by the [Scholars' Lab][scholarslab] at the University of
+Virginia Library, allows you to create timelines for the [Omeka][omeka] publishing
+platform. It uses the [SIMILE Timeline plugin][simile-timeline].
 
 ## Installation
 
-1. Upload the Timeline plugin directory to your Omeka installation's 'plugins'
-directory. See [Installing a Plugin][4].
+1. Upload the 'NeatlineTime' plugin directory to your Omeka installation's 'plugins'
+directory. See [Installing a Plugin][installing-a-plugin].
 
 2. Activate the plugin from the admin → Settings → Plugins page.
 
-## Note on Patches/Pull Requests
+## Usage
+
+Once installed, NeatlineTime will add a tab to the Omeka admin panel. From here, you can browse existing timelines, and add, edit, and delete timelines.
+
+Uninstalling the plugin will only remove timelines added to your Omeka archive, not any items displayed on those timelines.
+
+### Add a Timeline
+
+Creating a timeline is a two-step process:
+
+1. From the admin → NeatlineTime page, click the "Add New Timeline" button to begin creating a timeline. Give your timeline a title and description, and choose whether you wish to make the timeline public and featured. Save your changes.
+2. To choose which items appear on your timeline, click the "Edit Query" link beside your existing timeline. This will take you to a form similar to Omeka's advanced search form. From here, you can perform a search for any items in your archive, and if those items contain a valid date in their Dublin Core:Date field, they will be displayed on the timeline.
+
+### Browsing timelines
+
+You can browse existing timelines by clicking on the "Browse Timelines" from your public theme, or the "NeatlineTime" tab in the admin panel.
+
+### Viewing specific timelines
+
+You can always see your timeline by click the title of the timeline in the admin. The URL for your timelines will be 'neatline-time/timelines/show/[id]', where [id] is the ID number for your timeline.
+
+### Modifying theme templates for Neatline Time
+
+Neatline Time contains theme templates that control how its various pages are displayed in your public theme. As with other Omeka plugins, you can override these using the instructions on the [Theming Plugin Pages][themeing-plugin-pages] codex page.
+
+The template files available in NeatlineTime include:
+
+* timelines/browse.php - The template for browsing existing timelines.
+* timelines/show.php - The template for showing a specific timeline.
+
+## Contributing to the Project
+
+### Feedback
+We rely on the [Github issues tracker][issues] for feedback on issues
+and improvements.
+
+### Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+* Add tests for it, and make sure all the tests pass. This is important so we don't unknowingly break your changes in a future release. If you're fixing a bug, it helps us to verify that your bug does in fact exist. Both NeatlineTime and Omeka use [PHPUnit][phpunit] to ensure the quality of the software.
+* Commit your changes to your own fork.
+* Send us a pull request, with a clear explanation of the changes. Bonus points for topic branches.
 
 ## Copyright
-Copyright (c) 2011 The Board and Visitors of the University of Virginia.
-See [LICENSE][5] for more information.
 
-[1]: http://scholarslab.org/ "http://scholarslab.org/"
-[2]: http://omeka.org "http://omeka.org"
-[3]: http://timeglider.com/jquery/ "http://timeglider.com/jquery/"
-[4]: http://omeka.org/codex/Installing_a_Plugin "http://omeka.org/codex/Installing_a_Plugin"
-[5]: LICENSE "LICENSE"
+Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia.
+See [LICENSE][license] for more information.
 
+[scholarslab]: http://scholarslab.org/ "http://scholarslab.org/"
+[omeka]: http://omeka.org "http://omeka.org"
+[simile-timeline]: http://www.simile-widgets.org/wiki/Timeline "http://www.simile-widgets.org/wiki/Timeline"
+[installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin "http://omeka.org/codex/Installing_a_Plugin"
+[license]: LICENSE "LICENSE"
+[issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
+[phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
+[theming-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
