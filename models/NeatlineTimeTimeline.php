@@ -1,23 +1,6 @@
 <?php
 /**
-* PHP 5
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
- * applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
- */
-
-/**
- * Timeline record.
- *
- * @since 1.0
- * @author Scholars' Lab
- * @package NeatlineTime
- * @subpackage Models
+ * NeatlineTimeTimeline record.
  */
 class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
@@ -31,6 +14,11 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
     public $added;
     public $modified;
 
+    /**
+     * Mixin initializer.
+     *
+     * Adds the PublicFeatured mixin to timeline records.
+     */
     protected function _initializeMixins()
     {
         $this->_mixins[] = new PublicFeatured($this);
@@ -77,6 +65,12 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
         return 'NeatlineTime_Timelines';
     }
 
+    /**
+     * Checks whether a Timeline was created by a given user
+     *
+     * @param User
+     * @return boolean
+     */
     public function addedBy($user)
     {
         return ($user->id == $this->creator_id);

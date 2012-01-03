@@ -1,23 +1,22 @@
 <?php
 /**
- * PHP 5
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
- * applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
- */
-
-/**
  * Timelines Controller
- *
  */
-
 class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 {
+    /**
+     * Initialization.
+     *
+     * Checks version of Omeka and sets the controller's model accordingly.
+     * (Omeka 2.0 does this differently.).
+     *
+     * Sets the recordsPerPage using the per_page_admin setting.
+     *
+     * Checks the ACL for the model, and returns a 404 accordingly.
+     *
+     * @todo Add our own setting for recordsPerPage instead of using setting
+     * intended for Omeka Items.
+     */
     public function init()
     {
         $modelName = 'NeatlineTimeTimeline';

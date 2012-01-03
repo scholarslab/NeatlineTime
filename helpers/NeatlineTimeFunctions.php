@@ -1,17 +1,6 @@
 <?php
-
 /**
- * PHP 5
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
- * applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
- *
- * Timeline helper functions
+ * NeatlineTime helper functions
  */
 
 /**
@@ -282,7 +271,8 @@ function neatlinetime_display_timeline($timeline = null)
 /**
  * Returns a string detailing the parameters of a given query array.
  *
- * @param array A search array
+ * @param array A search array. If null, the function will check the front
+ * controller for any parameters.
  * @return string HTML
  */
 function neatlinetime_display_search_query($query = null)
