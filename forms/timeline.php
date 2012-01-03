@@ -31,6 +31,13 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
             'multiOptions' => array('0' => 'Not Public', '1' => 'Public')
         ));
 
+        // Featured/Not Featured
+        $this->addElement('select', 'featured', array(
+            'label'        => 'Featured',
+            'description'  => 'Whether the timeline is featured or not.',
+            'multiOptions' => array('0' => 'Not Featured', '1' => 'Featured')
+        ));
+
         // Submit
         $this->addElement('submit', 'submit', array(
             'label' => 'Save Timeline'
@@ -41,6 +48,7 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
             array('title', 
                   'description',
                   'public',
+                  'featured'
                  ),
             'timeline_info'
         );

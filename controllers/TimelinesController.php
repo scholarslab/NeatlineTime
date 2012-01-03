@@ -74,7 +74,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
 
         require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
         $form = new NeatlineTime_Form_Timeline;
-        $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public));
+        $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public, 'featured' => $timeline->featured));
 
         $this->view->form = $form;
     }
