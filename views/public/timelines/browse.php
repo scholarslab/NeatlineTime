@@ -26,7 +26,7 @@ head($head);
         <?php echo timeline('Description'); ?>
     </div>
     <?php endwhile; else: ?>
-        <p>You have no timelines</p>
+        <p>You have no timelines.</p>
     <?php endif; ?>
 </div>
 <?php foot(); ?>
