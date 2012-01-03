@@ -18,11 +18,13 @@ class TimelineTest extends NeatlineTime_Test_AppTestCase
 
         $this->dispatch('neatline-time/timelines/show/1');
 
-        // Exhibit Title
+        // Timeline Title
         $this->assertEquals('Timeline Title', timeline('title'));
 
-        // Exhibit Description
+        // Timeline Description
         $this->assertEquals('Timeline description.', timeline('description'));
 
+        // Check if timeline('query') returns an array.
+        $this->assertTrue(is_array(timeline('query')));
     }
 }

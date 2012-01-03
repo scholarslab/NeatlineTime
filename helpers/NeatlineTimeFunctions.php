@@ -26,13 +26,17 @@
 function timeline($fieldname, $options = array(), $timeline = null)
 {
 
-    $timeline = $timeline ? $timeline : get_current_timeline(); 
+    $timeline = $timeline ? $timeline : get_current_timeline();
 
-    $fieldname = strtolower($fieldname);  
+    $fieldname = strtolower($fieldname);
     $text = $timeline->$fieldname;
 
     if(isset($options['snippet'])) {
         $text = snippet($text, 0, (int)$options['snippet']);
+    }
+
+    if ($fieldname == 'query') {
+        $text = unserialize($text);
     }
 
     return $text;
@@ -272,5 +276,101 @@ function neatlinetime_display_timeline($timeline = null)
           . '</script>'
           . '<div id="'. $timelineId .'" class="neatlinetime-timeline"></div>';
 
+    return $html;
+}
+
+/**
+ * Returns a string detailing the parameters of a given query array.
+ *
+ * @param array A search array
+ * @return string HTML
+ */
+function neatlinetime_display_search_query($query = null)
+{
+    $html = '';
+
+    if ($query === null) {
+        $query = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+    }
+
+    if (!empty($query)) {
+        $db = get_db();
+
+        $displayList = '';
+        $displayArray = array();
+
+        foreach ($query as $key => $value) {
+            $filter = $key;
+            if($value != null) {
+                $displayValue = null;
+                switch ($key) {
+                    case 'type':
+                        $filter = 'Item Type';
+                        $itemtype = $db->getTable('ItemType')->find($value);
+                        $displayValue = $itemtype->name;
+                    break;
+
+                    case 'collection':
+                        $collection = $db->getTable('Collection')->find($value);
+                        $displayValue = $collection->name;
+                    break;
+
+                    case 'user':
+                        $user = $db->getTable('User')->find($value);
+                        $displayValue = $user->Entity->getName();
+                    break;
+
+                    case 'public':
+                    case 'featured':
+                        $displayValue = $value ? 'yes' : 'no';
+                    break;
+
+                    case 'search':
+                    case 'tags':
+                    case 'range':
+                        $displayValue = $value;
+                    break;
+                }
+                if ($displayValue) {
+                    $displayArray[$filter] = $displayValue;
+                }
+            }
+        }
+
+        foreach($displayArray as $filter => $value) {
+            $displayList .= '<li class="'.text_to_id($filter).'">'.ucwords($filter).': '.$value.'</li>';
+        }
+
+        if(array_key_exists('advanced', $query)) {
+            $advancedArray = array();
+
+            foreach ($query['advanced'] as $i => $row) {
+                if (!$row['element_id'] || !$row['type']) {
+                    continue;
+                }
+                $elementID = $row['element_id'];
+                $elementDb = $db->getTable('Element')->find($elementID);
+                $element = $elementDb->name;
+                $type = $row['type'];
+                $terms = $row['terms'];
+                $advancedValue = $element . ' ' . $type;
+                if ($terms) {
+                    $advancedValue .= ' "' . $terms . '"';
+                }
+                $advancedArray[$i] = $advancedValue;
+            }
+            foreach($advancedArray as $advancedKey => $advancedValue) {
+                $displayList .= '<li class="advanced">' . $advancedValue . '</li>';
+            }
+        } 
+
+        if (!empty($displayList)) {
+            $html = '<div class="filters">'
+                  . '<ul id="filter-list">'
+                  . $displayList
+                  . '</ul>'
+                  . '</div>';
+        }
+    }
     return $html;
 }
