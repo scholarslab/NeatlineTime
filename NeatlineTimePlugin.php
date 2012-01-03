@@ -171,8 +171,7 @@ class NeatlineTimePlugin
     {
 
         echo '<p><strong>Warning</strong>: Uninstalling the Neatline Time plugin
-            will remove all custom Timeline records, and will remove the
-            ability to browse items on a timeline.';
+            will remove all custom Timeline records.';
 
     }
 
