@@ -2,7 +2,7 @@
 /**
  * Timelines controller integration tests.
  */
-class NeatlineTime_TimelinesControllerTest extends NeatlineTime_Test_AppTestCase
+class TimelinesControllerTest extends NeatlineTime_Test_AppTestCase
 {
 
     public function setUp()
@@ -14,7 +14,7 @@ class NeatlineTime_TimelinesControllerTest extends NeatlineTime_Test_AppTestCase
     }
 
     /**
-     * Data provider for TimelinesController routes.
+     * Data provider for testRouting.
      */
     public static function routes()
     {
