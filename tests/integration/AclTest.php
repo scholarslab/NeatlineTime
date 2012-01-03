@@ -6,64 +6,70 @@ class AclTest extends NeatlineTime_Test_AppTestCase
 {
     const RESOURCE = 'NeatlineTime_Timelines';
 
+    /**
+     * Data for testAcl
+     */
+    public function acl()
+    {
+        return array(
+            // $isAllowed, $role, $privilege
+            array(false, null, 'add'),
+            array(false, null, 'edit'),
+            array(false, null, 'delete'),
+            array(false, null, 'query'),
+            array(true, null, 'browse'),
+            array(true, null, 'show'),
+            array(false, 'researcher', 'add'),
+            array(false, 'researcher', 'edit'),
+            array(false, 'researcher', 'delete'),
+            array(false, 'researcher', 'query'),
+            array(true, 'researcher', 'browse'),
+            array(true, 'researcher', 'show'),
+            array(true, 'researcher', 'showNotPublic'),
+            array(true, 'contributor', 'add'),
+            array(true, 'contributor', 'editSelf'),
+            array(true, 'contributor', 'deleteSelf'),
+            array(true, 'contributor', 'querySelf'),
+            array(false, 'contributor', 'editAll'),
+            array(false, 'contributor', 'deleteAll'),
+            array(false, 'contributor', 'queryAll'),
+            array(true, 'contributor', 'browse'),
+            array(true, 'contributor', 'show'),
+            array(true, 'contributor', 'showNotPublic'),
+            array(true, 'admin', 'add'),
+            array(true, 'admin', 'editSelf'),
+            array(true, 'admin', 'deleteSelf'),
+            array(true, 'admin', 'querySelf'),
+            array(true, 'admin', 'editAll'),
+            array(true, 'admin', 'deleteAll'),
+            array(true, 'admin', 'queryAll'),
+            array(true, 'admin', 'browse'),
+            array(true, 'admin', 'show'),
+            array(true, 'admin', 'showNotPublic'),
+            array(true, 'super', 'add'),
+            array(true, 'super', 'editSelf'),
+            array(true, 'super', 'deleteSelf'),
+            array(true, 'super', 'querySelf'),
+            array(true, 'super', 'editAll'),
+            array(true, 'super', 'deleteAll'),
+            array(true, 'super', 'queryAll'),
+            array(true, 'super', 'browse'),
+            array(true, 'super', 'show'),
+            array(true, 'super', 'showNotPublic'),
+        );
+    }
+
     public function assertPreConditions()
     {
         $this->assertTrue($this->acl->has(self::RESOURCE));
     }
 
-    public function testAclForUnauthenticatedUsers()
+    /**
+     * @dataProvider acl
+     */
+    public function testAcl($isAllowed, $role, $privilege = null)
     {
-        $this->assertTrue($this->acl->isAllowed(null, self::RESOURCE, 'browse'));
-        $this->assertTrue($this->acl->isAllowed(null, self::RESOURCE, 'show'));
-
-        $this->assertFalse($this->acl->isAllowed(null, self::RESOURCE, 'add'));
-        $this->assertFalse($this->acl->isAllowed(null, self::RESOURCE, 'edit'));
-        $this->assertFalse($this->acl->isAllowed(null, self::RESOURCE, 'delete'));
-        $this->assertFalse($this->acl->isAllowed(null, self::RESOURCE, 'query'));
-    }
-
-    public function testAclForSuperUsers()
-    {
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'browse'));
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'show'));
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'add'));
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'edit'));
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'delete'));
-        $this->assertTrue($this->acl->isAllowed('super', self::RESOURCE, 'query'));
-    }
-
-    public function testAclForAdminUsers()
-    {
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'browse'));
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'show'));
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'add'));
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'edit'));
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'delete'));
-        $this->assertTrue($this->acl->isAllowed('admin', self::RESOURCE, 'query'));
-    }
-
-    public function testAclForResearcherUsers()
-    {
-        $this->assertTrue($this->acl->isAllowed('researcher', self::RESOURCE, 'browse'));
-        $this->assertTrue($this->acl->isAllowed('researcher', self::RESOURCE, 'show'));
-
-        $this->assertFalse($this->acl->isAllowed('researcher', self::RESOURCE, 'add'));
-        $this->assertFalse($this->acl->isAllowed('researcher', self::RESOURCE, 'edit'));
-        $this->assertFalse($this->acl->isAllowed('researcher', self::RESOURCE, 'delete'));
-        $this->assertFalse($this->acl->isAllowed('researcher', self::RESOURCE, 'query'));
-    }
-
-    public function testAclForContributorUsers()
-    {
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'browse'));
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'show'));
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'add'));
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'editSelf'));
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'querySelf'));
-        $this->assertTrue($this->acl->isAllowed('contributor', self::RESOURCE, 'deleteSelf'));
-
-        $this->assertFalse($this->acl->isAllowed('contributor', self::RESOURCE, 'editAll'));
-        $this->assertFalse($this->acl->isAllowed('contributor', self::RESOURCE, 'queryAll'));
-        $this->assertFalse($this->acl->isAllowed('contributor', self::RESOURCE, 'deleteAll'));
+        $this->assertEquals($isAllowed,
+            $this->acl->isAllowed($role, self::RESOURCE, $privilege));
     }
 }

@@ -116,14 +116,15 @@ class NeatlineTimePlugin
     {
 
         $acl->loadResourceList(
-            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll'))
+            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic'))
         );
 
         // All everyone access to browse and show.
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
 
-        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'deleteSelf'));
-        $acl->allow('contributor', 'NeatlineTime_Timelines', array('edit', 'query', 'delete'), new NeatlineTime_OwnershipAclAssertion());
+        $acl->allow('researcher', 'NeatlineTime_Timelines', 'showNotPublic');
+        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'deleteSelf', 'showNotPublic'));
+        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'delete'), new NeatlineTime_OwnershipAclAssertion());
 
     }
 
