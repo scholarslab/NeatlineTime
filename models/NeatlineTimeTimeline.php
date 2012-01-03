@@ -5,6 +5,8 @@
 class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Interface
 {
 
+    CONST RESOURCE_ID = 'NeatlineTime_Timelines';
+
     public $title;
     public $description;
     public $query;
@@ -62,7 +64,7 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
      */
     public function getResourceId()
     {
-        return 'NeatlineTime_Timelines';
+        return self::RESOURCE_ID;
     }
 
     /**
