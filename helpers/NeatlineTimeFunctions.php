@@ -231,17 +231,11 @@ function queue_timeline_assets()
  */
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
+    $timeline = $timeline ? $timeline : get_current_timeline();
 
-    $query = $timeline->query;
+    $query = $timeline->query ? unserialize($timeline->query) : array();
 
-    if ($query) {
-        $params = unserialize($query);
-    }
-
-    return items_output_uri('neatlinetime-json', $params);
+    return items_output_uri('neatlinetime-json', $query);
 }
 
 /**
