@@ -101,40 +101,35 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
     /**
      * Sets the add success message
      */
-    protected function _getAddSuccessMessage($record)
+    protected function _getAddSuccessMessage($timeline)
     {
-        $timeline = $record;
         return 'The timeline "' . $timeline->title . '" was successfully added!';
     }
 
     /**
      * Sets the edit success message.
      */
-    protected function _getEditSuccessMessage($record)
+    protected function _getEditSuccessMessage($timeline)
     {
-        $timeline = $record;
         return 'The timeline "' . $timeline->title . '" was successfully changed!';
     }
 
     /**
      * Sets the delete success message
      */
-    protected function _getDeleteSuccessMessage($record)
+    protected function _getDeleteSuccessMessage($timeline)
     {
-        $timeline = $record;
         return 'The timeline "' . $timeline->title . '" was successfully deleted!';
     }
 
     /**
      * Sets the delete confirm message
      */
-    protected function _getDeleteConfirmMessage($record)
+    protected function _getDeleteConfirmMessage($timeline)
     {
-        $timeline = $record;
         return 'This will delete the timeline "'. $timeline->title .'" and '
              . 'its associated metadata. This will not delete any items '
-             . 'associated with this timeline, but will delete references to '
-             . 'this timeline in each item.';
+             . 'associated with this timeline.';
     }
 
 }
