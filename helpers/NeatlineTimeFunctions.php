@@ -151,9 +151,7 @@ function total_timelines()
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
 
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
+    $timeline = $timeline ? $timeline : get_current_timeline();
 
     $text = $text ? $text : $timeline->title;
 
@@ -176,9 +174,7 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 function timeline_delete_button($timeline = null)
 {
 
-    if (!$timeline) {
-        $timeline = get_current_timeline();
-    }
+    $timeline = $timeline ? $timeline : get_current_timeline();
 
     return button_to(
         uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
@@ -251,7 +247,6 @@ function neatlinetime_display_timeline($timeline = null)
 
     $timelineId = text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
 
-    $html = '';
     $html = '<script>'
           . 'jQuery(document).ready(function() {'
           . 'NeatlineTime.loadTimeline("'. $timelineId .'", "'. neatlinetime_json_uri_for_timeline() . '");' 
