@@ -3,8 +3,10 @@
  * The edit query view for a specific Timeline.
  */
 
+$timelineTitle = timeline('title') ? strip_formatting(timeline('title')) : '[Untitled]';
+$title = 'Neatline Time | Edit "' . $timelineTitle . '" Items Query';
 $head = array('bodyclass' => 'timelines primary', 
-              'title' => html_escape('Neatline Time | Edit Timeline Query'));
+              'title' => html_escape($title));
 head($head);
 ?>
 <script type="text/javascript" charset="utf-8">
