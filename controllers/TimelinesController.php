@@ -77,6 +77,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
         $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public, 'featured' => $timeline->featured));
 
         $this->view->form = $form;
+        $this->view->neatlinetimetimeline = $timeline;
     }
 
     public function queryAction()
@@ -94,8 +95,9 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
             // $_REQUEST, so we set both to be able to edit a previous query.
             $_GET = $queryArray;
             $_REQUEST = $queryArray;
-            $this->view->timeline = $timeline;
         }
+
+        $this->view->neatlinetimetimeline = $timeline;
     }
 
     /**
