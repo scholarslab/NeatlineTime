@@ -213,7 +213,7 @@ class NeatlineTimePlugin
         }
 
         // queue js
-        queue_js('moment.min');
+        queue_js(array('moment.min', 'dc_date'));
 
     }
 
