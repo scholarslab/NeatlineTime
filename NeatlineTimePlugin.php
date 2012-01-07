@@ -212,6 +212,9 @@ class NeatlineTimePlugin
             queue_css('neatline-time-admin');
         }
 
+        // queue js
+        queue_js('moment.min');
+
     }
 
     /**
