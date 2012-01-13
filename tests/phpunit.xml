@@ -1,9 +1,9 @@
-<phpunit bootstrap="../../../application/tests/bootstrap.php"
+<phpunit bootstrap="bootstrap.php"
          convertErrorsToExceptions="true"
          convertWarningsToExceptions="true">
 
     <testsuite name="Neatline Time Tests">
-        <file>AllTests.php</file>
+        <directory>integration</directory>
     </testsuite>
 
     <logging>
