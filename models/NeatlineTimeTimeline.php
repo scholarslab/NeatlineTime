@@ -10,7 +10,7 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
     public $title;
     public $description;
     public $query;
-    public $creator_id;
+    public $creator_id = 0;
     public $public = 0;
     public $featured = 0;
     public $added;
@@ -36,8 +36,12 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
      */
     protected function beforeInsert()
     {
-        $user = Omeka_Context::getInstance()->getCurrentUser();
-        $this->creator_id = $user->id;
+        $now = Zend_Date::now()->toString(self::DATE_FORMAT);
+        $this->added = $now;
+        $this->modified = $now;
+        if (!$this->creator_id && ($user = Omeka_Context::getInstance()->getCurrentUser())) {
+            $this->setAddedBy($user);
+        }
     }
 
     /**
@@ -76,5 +80,18 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
     public function addedBy($user)
     {
         return ($user->id == $this->creator_id);
+    }
+
+    /**
+     * Set the user who added the timeline.
+     *
+     * @param User $user
+     */
+    public function setAddedBy(User $user)
+    {
+        if (!$user->exists()) {
+            throw new RuntimeException(__("Cannot associate the timeline with a user who doesn't exist."));
+        }
+        $this->creator_id = $user->id;
     }
 }
