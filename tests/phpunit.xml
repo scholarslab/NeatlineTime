@@ -4,6 +4,7 @@
 
     <testsuite name="Neatline Time Tests">
         <directory>integration</directory>
+        <directory>unit</directory>
     </testsuite>
 
     <logging>
