@@ -16,7 +16,7 @@ head($head);
 </script>
 <h1><?php echo $head['title']; ?></h1>
 <div id="primary">
-    <?php echo $timeline->title; ?>
+    <?php echo timeline('title'); ?>
     <?php if ($query = timeline('query')) : ?>
     <p><strong>The &#8220;<?php echo timeline('title'); ?>&#8221; timeline displays items that match the following query:</strong></p>
     <?php echo neatlinetime_display_search_query($query); ?>
