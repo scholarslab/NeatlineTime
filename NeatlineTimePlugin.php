@@ -70,7 +70,7 @@ class NeatlineTimePlugin
             `added` timestamp NOT NULL default '0000-00-00 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
-            ) ENGINE=MyISAM";
+            ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 
         $this->_db->query($sqlNeatlineTimeline);
 
