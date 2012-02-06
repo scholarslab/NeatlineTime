@@ -5,9 +5,13 @@
 ?>
 
 <!-- Container. -->
-<div id="<?php echo neatlinetime_timeline_id(); ?>"></div>
+<div id="<?php echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline"></div>
 
 <script>
-    NeatlineTime.data = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
-    $('#<?php echo neatlinetime_timeline_id(); ?>').neatlinetimeline();
+    jQuery(document).ready(function($) {
+        NeatlineTime.loadTimeline(
+            '<?php echo neatlinetime_timeline_id(); ?>',
+            '<?php echo neatlinetime_json_uri_for_timeline(); ?>'
+        );
+    });
 </script>
