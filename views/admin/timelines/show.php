@@ -16,13 +16,17 @@ head($head);
     <?php echo link_to_timeline('Edit Items Query', array('class' => 'edit'), 'query'); ?>
 </p>
 <?php endif; ?>
+
 <div id="primary">
-    <?php echo neatlinetime_display_timeline(); ?>
-    <?php echo timeline('description'); ?>
+
+    <!-- Construct the timeline. -->
+    <?php echo $this->partial('timelines/_timeline.php'); ?>
+
     <?php if ($query = timeline('query')) : ?>
-    <h2>Items Query</h2>
-    <p><strong>The &#8220;<?php echo timeline('title'); ?>&#8221; timeline displays items that match the following query:</strong></p>
-    <?php echo neatlinetime_display_search_query(timeline('query')); ?>
+        <h2>Items Query</h2>
+        <p><strong>The &#8220;<?php echo timeline('title'); ?>&#8221; timeline displays items that match the following query:</strong></p>
+        <?php echo neatlinetime_display_search_query(timeline('query')); ?>
     <?php endif; ?>
+
 </div>
 <?php foot(); ?>
