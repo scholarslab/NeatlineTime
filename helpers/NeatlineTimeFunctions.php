@@ -236,29 +236,6 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
 }
 
 /**
- * Displays timeline for a given NeatlineTime Timeline record.
- *
- * @since 1.0
- * @param NeatlineTimeTimeline|null
- * @return string HTML
- */
-function neatlinetime_display_timeline($timeline = null)
-{
-    $timeline = $timeline ? $timeline : get_current_timeline();
-
-    $timelineId = text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
-
-    $html = '<script>'
-          . 'jQuery(document).ready(function() {'
-          . 'NeatlineTime.loadTimeline("'. $timelineId .'", "'. neatlinetime_json_uri_for_timeline() . '");' 
-          . '});'
-          . '</script>'
-          . '<div id="'. $timelineId .'" class="neatlinetime-timeline"></div>';
-
-    return $html;
-}
-
-/**
  * Construct id for container div.
  *
  * @since 1.0
