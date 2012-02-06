@@ -12,7 +12,11 @@ head($head);
 <h1><?php echo timeline('title'); ?></h1>
 
 <div id="primary">
-    <?php echo neatlinetime_display_timeline(); ?>
+
+    <!-- Construct the timeline. -->
+    <?php echo $this->partial('timelines/_timeline.php'); ?>
+
     <?php echo timeline('description'); ?>
+
 </div>
 <?php foot(); ?>
