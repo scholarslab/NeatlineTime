@@ -195,7 +195,6 @@ function queue_timeline_assets()
 {
     $headScript = __v()->headScript();
     $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
-    $headScript->appendFile(src('neatline_timeline.js', 'javascripts'));
 
     // Check useInternalJavascripts in config.ini.
     $config = Omeka_Context::getInstance()->getConfig('basic');
