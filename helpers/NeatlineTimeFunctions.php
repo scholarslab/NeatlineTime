@@ -194,6 +194,8 @@ function timeline_delete_button($timeline = null)
 function queue_timeline_assets()
 {
     $headScript = __v()->headScript();
+    $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
+    $headScript->appendFile(src('neatline_timeline.js', 'javascripts'));
 
     // Check useInternalJavascripts in config.ini.
     $config = Omeka_Context::getInstance()->getConfig('basic');
@@ -211,7 +213,6 @@ function queue_timeline_assets()
     } else {
         $headScript->appendFile('http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
     }
-    $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
 
     $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
 
@@ -235,26 +236,16 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
 }
 
 /**
- * Displays timeline for a given NeatlineTime Timeline record.
+ * Construct id for container div.
  *
  * @since 1.0
  * @param NeatlineTimeTimeline|null
  * @return string HTML
  */
-function neatlinetime_display_timeline($timeline = null)
+function neatlinetime_timeline_id($timeline = null)
 {
     $timeline = $timeline ? $timeline : get_current_timeline();
-
-    $timelineId = text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
-
-    $html = '<script>'
-          . 'jQuery(document).ready(function() {'
-          . 'NeatlineTime.loadTimeline("'. $timelineId .'", "'. neatlinetime_json_uri_for_timeline() . '");' 
-          . '});'
-          . '</script>'
-          . '<div id="'. $timelineId .'" class="neatlinetime-timeline"></div>';
-
-    return $html;
+    return text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
 }
 
 /**
