@@ -94,11 +94,13 @@ class NeatlineTimePlugin
      */
     public function defineAcl($acl)
     {
-
-        $acl->loadResourceList(
-            array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic'))
-        );
-
+        if (version_compare(OMEKA_VERSION, '2.0-dev', '>=')) {
+            $acl->addResource('NeatlineTime_Timelines');
+        } else {
+            $acl->loadResourceList(
+                array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic'))
+            );
+        }
         // All everyone access to browse and show.
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
 

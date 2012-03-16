@@ -92,7 +92,7 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
 
         $acl = Omeka_Context::getInstance()->acl;
         if ($acl && $acl->has('NeatlineTime_Timelines')) {
-            $has_permission = $acl->checkUserPermission('NeatlineTime_Timelines', 'showNotPublic');
+            $has_permission =  $acl->isAllowed(current_user(), 'NeatlineTime_Timelines', 'showNotPublic');
             if (!$has_permission) {
                 $select->where('ntt.public = 1');
             }
