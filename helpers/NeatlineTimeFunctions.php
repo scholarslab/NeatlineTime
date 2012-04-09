@@ -230,7 +230,8 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
     $timeline = $timeline ? $timeline : get_current_timeline();
 
     $query = $timeline->query ? unserialize($timeline->query) : array();
-
+    $query['sort_dir'] = 'a';
+    $query['sort_field'] = 'Dublin Core,Date';
     return items_output_uri('neatlinetime-json', $query);
 }
 
@@ -331,7 +332,7 @@ function neatlinetime_display_search_query($query = null)
             foreach($advancedArray as $advancedKey => $advancedValue) {
                 $displayList .= '<li class="advanced">' . $advancedValue . '</li>';
             }
-        } 
+        }
 
         if (!empty($displayList)) {
             $html = '<div class="filters">'
@@ -342,4 +343,87 @@ function neatlinetime_display_search_query($query = null)
         }
     }
     return $html;
+}
+
+function neatlinetime_get_startdate($timeline = null)
+{
+  $timeline = $timeline ? $timeline : get_current_timeline();
+
+  $query = $timeline->query ? unserialize($timeline->query) : array();
+  $query = neatlinetime_convert_search_filters($query);
+  $query['sort_dir'] = 'a';
+  $query['sort_field'] = 'Dublin Core,Date';
+  $items = get_db()->getTable('Item')->findBy($query, 1);
+  $firstItem = $items[0];
+  $startDate = item('Dublin Core', 'Date', array(), $firstItem);
+
+  return $startDate;
+}
+
+/**
+ * Converts the advanced search output into acceptable input for findBy().
+ *
+ * @see Omeka_Db_Table::findBy()
+ * @param array $query HTTP query string array
+ * @return array Array of findBy() parameters
+ */
+function neatlinetime_convert_search_filters($query) {
+    $perms  = array();
+    $filter = array();
+    $order  = array();
+
+    //Show only public items
+    if ($query['public']) {
+        $perms['public'] = true;
+    }
+
+    //Here we add some filtering for the request
+    // User-specific item browsing
+    if ($userToView = $query['user']) {
+        if (is_numeric($userToView)) {
+            $filter['user'] = $userToView;
+        }
+    }
+
+    if ($query['featured']) {
+        $filter['featured'] = true;
+    }
+
+    if ($collection = $query['collection']) {
+        $filter['collection'] = $collection;
+    }
+
+    if ($type = $query['type']) {
+        $filter['type'] = $type;
+    }
+
+    if (($tag = @$query['tag']) || ($tag = @$query['tags'])) {
+        $filter['tags'] = $tag;
+    }
+
+    if ($excludeTags = @$query['excludeTags']) {
+        $filter['excludeTags'] = $excludeTags;
+    }
+
+    if ($search = $query['search']) {
+        $filter['search'] = $search;
+    }
+
+    //The advanced or 'itunes' search
+    if ($advanced = $query['advanced']) {
+
+        //We need to filter out the empty entries if any were provided
+        foreach ($advanced as $k => $entry) {
+            if (empty($entry['element_id']) || empty($entry['type'])) {
+                unset($advanced[$k]);
+            }
+        }
+        $filter['advanced_search'] = $advanced;
+    };
+
+    if ($range = $query['range']) {
+        $filter['range'] = $range;
+    }
+
+    return array_merge($perms, $filter, $order);
 }

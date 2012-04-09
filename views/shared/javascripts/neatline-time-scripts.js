@@ -10,7 +10,7 @@ var NeatlineTime = {
     }
   },
 
-  loadTimeline: function(timelineId, timelineData) {
+  loadTimeline: function(timelineId, timelineData, timelineStartDate) {
     var eventSource = new Timeline.DefaultEventSource();
 
     var defaultTheme = Timeline.getDefaultTheme();
@@ -18,6 +18,7 @@ var NeatlineTime = {
 
     var bandInfos = [
         Timeline.createBandInfo({
+            date:           timelineStartDate,
             eventSource:    eventSource,
             width:          "80%",
             intervalUnit:   Timeline.DateTime.MONTH,
@@ -38,6 +39,7 @@ var NeatlineTime = {
             )
         }),
         Timeline.createBandInfo({
+            date:           timelineStartDate,
             overview:       true,
             eventSource:    eventSource,
             width:          "20%",
@@ -53,5 +55,6 @@ var NeatlineTime = {
     tl.loadJSON(timelineData, function(json, url) {
         eventSource.loadJSON(json, url);
     });
+
   }
 };
