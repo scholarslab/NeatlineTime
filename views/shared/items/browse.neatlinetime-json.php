@@ -17,7 +17,13 @@ while (loop_items()) {
     if (!empty($itemDates)) {
         foreach ($itemDates as $itemDate) {
             $neatlineTimeEvent = array();
-            $neatlineTimeEvent['start'] = date('c', strtotime($itemDate));
+            $dateArray = explode('/', $itemDate);
+
+            $neatlineTimeEvent['start'] = date('c', strtotime(trim($dateArray[0])));
+
+            if (count($dateArray) == 2) {
+              $neatlineTimeEvent['end'] = date('c', strtotime(trim($dateArray[1])));
+            }
 
             $neatlineTimeEvent['title'] = $itemTitle;
             $neatlineTimeEvent['link'] = $itemLink;
@@ -36,6 +42,7 @@ while (loop_items()) {
 }
 
 $neatlineTimeArray = array();
+$neatlineTimeArray['date-time-format'] = "iso8601";
 $neatlineTimeArray['events'] = $neatlineTimeEvents;
 
 $neatlinetimeJson = json_encode($neatlineTimeArray);
