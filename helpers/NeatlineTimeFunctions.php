@@ -21,7 +21,7 @@ function timeline($fieldname, $options = array(), $timeline = null)
     $text = $timeline->$fieldname;
 
     if(isset($options['snippet'])) {
-        $text = snippet($text, 0, (int)$options['snippet']);
+        $text = nls2p(snippet($text, 0, (int)$options['snippet']));
     }
 
     if ($fieldname == 'query') {
@@ -426,4 +426,26 @@ function neatlinetime_convert_search_filters($query) {
     }
 
     return array_merge($perms, $filter, $order);
+}
+
+/**
+ * Displays random featured timelines
+ *
+ * @param int Maximum number of random featured timelines to display.
+ * @return string HTML
+ */
+function neatlinetime_display_random_featured_timelines($num = 1) {
+  $html = '';
+
+  $timelines = get_db()->getTable('NeatlineTimeTimeline')->findBy(array('random' => 1, 'featured' => 1), $num);
+
+  if ($timelines) {
+    foreach ($timelines as $timeline) {
+      $html .= '<h3>' . link_to_timeline(null, array(), 'show', $timeline) . '</h3>'
+        . '<div class="description timeline-description">'
+        . timeline('description', array('snippet' => 150), $timeline)
+        . '</div>';
+    }
+    return $html;
+  }
 }

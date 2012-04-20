@@ -7,13 +7,13 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
 
     /**
      * Filter public/not public timelines.
-     * 
+     *
      * @param Zend_Db_Select
      * @param boolean Whether to retrieve only public timelines.
      * @return void
      */
     public function filterByPublic($select, $isPublic)
-    {         
+    {
         $isPublic = (bool) $isPublic;
 
         if ($isPublic) {
@@ -32,7 +32,7 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     public function filterByFeatured($select, $isFeatured)
     {
         $isFeatured = (bool) $isFeatured;
-        
+
         if ($isFeatured) {
             $select->where('ntt.featured = 1');
         } else {
@@ -49,21 +49,32 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     public function filterByUser($select, $userId)
     {
         $userId = (int) $userId;
-        
+
         if ($userId) {
             $select->where('ntt.creator_id = ?', $userId);
         }
     }
 
     /**
+     * Order SELECT results randomly.
+     *
+     * @param Zend_Db_Select
+     * @return void
+     */
+    public function orderSelectByRandom($select)
+    {
+        $select->order('RAND()');
+    }
+
+    /**
      * Possible options: 'public','user', and 'featured'.
-     * 
+     *
      * @param Omeka_Db_Select
      * @param array
      * @return void
      */
     public function applySearchFilters($select, $params)
-    {   
+    {
         if (isset($params['user'])) {
             $userId = $params['user'];
             $this->filterByUser($select, $userId);
@@ -77,11 +88,15 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
             $this->filterByFeatured($select, $params['featured']);
         }
 
+        if(isset($params['random'])) {
+            $this->orderSelectByRandom($select);
+        }
+
         $select->group("ntt.id");
     }
 
     /**
-     * This is a kind of simple factory that spits out proper beginnings 
+     * This is a kind of simple factory that spits out proper beginnings
      * of SQL statements when retrieving items
      *
      * @return Omeka_Db_Select
