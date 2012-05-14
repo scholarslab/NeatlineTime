@@ -100,6 +100,20 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
         $this->view->neatlinetimetimeline = $timeline;
     }
 
+    public function itemsAction()
+    {
+        $timeline = $this->findById();
+
+        $query = $timeline->query ? unserialize($timeline->query) : array();
+        $query = neatlinetime_convert_search_filters($query);
+        $query['sort_dir'] = 'a';
+        $query['sort_field'] = 'Dublin Core,Date';
+        $items = get_db()->getTable('Item')->findBy($query, null);
+
+        $this->view->neatlinetimetimeline = $timeline;
+        $this->view->items = $items;
+    }
+
     /**
      * Sets the add success message
      */

@@ -228,11 +228,8 @@ function queue_timeline_assets()
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
     $timeline = $timeline ? $timeline : get_current_timeline();
-
-    $query = $timeline->query ? unserialize($timeline->query) : array();
-    $query['sort_dir'] = 'a';
-    $query['sort_field'] = 'Dublin Core,Date';
-    return items_output_uri('neatlinetime-json', $query);
+    $route = 'neatline-time/timelines/items/'.$timeline->id.'?output=neatlinetime-json';
+    return uri($route);
 }
 
 /**

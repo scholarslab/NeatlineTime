@@ -4,7 +4,6 @@
  */
 
 $neatlineTimeEvents = array();
-
 while (loop_items()) {
     $itemTitle = item('Dublin Core', 'Title');
     $itemLink = abs_item_uri();
@@ -45,3 +44,4 @@ $neatlineTimeArray['events'] = $neatlineTimeEvents;
 $neatlinetimeJson = json_encode($neatlineTimeArray);
 
 echo $neatlinetimeJson;
+
