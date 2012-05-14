@@ -373,27 +373,27 @@ function neatlinetime_convert_search_filters($query) {
     $order  = array();
 
     //Show only public items
-    if ($query['public']) {
+    if (@$query['public']) {
         $perms['public'] = true;
     }
 
     //Here we add some filtering for the request
     // User-specific item browsing
-    if ($userToView = $query['user']) {
+    if ($userToView = @$query['user']) {
         if (is_numeric($userToView)) {
             $filter['user'] = $userToView;
         }
     }
 
-    if ($query['featured']) {
+    if (@$query['featured']) {
         $filter['featured'] = true;
     }
 
-    if ($collection = $query['collection']) {
+    if ($collection = @$query['collection']) {
         $filter['collection'] = $collection;
     }
 
-    if ($type = $query['type']) {
+    if ($type = @$query['type']) {
         $filter['type'] = $type;
     }
 
@@ -405,12 +405,12 @@ function neatlinetime_convert_search_filters($query) {
         $filter['excludeTags'] = $excludeTags;
     }
 
-    if ($search = $query['search']) {
+    if ($search = @$query['search']) {
         $filter['search'] = $search;
     }
 
     //The advanced or 'itunes' search
-    if ($advanced = $query['advanced']) {
+    if ($advanced = @$query['advanced']) {
 
         //We need to filter out the empty entries if any were provided
         foreach ($advanced as $k => $entry) {
@@ -421,7 +421,7 @@ function neatlinetime_convert_search_filters($query) {
         $filter['advanced_search'] = $advanced;
     };
 
-    if ($range = $query['range']) {
+    if ($range = @$query['range']) {
         $filter['range'] = $range;
     }
 
