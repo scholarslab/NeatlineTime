@@ -446,3 +446,32 @@ function neatlinetime_display_random_featured_timelines($num = 1) {
     return $html;
   }
 }
+
+/**
+ * Returns a string for neatline_json 'classname' attribute for an item.
+ *
+ * Default fields included are: 'item', item type name, all DC:Type values.
+ *
+ * Output can be filtered using the 'neatlinetime_item_class' filter.
+ *
+ * @return string
+ */
+function neatlinetime_item_class($item = null) {
+    $item = $item ? $item : get_current_item();
+    
+    $classArray = array('item');
+
+    if ($itemTypeName = $item->Type->name) {
+        $classArray[] = text_to_id($itemTypeName);
+    }
+
+    if ($dcTypes = item('Dublin Core', 'Type', 'all', $item)) {
+        foreach ($dcTypes as $type) {
+            $classArray[] = text_to_id($type);
+        }
+    }
+
+    $classAttribute = implode(' ', $classArray);
+    $classAttribute = apply_filters('neatlinetime_item_class', $classAttribute);
+    return $classAttribute;
+}

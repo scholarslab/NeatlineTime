@@ -26,6 +26,7 @@ while (loop_items()) {
 
             $neatlineTimeEvent['title'] = $itemTitle;
             $neatlineTimeEvent['link'] = $itemLink;
+            $neatlineTimeEvent['classname'] = neatlinetime_item_json_class();
 
             if ($fileUrl) {
                 $neatlineTimeEvent['image'] = $fileUrl;
