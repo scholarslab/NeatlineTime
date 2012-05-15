@@ -98,15 +98,15 @@ class NeatlineTimePlugin
             $acl->addResource('NeatlineTime_Timelines');
         } else {
             $acl->loadResourceList(
-                array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic'))
+                array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic', 'items', 'itemsSelf', 'itemsAll'))
             );
         }
-        // All everyone access to browse and show.
-        $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse'));
+        // All everyone access to browse, show, and items.
+        $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse', 'items'));
 
         $acl->allow('researcher', 'NeatlineTime_Timelines', 'showNotPublic');
-        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'deleteSelf', 'showNotPublic'));
-        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'delete'), new NeatlineTime_OwnershipAclAssertion());
+        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
+        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'items', 'delete'), new NeatlineTime_OwnershipAclAssertion());
 
     }
 
@@ -264,15 +264,14 @@ class NeatlineTimePlugin
     }
 
     /**
-     * Adds neatlinetime-json context to the 'browse' and 'show' actions for
-     * the Items controller.
+     * Adds neatlinetime-json context to the 'items' actions for the
+     * NeatlineTime_TimelinesController.
      */
     public function defineActionContexts($context, $controller)
     {
 
-        if ($controller instanceof ItemsController) {
-            $context['browse'][] = 'neatlinetime-json';
-            $context['show'][] = 'neatlinetime-json';
+        if ($controller instanceof NeatlineTime_TimelinesController) {
+            $context['items'][] = 'neatlinetime-json';
         }
 
         return $context;

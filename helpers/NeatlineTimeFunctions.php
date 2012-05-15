@@ -21,7 +21,7 @@ function timeline($fieldname, $options = array(), $timeline = null)
     $text = $timeline->$fieldname;
 
     if(isset($options['snippet'])) {
-        $text = snippet($text, 0, (int)$options['snippet']);
+        $text = nls2p(snippet($text, 0, (int)$options['snippet']));
     }
 
     if ($fieldname == 'query') {
@@ -228,11 +228,8 @@ function queue_timeline_assets()
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
     $timeline = $timeline ? $timeline : get_current_timeline();
-
-    $query = $timeline->query ? unserialize($timeline->query) : array();
-    $query['sort_dir'] = 'a';
-    $query['sort_field'] = 'Dublin Core,Date';
-    return items_output_uri('neatlinetime-json', $query);
+    $route = 'neatline-time/timelines/items/'.$timeline->id.'?output=neatlinetime-json';
+    return uri($route);
 }
 
 /**
@@ -373,27 +370,27 @@ function neatlinetime_convert_search_filters($query) {
     $order  = array();
 
     //Show only public items
-    if ($query['public']) {
+    if (@$query['public']) {
         $perms['public'] = true;
     }
 
     //Here we add some filtering for the request
     // User-specific item browsing
-    if ($userToView = $query['user']) {
+    if ($userToView = @$query['user']) {
         if (is_numeric($userToView)) {
             $filter['user'] = $userToView;
         }
     }
 
-    if ($query['featured']) {
+    if (@$query['featured']) {
         $filter['featured'] = true;
     }
 
-    if ($collection = $query['collection']) {
+    if ($collection = @$query['collection']) {
         $filter['collection'] = $collection;
     }
 
-    if ($type = $query['type']) {
+    if ($type = @$query['type']) {
         $filter['type'] = $type;
     }
 
@@ -405,12 +402,12 @@ function neatlinetime_convert_search_filters($query) {
         $filter['excludeTags'] = $excludeTags;
     }
 
-    if ($search = $query['search']) {
+    if ($search = @$query['search']) {
         $filter['search'] = $search;
     }
 
     //The advanced or 'itunes' search
-    if ($advanced = $query['advanced']) {
+    if ($advanced = @$query['advanced']) {
 
         //We need to filter out the empty entries if any were provided
         foreach ($advanced as $k => $entry) {
@@ -421,9 +418,60 @@ function neatlinetime_convert_search_filters($query) {
         $filter['advanced_search'] = $advanced;
     };
 
-    if ($range = $query['range']) {
+    if ($range = @$query['range']) {
         $filter['range'] = $range;
     }
 
     return array_merge($perms, $filter, $order);
+}
+
+/**
+ * Displays random featured timelines
+ *
+ * @param int Maximum number of random featured timelines to display.
+ * @return string HTML
+ */
+function neatlinetime_display_random_featured_timelines($num = 1) {
+  $html = '';
+
+  $timelines = get_db()->getTable('NeatlineTimeTimeline')->findBy(array('random' => 1, 'featured' => 1), $num);
+
+  if ($timelines) {
+    foreach ($timelines as $timeline) {
+      $html .= '<h3>' . link_to_timeline(null, array(), 'show', $timeline) . '</h3>'
+        . '<div class="description timeline-description">'
+        . timeline('description', array('snippet' => 150), $timeline)
+        . '</div>';
+    }
+    return $html;
+  }
+}
+
+/**
+ * Returns a string for neatline_json 'classname' attribute for an item.
+ *
+ * Default fields included are: 'item', item type name, all DC:Type values.
+ *
+ * Output can be filtered using the 'neatlinetime_item_class' filter.
+ *
+ * @return string
+ */
+function neatlinetime_item_class($item = null) {
+    $item = $item ? $item : get_current_item();
+    
+    $classArray = array('item');
+
+    if ($itemTypeName = $item->Type->name) {
+        $classArray[] = text_to_id($itemTypeName);
+    }
+
+    if ($dcTypes = item('Dublin Core', 'Type', 'all', $item)) {
+        foreach ($dcTypes as $type) {
+            $classArray[] = text_to_id($type);
+        }
+    }
+
+    $classAttribute = implode(' ', $classArray);
+    $classAttribute = apply_filters('neatlinetime_item_class', $classAttribute);
+    return $classAttribute;
 }

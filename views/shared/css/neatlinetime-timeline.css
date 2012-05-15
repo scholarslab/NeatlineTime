@@ -71,6 +71,11 @@ of whatever you set for width/height, if you want a circle.
     border-radius: 3px;
 }
 
+.neatlinetime-timeline .timeline-event-tape,
+.neatlinetime-timeline .timeline-small-event-tape {
+    background: rgba(190, 160, 5, 0.75);
+}
+
 .neatlinetime-timeline .timeline-band-1 .timeline-ether-highlight {
     background: rgba(255,255,255, 0.35);
 }
@@ -134,7 +139,8 @@ elements inside the event body.
     font-weight:bold;
     color: rgba(0,0,0,0.5);
     text-align:right;
-    padding:0 20px 10px !important;
+    padding:10px 20px !important;
+    clear:both;
 }
 
 /* Bubble background images. Ugh. */

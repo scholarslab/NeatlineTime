@@ -13,7 +13,7 @@ class NeatlineTimeJsonUriForTimelineTest extends NeatlineTime_Test_AppTestCase {
 
         $this->dispatch('neatline-time/timelines/show/1');
 
-        $html = '/items/browse?range=1&output=neatlinetime-json';
+        $html = '/neatline-time/timelines/items/1?output=neatlinetime-json';
 
         $this->assertSame($html, neatlinetime_json_uri_for_timeline());
 
