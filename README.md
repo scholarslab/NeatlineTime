@@ -33,6 +33,21 @@ Omeka's advanced search form. From here, you can perform a search for any
 items in your archive, and if those items contain a valid date in their Dublin
 Core:Date field, they will be displayed on the timeline.
 
+#### Dates for Items
+
+NeatlineTime will attempt to convert the value for a date string into an
+ISO-8601 date format. Some example date values you can use:
+
+  * January 1, 2012
+  * 2012-01-01
+  * 2012
+  * 1 Jan 2012
+
+To denote spans of time, separate the start and end date with a '/':
+
+  * January 1, 2012/February 1, 2012
+  * 2012/2013
+
 ### Browsing timelines
 
 You can browse existing timelines by clicking on the "Browse Timelines" from
