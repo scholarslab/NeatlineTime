@@ -78,11 +78,11 @@ and Omeka use [PHPUnit][phpunit] to ensure the quality of the software.
 Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia.
 See [LICENSE][license] for more information.
 
-[scholarslab]: http://scholarslab.org/ "http://scholarslab.org/"
-[omeka]: http://omeka.org "http://omeka.org"
-[simile-timeline]: http://www.simile-widgets.org/wiki/Timeline "http://www.simile-widgets.org/wiki/Timeline"
-[installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin "http://omeka.org/codex/Installing_a_Plugin"
-[license]: LICENSE "LICENSE"
+[scholarslab]: http://scholarslab.org/
+[omeka]: http://omeka.org
+[simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
+[installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
+[license]: LICENSE
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
 [theming-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
