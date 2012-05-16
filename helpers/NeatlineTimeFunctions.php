@@ -475,3 +475,20 @@ function neatlinetime_item_class($item = null) {
     $classAttribute = apply_filters('neatlinetime_item_class', $classAttribute);
     return $classAttribute;
 }
+
+/**
+ * Generates an ISO-8601 date from a date string
+ *
+ * @see Zend_Date
+ * @return string ISO-8601 date
+ */
+function neatlinetime_convert_date($date) {
+  try {
+    $newDate = new Zend_Date($date);
+    return $newDate->get('c');
+  } catch (Exception $e) {
+    return false;
+  }
+
+}
+
