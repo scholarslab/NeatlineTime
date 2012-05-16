@@ -342,21 +342,6 @@ function neatlinetime_display_search_query($query = null)
     return $html;
 }
 
-function neatlinetime_get_startdate($timeline = null)
-{
-  $timeline = $timeline ? $timeline : get_current_timeline();
-
-  $query = $timeline->query ? unserialize($timeline->query) : array();
-  $query = neatlinetime_convert_search_filters($query);
-  $query['sort_dir'] = 'a';
-  $query['sort_field'] = 'Dublin Core,Date';
-  $items = get_db()->getTable('Item')->findBy($query, 1);
-  $firstItem = $items[0];
-  $startDate = item('Dublin Core', 'Date', array(), $firstItem);
-
-  return $startDate;
-}
-
 /**
  * Converts the advanced search output into acceptable input for findBy().
  *
