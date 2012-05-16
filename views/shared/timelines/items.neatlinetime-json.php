@@ -18,22 +18,24 @@ while (loop_items()) {
             $neatlineTimeEvent = array();
             $dateArray = explode('/', $itemDate);
 
-            $neatlineTimeEvent['start'] = date('c', strtotime(trim($dateArray[0])));
+            if ($dateStart = neatlinetime_convert_date(trim($dateArray[0]))) {
+                $neatlineTimeEvent['start'] = $dateStart;
 
-            if (count($dateArray) == 2) {
-              $neatlineTimeEvent['end'] = date('c', strtotime(trim($dateArray[1])));
+                if (count($dateArray) == 2) {
+                    $neatlineTimeEvent['end'] = neatlinetime_convert_date(trim($dateArray[1]));
+                }
+
+                $neatlineTimeEvent['title'] = $itemTitle;
+                $neatlineTimeEvent['link'] = $itemLink;
+                $neatlineTimeEvent['classname'] = neatlinetime_item_class();
+
+                if ($fileUrl) {
+                    $neatlineTimeEvent['image'] = $fileUrl;
+                }
+
+                $neatlineTimeEvent['description'] = $itemDescription;
+                $neatlineTimeEvents[] = $neatlineTimeEvent;
             }
-
-            $neatlineTimeEvent['title'] = $itemTitle;
-            $neatlineTimeEvent['link'] = $itemLink;
-            $neatlineTimeEvent['classname'] = neatlinetime_item_class();
-
-            if ($fileUrl) {
-                $neatlineTimeEvent['image'] = $fileUrl;
-            }
-            
-            $neatlineTimeEvent['description'] = $itemDescription;
-            $neatlineTimeEvents[] = $neatlineTimeEvent;
         }
     }
 }
