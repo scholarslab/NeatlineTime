@@ -15,7 +15,11 @@ head($head);
         <h2><?php echo link_to_timeline(); ?></h2>
         <?php echo timeline('Description'); ?>
     </div>
-    <?php endwhile; else: ?>
+    <?php endwhile; ?>
+    <div class="pagination">
+      <?php echo pagination_links(); ?>
+    </div>
+    <?php else: ?>
         <p>You have no timelines.</p>
     <?php endif; ?>
 </div>
