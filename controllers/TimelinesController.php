@@ -119,7 +119,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
      */
     protected function _getAddSuccessMessage($timeline)
     {
-        return 'The timeline "' . $timeline->title . '" was successfully added!';
+        return __('The timeline "%s" was successfully added!', $timeline->title);
     }
 
     /**
@@ -127,7 +127,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
      */
     protected function _getEditSuccessMessage($timeline)
     {
-        return 'The timeline "' . $timeline->title . '" was successfully changed!';
+        return __('The timeline "%s" was successfully changed!', $timeline->title);
     }
 
     /**
@@ -135,7 +135,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
      */
     protected function _getDeleteSuccessMessage($timeline)
     {
-        return 'The timeline "' . $timeline->title . '" was successfully deleted!';
+        return __('The timeline "%s" was successfully deleted!', $timeline->title);
     }
 
     /**
@@ -143,9 +143,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
      */
     protected function _getDeleteConfirmMessage($timeline)
     {
-        return 'This will delete the timeline "'. $timeline->title .'" and '
-             . 'its associated metadata. This will not delete any items '
-             . 'associated with this timeline.';
+        return __('This will delete the timeline "%s" and its associated metadata. This will not delete any items associated with this timeline.', $timeline->title);
     }
 
 }

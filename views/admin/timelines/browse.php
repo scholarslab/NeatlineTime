@@ -4,11 +4,11 @@
  */
 
 $head = array('bodyclass' => 'timelines primary', 
-              'title' => html_escape('Neatline Time | Timelines'));
+              'title' => html_escape(__('Neatline Time | Browse Timelines')));
 head($head);
 ?>
 <h1><?php echo $head['title']; ?></h1>
-<p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a Timeline</a></p>
+<p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?></a></p>
 <div id="primary">
 <?php echo flash(); ?>
 <?php if (has_timelines_for_loop()) : ?>
@@ -16,14 +16,14 @@ head($head);
 <table>
     <thead id="timelines-table-head">
         <tr>
-            <th>Title</th>
-            <th>Description</th>
+        <th><?php echo __('Title'); ?></th>
+        <th><?php echo __('Description'); ?></th>
             <?php if (has_permission('NeatlineTime_Timelines', 'edit')): ?>
-            <th>Edit Metadata</th>
-            <th>Edit Item Query</th>
+            <th><?php echo __('Edit Metadata'); ?></th>
+            <th><?php echo __('Edit Item Query'); ?></th>
             <?php endif; ?>
             <?php if (has_permission('NeatlineTime_Timelines', 'delete')): ?>
-            <th>Delete</th>
+              <th><?php echo __('Delete'); ?></th>
             <?php endif; ?>
         </tr>
     </thead>
@@ -44,7 +44,7 @@ head($head);
     </tbody>
 </table>
 <?php else : ?>
-    <p>There are no timelines. <?php if (has_permission('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>">Add a new Timeline.</a><?php endif; ?></p>
+    <p><?php echo __('There are no timelines.'); ?> <?php if (has_permission('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?>.</a><?php endif; ?></p>
 <?php endif; ?>
 </div>
 <?php foot(); ?>

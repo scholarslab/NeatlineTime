@@ -13,34 +13,34 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
 
         // Title
         $this->addElement('text', 'title', array(
-            'label'       => 'Title',
-            'description' => 'A title for your timeline.'
+            'label'       => __('Title'),
+            'description' => __('A title for your timeline.')
         ));
 
         // Description
         $this->addElement('textarea', 'description', array(
-            'label'       => 'Description',
-            'description' => 'A description for your timeline.',
+            'label'       => __('Description'),
+            'description' => __('A description for your timeline.'),
             'attribs'     => array('class' => 'html-editor', 'rows' => '15')
         ));
 
         // Public/Not Public
         $this->addElement('select', 'public', array(
-            'label'        => 'Status',
-            'description'  => 'Whether the timeline is public or not.',
+            'label'        => __('Status'),
+            'description'  => __('Whether the timeline is public or not.'),
             'multiOptions' => array('0' => 'Not Public', '1' => 'Public')
         ));
 
         // Featured/Not Featured
         $this->addElement('select', 'featured', array(
-            'label'        => 'Featured',
-            'description'  => 'Whether the timeline is featured or not.',
+            'label'        => __('Featured'),
+            'description'  => __('Whether the timeline is featured or not.'),
             'multiOptions' => array('0' => 'Not Featured', '1' => 'Featured')
         ));
 
         // Submit
         $this->addElement('submit', 'submit', array(
-            'label' => 'Save Timeline'
+            'label' => __('Save Timeline')
         ));
 
         // Group the title, description, and public fields

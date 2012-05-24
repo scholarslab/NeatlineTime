@@ -8,6 +8,7 @@ class NeatlineTimePlugin
     private static $_hooks = array(
         'install',
         'uninstall',
+        'initialize',
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
@@ -87,6 +88,14 @@ class NeatlineTimePlugin
 
         $this->_db->query($sql);
 
+    }
+
+    /**
+     * Timeline initialize hook
+     */
+    public function initialize()
+    {
+        add_translation_source(dirname(__FILE__) . '/languages');
     }
 
     /**
@@ -171,9 +180,10 @@ class NeatlineTimePlugin
      */
     public function adminAppendToPluginUninstallMessage()
     {
+        $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
+          will remove all custom Timeline records.');
 
-        echo '<p><strong>Warning</strong>: Uninstalling the Neatline Time plugin
-            will remove all custom Timeline records.';
+        echo '<p>'.$string.'</p>';
 
     }
 

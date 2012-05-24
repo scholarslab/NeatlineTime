@@ -4,7 +4,7 @@
  */
 
 $timelineTitle = timeline('title') ? strip_formatting(timeline('title')) : '[Untitled]';
-$title = 'Neatline Time | Edit "' . $timelineTitle . '" Metadata';
+$title = __('Neatline Time | Edit "%s" Metadata', $timelineTitle);
 queue_timeline_assets();
 queue_js('tiny_mce/tiny_mce');
 $head = array('bodyclass' => 'timelines primary', 
