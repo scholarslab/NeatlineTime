@@ -146,9 +146,11 @@ $formAttributes['method'] = 'GET';
         <div class="field">
             <?php echo label('public', __('Public/Non-Public')); ?>
             <div class="inputs">
-                <?php echo select(array('name' => 'public', 'id' => 'public'),
-                    array('1' => __('Only Public Items'),
-                          '0' => __('Only Non-Public Items'))); ?>
+                <?php echo select(
+                            array('name' => 'public', 'id' => 'public'),
+                            array('1' => __('Only Public Items'),
+                                  '0' => __('Only Non-Public Items')),
+                            @$_REQUEST['public']); ?>
             </div>
         </div>
         <?php endif; ?>
@@ -156,9 +158,11 @@ $formAttributes['method'] = 'GET';
         <div class="field">
             <?php echo label('featured', __('Featured/Non-Featured')); ?>
             <div class="inputs">
-                <?php echo select(array('name' => 'featured', 'id' => 'featured'),
-                    array('1' => __('Only Featured Items'),
-                          '0' => __('Only Non-Featured Items'))); ?>
+                <?php echo select(
+                            array('name' => 'featured', 'id' => 'featured'),
+                            array('1' => __('Only Featured Items'),
+                                  '0' => __('Only Non-Featured Items')),
+                            @$_REQUEST['featured']); ?>
             </div>
         </div>
 
