@@ -20,7 +20,7 @@ head($head);
     <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', timeline('title')) ?></strong></p>
     <?php echo neatlinetime_display_search_query($query); ?>
     <?php endif; ?>
-    <?php echo items_search_form(array(), current_uri()); ?>
+    <?php echo neatlinetime_items_search_form(array(), current_uri()); ?>
 
 </div>
 <?php foot(); ?>
