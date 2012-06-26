@@ -51,8 +51,10 @@ var NeatlineTime = {
 
     tl = Timeline.create(document.getElementById(timelineId), bandInfos);
     tl.loadJSON(timelineData, function(json, url) {
-        eventSource.loadJSON(json, url);
-        tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
+        if (json.events.length > 0) {
+            eventSource.loadJSON(json, url);
+            tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
+        }
     });
 
   }
