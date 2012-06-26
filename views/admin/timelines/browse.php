@@ -31,14 +31,14 @@ head($head);
             <td>
             <?php
             if (has_permission(get_current_timeline(), 'edit')) {
-                echo link_to_timeline('Edit Metadata', array('class' => 'edit'), 'edit');
+                echo link_to_timeline(__('Edit Metadata'), array('class' => 'edit'), 'edit');
             }
             ?>
             </td>
             <td>
             <?php
             if (has_permission(get_current_timeline(), 'query')) {
-                echo link_to_timeline('Edit Query', array('class' => 'query'), 'query');
+                echo link_to_timeline(__('Edit Item Query'), array('class' => 'query'), 'query');
             }
             ?>
             </td>
