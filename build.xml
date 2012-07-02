@@ -4,14 +4,22 @@
   <property name="build.dir" value="${basedir}/build" />
   <property name="test.dir" value="${basedir}/tests" />
   <property name="dist.dir" value="${basedir}/dist" />
+  <property name="tmp.dir" value="${build.dir}/tmp" />
+  <property name="staging.dir" value="${build.dir}/tmp/NeatlineTime" />
+  <property name="dir.views" value="views" />
+  <property name="lang.dir" location="languages" />
+  <property name="core.pot" location="../../application/languages/Omeka.pot" />
 
-  <tstamp />
-  <property name="now" value="${DSTAMP}-${TSTAMP}" />
-  <property name="tar" value="${project.name}-${now}.tar" />
-  <property name="gzip" value="${tar}.gz" />
+  <!-- Load the Ant-contrib to give us access to some very useful tasks! -->
+  <!-- the .jar file is located in the tools directory -->
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${build.dir}/tools/ant-contrib-1.0b3.jar"/>
+    </classpath>
+  </taskdef>
 
   <target name="clean" description="Clean up the build directory">
-    <delete dir="${build.dir}" />
+    <delete dir="${tmp.dir}" />
     <delete dir="${dist.dir}" />
   </target>
 
@@ -38,15 +46,191 @@
     </parallel>
   </target>
 
-  <target name="package" description="Create a gzipped package of the current branch for distribution">
+  <target name="minify-js" depends="_copy" description="Minifies JavaScript using Google's Closure Compiler">
+    <echo message="Minifying JavaScript..." />
+
+    <!-- work around for css files -->
+    <delete>
+      <fileset dir="${staging.dir}/${dir.views}/">
+        <include name="**/*.js"/>
+      </fileset>
+    </delete>
+
+
+    <apply executable="java" parallel="false">
+      <!--<fileset dir="${basedir}/${dir.views}/" excludes="**/*.min.js, **/spec/**," includes="**/*.js" />-->
+      <fileset dir="${basedir}/${dir.views}/" excludes="**/spec/**" includes="**/*.js"/>
+
+      <arg line="-jar" />
+      <arg path="${basedir}/build/tools/closure-compiler-v1346.jar" />
+      <!--<arg path="${basedir}/build/tools/yuicompressor-2.4.5.jar" />-->
+
+      <arg line="--js" />
+      <srcfile/>
+      <arg line="--compilation_level" />
+      <arg value="SIMPLE_OPTIMIZATIONS" />
+      <arg line="--js_output_file" />
+      <mapper type="glob" from="*.js" to="${staging.dir}/${dir.views}/*.js" />
+      <!--<mapper type="identity" /> -->
+      <targetfile/>
+    </apply>
+  </target>
+
+  <target name="minify-css" depends="_copy" description="Minifies CSS files">
+    <echo message="Minifying CSS files" />
+    <!-- work around for css files -->
+    <delete>
+      <fileset dir="${staging.dir}/${dir.views}/">
+        <include name="**/*.css"/>
+      </fileset>
+    </delete>
+
+
+    <apply executable="java" parallel="false">
+
+      <fileset dir="${basedir}/${dir.views}/" excludes="**/*.min.css" includes="**/*.css"/>
+      <arg line="-jar" />
+      <arg path="${build.dir}/tools/yuicompressor-2.4.5.jar" />
+      <srcfile/>
+      <arg line="-o" />
+      <mapper type="glob" from="*.css" to="${staging.dir}/${dir.views}/*.css" />
+      <!-- <mapper type="identity" /> -->
+      <targetfile />
+    </apply>
+
+  </target>
+
+  <target name="optimize-png" depends="_copy" description="Optimizes .png images">
+    <echo message="Optimizing pngs..." />
+    <echo message="This may tak a while, but everything else is already done." />
+    <echo message=" " />
+
+    <echo message="Running optipng on the .png files..." />
+
+    <!-- On *nix's and OS X, check for optipng and give a helpful message if it's not installed -->
+    <if>
+      <and>
+        <os family="unix" />
+        <available file="optipng" filepath="${ENV.PATH}" />
+      </and>
+      <then>
+        <!-- work around https://sourceforge.net/tracker/?func=detail&aid=2671422&group_id=151404&atid=780916 -->
+        <delete>
+          <fileset dir="${staging.dir}/${dir.views}/">
+            <include name="**/*.png"/>
+          </fileset>
+        </delete>
+        <apply executable="optipng"  osfamily="unix">
+          <fileset dir="${basedir}/${dir.views}/" includes="**/*.png" />
+          <arg value="-quiet"/>
+          <arg value="-o7"/>
+          <arg value="-out"/>
+          <targetfile/>
+          <srcfile/>
+          <mapper type="glob" from="*.png" to="${staging.dir}/${dir.views}/*.png"/>
+        </apply>
+      </then>
+      <elseif>
+        <os family="unix" />
+        <then>
+          <echo message="*** optipng NOT INSTALLED. SKIPPING OPTIMIZATION OF PNGs." />
+          <echo message="*** Install optipng to enable png optimization." />
+          <echo message="*** For instructions see 'Dependencies' at: http://html5boilerplate.com/docs/#Build-script#dependencies" />
+        </then>
+      </elseif>
+    </if>
+
+  </target>
+
+  <target name="optimize-jpeg" depends="_copy" description="Optimizes .jpg images using jpegtan">
+    <echo message="Optimizing jpegs..." />
+
+    <var name="strip-meta-tags" value="all" />
+
+    <delete>
+      <fileset dir="${staging.dir}/${dir.views}/">
+        <include name="**/*.jpg"/>
+      </fileset>
+    </delete>
+
+
+    <!-- On *nix's and OS X, check for jpegtran and give a helpful message if it's not installed -->
+    <if>
+      <and>
+        <os family="unix" />
+        <available file="jpegtran" filepath="${ENV.PATH}" />
+      </and>
+      <then>
+        <apply executable="jpegtran" dest="${staging.dir}/${dir.views}/" osfamily="unix">
+          <fileset dir="${basedir}/${dir.views}/" includes="**/*.jpg" />
+          <arg value="-copy"/>
+          <arg value="${strip-meta-tags}"/>
+          <arg value="-optimize"/>
+          <arg value="-outfile"/>
+          <targetfile/>
+          <srcfile/>
+          <mapper type="glob" from="*.jpg" to="${staging.dir}/${dir.views}/"/>
+          <!-- you may want to flag optimized images. If so, do it here. Otherwise change this to type="identity" -->
+          <!--<mapper type="glob" from="*.jpg" to="*.jpg"/>-->
+        </apply>
+      </then>
+      <elseif>
+        <os family="unix" />
+        <then>
+          <echo message="*** jpegtran NOT INSTALLED. SKIPPING OPTIMIZATION OF JPEGs." />
+          <echo message="*** Install jpegtran to enable jpeg optimization." />
+          <echo message="*** For instructions see 'Dependencies' at: http://html5boilerplate.com/docs/#Build-script#dependencies" />
+        </then>
+      </elseif>
+    </if>
+
+    <apply executable="${basedir}/build/tools/jpegtran.exe" dest="./images/optimized" osfamily="windows">
+      <fileset dir="${basedir}/images" includes="**/*.jpg" />
+      <arg value="-copy"/>
+      <arg value="${strip-meta-tags}"/>
+      <arg value="-optimize"/>
+      <arg value="-outfile"/>
+      <targetfile/>
+      <srcfile/>
+      <mapper type="identity"/>
+      <!-- you may want to flag optimized images. If so, do it here. Otherwise change this to type="identity" -->
+      <!--<mapper type="glob" from="*.jpg" to="*.jpg"/>-->
+    </apply>
+
+  </target>
+
+  <target name="package" description="Create a gzipped package of the current branch for distribution"
+          depends="clean,minify-css,minify-js,optimize-png,optimize-jpeg">
+
+    <tstamp />
+
+    <property name="now" value="${DSTAMP}-${TSTAMP}" />
+    <property name="tar" value="${ant.project.name}-${now}.tar"/>
+    <property name="gzip" value="${tar}.gz" />
+
     <mkdir dir="${dist.dir}" />
 
-    <tar destfile="${dist.dir}/${project.name}-${now}.tar"
-      basedir="${basedir}"
-      excludes="${build.dir}/**, ${dist.dir}/**, ${test.dir}/**" />
-    <gzip zipfile="${dist.dir}/${gzip}" src="${dist.dir}/${tar}" />
+    <echo message="Creating zipped tarball" />
+    <tar destfile="${dist.dir}/${tar}"
+      basedir="${tmp.dir}" />
 
+    <gzip zipfile="${dist.dir}/${gzip}" src="${dist.dir}/${tar}" />
     <delete file="${dist.dir}/${tar}" />
+
+    <echo message="Creating zip file" />
+    <zip destfile="${dist.dir}/${ant.project.name}-${now}.zip"
+      basedir="${tmp.dir}" />
+
+  </target>
+
+  <target name="_copy" description="Copies files in to ${staging.dir}">
+    <echo message="Copying all files..." />
+
+    <mkdir dir="${staging.dir}" />
+
+    <copy todir="${staging.dir}">
+      <fileset dir="${basedir}/" excludes="**/build/**" />
+    </copy>
   </target>
 
   <target name="phpunit" depends="setup" description="Run PHPUnit tests and generate code coverage report">
@@ -147,5 +331,56 @@
 
   <target name="usage">
     <echo message="Type ant -p to list all the targets available in this build script." />
+  </target>
+
+  <target name="update-pot" description="Update the translation template.">
+    <property name="pot.file" location="${lang.dir}/template.pot"/>
+    <property name="pot.base" location="${lang.dir}/template.base.pot"/>
+    <tempfile property="pot.temp" suffix=".pot"/>
+    <tempfile property="pot.duplicates" suffix="-duplicates.pot" />
+    <apply executable="xgettext" relative="true" parallel="true" verbose="true">
+      <arg value="-L"/>
+      <arg value="php"/>
+      <arg value="--from-code=utf-8"/>
+      <arg value="-k__"/>
+      <arg value="--flag=__:1:pass-php-format"/>
+      <arg value="--omit-header"/>
+      <arg value="-F"/>
+      <arg value="-o"/>
+      <arg file="${pot.temp}"/>
+      <fileset dir="." includes="**/*.php **/*.phtml" excludes="tests/"/>
+    </apply>
+    <exec executable="msgcomm">
+      <arg value="--omit-header" />
+      <arg value="-o" />
+      <arg file="${pot.duplicates}" />
+      <arg file="${pot.temp}" />
+      <arg file="${core.pot}" />
+    </exec>
+    <exec executable="msgcomm">
+      <arg value="-u" />
+      <arg value="-o" />
+      <arg file="${pot.temp}" />
+      <arg file="${pot.temp}" />
+      <arg file="${pot.duplicates}" />
+    </exec>
+    <exec executable="msgcat">
+      <arg value="-o"/>
+      <arg file="${pot.file}"/>
+      <arg file="${pot.base}"/>
+      <arg file="${pot.temp}"/>
+    </exec>
+    <delete file="${pot.temp}" quiet="true" />
+    <delete file="${pot.duplicates}" quiet="true" />
+  </target>
+
+  <target name="build-mo" description="Build the MO translation files.">
+    <apply executable="msgfmt" dest="${lang.dir}" verbose="true">
+      <arg value="-o"/>
+      <targetfile />
+      <srcfile />
+      <fileset dir="${lang.dir}" includes="*.po"/>
+      <mapper type="glob" from="*.po" to="*.mo"/>
+    </apply>
   </target>
 </project>
