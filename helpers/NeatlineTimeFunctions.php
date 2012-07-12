@@ -469,6 +469,11 @@ function neatlinetime_item_class($item = null) {
  */
 function neatlinetime_convert_date($date) {
   try {
+    $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
+    return $newDate->get('c');
+  } catch (Exception $e) {
+  }
+  try {
     $newDate = new Zend_Date($date);
     return $newDate->get('c');
   } catch (Exception $e) {
