@@ -179,7 +179,7 @@ function timeline_delete_button($timeline = null)
     return button_to(
         uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
         null,
-        'Delete',
+        __('Delete'),
         array('class' => 'delete-confirm')
     );
 
@@ -289,7 +289,7 @@ function neatlinetime_display_search_query($query = null)
 
                     case 'public':
                     case 'featured':
-                        $displayValue = $value ? 'yes' : 'no';
+                        $displayValue = $value ? __('Yes') : __('No');
                     break;
 
                     case 'search':
@@ -305,7 +305,7 @@ function neatlinetime_display_search_query($query = null)
         }
 
         foreach($displayArray as $filter => $value) {
-            $displayList .= '<li class="'.text_to_id($filter).'">'.ucwords($filter).': '.$value.'</li>';
+            $displayList .= '<li class="'.text_to_id($filter).'">'.__(ucwords($filter)).': '.$value.'</li>';
         }
 
         if(array_key_exists('advanced', $query)) {

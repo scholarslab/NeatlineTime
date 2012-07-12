@@ -67,6 +67,14 @@ msgstr ""
 msgid "Save Timeline"
 msgstr ""
 
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "No"
+msgstr ""
+
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "Yes"
+msgstr ""
+
 #: models/NeatlineTimeTimeline.php:93
 msgid "Cannot associate the timeline with a user who doesn't exist."
 msgstr ""
@@ -79,19 +87,20 @@ msgstr ""
 msgid "Neatline Time | Browse Timelines"
 msgstr ""
 
-#: views/admin/timelines/browse.php:11 views/admin/timelines/browse.php:47
+#: views/admin/timelines/browse.php:11 views/admin/timelines/browse.php:57
 msgid "Add a Timeline"
 msgstr ""
 
-#: views/admin/timelines/browse.php:22 views/admin/timelines/show.php:15
+#: views/admin/timelines/browse.php:21 views/admin/timelines/browse.php:34
+#: views/admin/timelines/show.php:15
 msgid "Edit Metadata"
 msgstr ""
 
-#: views/admin/timelines/browse.php:23
+#: views/admin/timelines/browse.php:22 views/admin/timelines/browse.php:41
 msgid "Edit Item Query"
 msgstr ""
 
-#: views/admin/timelines/browse.php:47
+#: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
 msgstr ""
 
