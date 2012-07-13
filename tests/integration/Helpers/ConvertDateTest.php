@@ -12,4 +12,11 @@ class ConvertDateTest extends NeatlineTime_Test_AppTestCase
             '2012-07-12T00:00:00+00:00', neatlinetime_convert_date('2012-07-12')
         );
     }
+
+    // https://github.com/scholarslab/NeatlineTime/issues/39
+    public function testYearOnlyDate() {
+        $this->assertFalse(
+            neatlinetime_convert_date('2012')
+        );
+    }
 }
