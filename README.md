@@ -94,4 +94,4 @@ Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia. 
 [license]: LICENSE
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
-[theming-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
+[themeing-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
