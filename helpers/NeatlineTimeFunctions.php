@@ -468,6 +468,9 @@ function neatlinetime_item_class($item = null) {
  * @return string ISO-8601 date
  */
 function neatlinetime_convert_date($date) {
+  if (preg_match('/^\d{4}$/', $date) > 0) {
+      return false;
+  }
   try {
     $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
     return $newDate->get('c');

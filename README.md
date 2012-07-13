@@ -42,13 +42,14 @@ NeatlineTime will attempt to convert the value for a date string into an ISO-860
 
   * January 1, 2012
   * 2012-01-01
-  * 2012
   * 1 Jan 2012
+  * 2012-12-15
 
 To denote spans of time, separate the start and end date with a '/':
 
   * January 1, 2012/February 1, 2012
-  * 2012/2013
+
+NeatlineTime doesn't accept just years (*1066*, for example) because it's not clear what that means. Should that translate to the range *January 1, 1066/December 31, 1066*? Should it be *January 1, 1066*? *June 31, 1066*? Instead of us picking an arbitrary point in the year or marking the entire year, we simply ask that you be more specific.
 
 ### Browsing timelines
 
