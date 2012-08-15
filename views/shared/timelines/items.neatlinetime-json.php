@@ -44,7 +44,7 @@ while (loop_items()) {
 }
 
 $neatlineTimeArray = array();
-$neatlineTimeArray['date-time-format'] = "iso8601";
+$neatlineTimeArray['dateTimeFormat'] = "iso8601";
 $neatlineTimeArray['events'] = $neatlineTimeEvents;
 
 $neatlinetimeJson = json_encode($neatlineTimeArray);
