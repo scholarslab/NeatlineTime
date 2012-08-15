@@ -6,7 +6,17 @@ The NeatlineTime plugin, by the [Scholars' Lab][scholarslab] at the University o
 
 1. Upload the 'NeatlineTime' plugin directory to your Omeka installation's 'plugins' directory. See [Installing a Plugin][installing-a-plugin].
 
-2. Activate the plugin from the admin → Settings → Plugins page.
+2. Activate the plugin from the Admin → Settings → Plugins page.
+
+3. Configure the plugin to choose which fields you want the plugin to use on
+   the timeline.
+
+    * Item Date: The field you would like to use for item dates on the
+      timeline. The default is DC:Date.
+    * Item Title: The field you would like displayed for the item's title in
+      its information bubble. The default is DC:Title
+    * Item Description: The field you would like displayed for the item's
+      description in its information bubble. The default is DC:Description.
 
 ## Usage
 
