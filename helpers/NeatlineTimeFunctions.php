@@ -507,3 +507,63 @@ function neatlinetime_items_search_form($props=array(), $formActionUri = null)
     );
 }
 
+/**
+ * Generates a form select populated by all elements and element sets.
+ * 
+ * @param string The NeatlineTime option name. 
+ * @return string HTML.
+ */
+function neatlinetime_option_select($name = null) {
+
+  if ($name) {
+    return select_element(
+            array('name' => $name),
+            neatlinetime_get_option($name),
+            null,
+            array('record_types' => array('Item', 'All'),
+            'sort' => 'alphaBySet')
+    );
+  }
+
+  return false;
+
+}
+
+/**
+ * Gets the value for an option set in the neatlinetime option array.
+ *
+ * @param string The NeatlineTime option name. 
+ * @return string
+ */
+function neatlinetime_get_option($name = null) {
+
+  if ($name) {
+    $options = get_option('neatlinetime');
+    $options = unserialize($options);
+    return $options[$name];
+  }
+
+  return false;
+
+}
+
+/**
+ * Returns the value of an element set in the NeatlineTime config options.
+ *
+ * @param string The NeatlineTime option name.
+ * @param array An array of options.
+ * @param Item
+ * @return string|array|null
+ */
+function neatlinetime_get_item_text($optionName, $options = array(), $item = null) {
+
+    $db = get_db();
+
+    $item = $item ? $item : get_current_item();
+
+    $element = $db->getTable('Element')->find(neatlinetime_get_option($optionName));
+    $elementTexts = $item->getTextsByElement($element);
+
+    return item($element->getElementSet()->name, $element->name, $options, $item);
+
+}

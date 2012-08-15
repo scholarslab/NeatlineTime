@@ -15,28 +15,58 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: NeatlineTimePlugin.php:183
+#: NeatlineTimePlugin.php:207
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
 msgstr ""
 
-#: controllers/TimelinesController.php:122
+#: config_form.php:2
+msgid "Item Date"
+msgstr ""
+
+#: config_form.php:8
+msgid ""
+"The date field to use to retrieve and display items on a timeline. Default "
+"is DC:Date."
+msgstr ""
+
+#: config_form.php:14
+msgid "Item Title"
+msgstr ""
+
+#: config_form.php:21
+msgid ""
+"The title field to use when displaying an item on a timeline. Default is DC:"
+"Title"
+msgstr ""
+
+#: config_form.php:27
+msgid "Item Description"
+msgstr ""
+
+#: config_form.php:33
+msgid ""
+"The description field to use when displaying an item on a timeline. Default "
+"is DC:Description"
+msgstr ""
+
+#: controllers/TimelinesController.php:120
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
 msgstr ""
 
-#: controllers/TimelinesController.php:130
+#: controllers/TimelinesController.php:128
 #, php-format
 msgid "The timeline \"%s\" was successfully changed!"
 msgstr ""
 
-#: controllers/TimelinesController.php:138
+#: controllers/TimelinesController.php:136
 #, php-format
 msgid "The timeline \"%s\" was successfully deleted!"
 msgstr ""
 
-#: controllers/TimelinesController.php:146
+#: controllers/TimelinesController.php:144
 #, php-format
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "

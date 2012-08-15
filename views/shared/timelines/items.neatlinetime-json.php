@@ -5,16 +5,19 @@
 
 $neatlineTimeEvents = array();
 while (loop_items()) {
-    $itemTitle = item('Dublin Core', 'Title');
+    $itemTitle = neatlinetime_get_item_text('item_title');
     $itemLink = abs_item_uri();
-    $itemDescription = item('Dublin Core', 'Description') ? item('Dublin Core', 'Description') : '';
+    $itemDescription =  neatlinetime_get_item_text('item_description');
 
-    $itemDates = item('Dublin Core', 'Date', 'all');
+    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true));
+
     if ($file = get_db()->getTable('File')->findWithImages(item('id'), 0)) {
         $fileUrl = file_display_uri($file, 'square_thumbnail'); 
     }
     if (!empty($itemDates)) {
-        foreach ($itemDates as $itemDate) {
+      foreach ($itemDates as $itemDate) {
+            $itemDate = $itemDate;
+
             $neatlineTimeEvent = array();
             $dateArray = explode('/', $itemDate);
 
