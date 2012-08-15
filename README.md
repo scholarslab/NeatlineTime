@@ -82,7 +82,9 @@ The template files available in NeatlineTime include:
 
 ## Contributing to the Project
 
-### Feedback We rely on the [Github issues tracker][issues] for feedback on issues and improvements.
+### Feedback
+
+We rely on the [Github issues tracker][issues] for feedback on issues and improvements.
 
 ### Patches/Pull Requests
 
