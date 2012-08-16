@@ -95,6 +95,13 @@ We rely on the [Github issues tracker][issues] for feedback on issues and improv
 * Send us a pull request, with a clear explanation of the changes. Bonus
   points for topic branches.
 
+## Credits
+
+### Translations
+
+* Gillian Price (Spanish)
+* Katina Rogers (French)
+
 ## Copyright
 
 Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia. See [LICENSE][license] for more information.
