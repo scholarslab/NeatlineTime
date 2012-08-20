@@ -1,14 +1,15 @@
 # Translation for the Neatline Time plugin for Omeka.
 # 
 # Translators:
+#   <gbp2q@virginia.edu>, 2012.
 # Jeremy Boggs <jeremy@clioweb.org>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: 2012-07-12 15:55+0000\n"
-"Last-Translator: Jeremy Boggs <jeremy@clioweb.org>\n"
+"PO-Revision-Date: 2012-08-20 17:21+0000\n"
+"Last-Translator: gbp2q <gbp2q@virginia.edu>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/neatline/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,28 +17,58 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: NeatlineTimePlugin.php:183
+#: NeatlineTimePlugin.php:207
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
 msgstr "<strong>Advertencia</strong>:Desinstalando el programa adicional Neatline Time. Se eliminará todos los archivos a medida de Timeline. "
 
-#: controllers/TimelinesController.php:122
+#: config_form.php:2
+msgid "Item Date"
+msgstr "Fecha del punto"
+
+#: config_form.php:8
+msgid ""
+"The date field to use to retrieve and display items on a timeline. Default "
+"is DC:Date."
+msgstr "Este campo de la fecha para usar, recuperar y exponer puntos en la secuencia. La opción por defecto es DC:Date."
+
+#: config_form.php:14
+msgid "Item Title"
+msgstr "Título del punto."
+
+#: config_form.php:21
+msgid ""
+"The title field to use when displaying an item on a timeline. Default is "
+"DC:Title"
+msgstr "El campo del título que se usa mientras se expone un punto en la secuencia. La opción por defecto es DC:Title"
+
+#: config_form.php:27
+msgid "Item Description"
+msgstr "Descripción del punto"
+
+#: config_form.php:33
+msgid ""
+"The description field to use when displaying an item on a timeline. Default "
+"is DC:Description"
+msgstr "El campo de descripción que se usa mientras se expone un punto en la secuencia. La opción por defecto es DC:Description"
+
+#: controllers/TimelinesController.php:120
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
 msgstr "Se agregó la secuencia \"%s\"!"
 
-#: controllers/TimelinesController.php:130
+#: controllers/TimelinesController.php:128
 #, php-format
 msgid "The timeline \"%s\" was successfully changed!"
 msgstr "Se cambió la secuencia \"%s\"!"
 
-#: controllers/TimelinesController.php:138
+#: controllers/TimelinesController.php:136
 #, php-format
 msgid "The timeline \"%s\" was successfully deleted!"
 msgstr "Se borró la secuencia \"%s\"!"
 
-#: controllers/TimelinesController.php:146
+#: controllers/TimelinesController.php:144
 #, php-format
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "

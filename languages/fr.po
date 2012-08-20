@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: 2012-08-15 21:09+0000\n"
+"PO-Revision-Date: 2012-08-16 20:31+0000\n"
 "Last-Translator: katinalynn <katina.rogers@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/neatline/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -20,37 +20,37 @@ msgstr ""
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
-msgstr "<strong>Attention</strong>: Si vous désinstaller le plug-in Neatline Time, tous les dossiers personnalisés du Timeline seront également supprimés."
+msgstr "<strong>Attention</strong>: Si vous désinstaller le plug-in Neatline Time, tous les objets personnalisés du Timeline seront également supprimés."
 
 #: config_form.php:2
 msgid "Item Date"
-msgstr "Date de l'élément"
+msgstr "Date de l'objet"
 
 #: config_form.php:8
 msgid ""
 "The date field to use to retrieve and display items on a timeline. Default "
 "is DC:Date."
-msgstr "Le champ de date à utiliser pour retrouver et exhiber les éléments sur une chronologie. DC:Date par défaut."
+msgstr "Le champ de date à utiliser pour retrouver et exhiber les objets sur une chronologie. DC:Date par défaut."
 
 #: config_form.php:14
 msgid "Item Title"
-msgstr "Titre de l'élément"
+msgstr "Titre de l'objet"
 
 #: config_form.php:21
 msgid ""
 "The title field to use when displaying an item on a timeline. Default is "
 "DC:Title"
-msgstr "Le champ de titre à utiliser pour exhiber les éléments sur une chronologie. DC:Titre par défaut."
+msgstr "Le champ de titre à utiliser pour exhiber les objets sur une chronologie. DC:Titre par défaut."
 
 #: config_form.php:27
 msgid "Item Description"
-msgstr "Description de l'élément"
+msgstr "Description de l'objet"
 
 #: config_form.php:33
 msgid ""
 "The description field to use when displaying an item on a timeline. Default "
 "is DC:Description"
-msgstr "Le champ de description à utiliser pour exhiber les éléments sur une chronologie. DC:Description par défaut."
+msgstr "Le champ de description à utiliser pour exhiber les objets sur une chronologie. DC:Description par défaut."
 
 #: controllers/TimelinesController.php:120
 #, php-format
@@ -72,7 +72,7 @@ msgstr "Succès : La chronologie \"%s\" a été supprimée !"
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
 "not delete any items associated with this timeline."
-msgstr "Cette action supprimera définitivement la chronologie \"%s\" et ses métadonnées associées. Cette action ne supprimera pas les éléments associées avec cette chronologie."
+msgstr "Cette action supprimera définitivement la chronologie \"%s\" et ses métadonnées associées. Cette action ne supprimera pas les objets associés avec cette chronologie."
 
 #: forms/timeline.php:17
 msgid "A title for your timeline."
@@ -129,7 +129,7 @@ msgstr "Modifier les métadonnées"
 
 #: views/admin/timelines/browse.php:22 views/admin/timelines/browse.php:41
 msgid "Edit Item Query"
-msgstr "Modifier la requête d'élément"
+msgstr "Modifier la requête de l'objet"
 
 #: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
@@ -143,13 +143,13 @@ msgstr "Neatline Time | Modifier les métadonnées de \"%s\""
 #: views/admin/timelines/query.php:7
 #, php-format
 msgid "Neatline Time | Edit \"%s\" Items Query"
-msgstr "Neatline Time | Modifier les requêtes d'éléments de \"%s\""
+msgstr "Neatline Time | Modifier les requêtes des objets de \"%s\""
 
 #: views/admin/timelines/query.php:20 views/admin/timelines/show.php:27
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
-msgstr "La chronologie &#8220;%s&#8221; montre des éléments qui correspondent à la requête suivante:"
+msgstr "La chronologie &#8220;%s&#8221; montre des objets qui correspondent à la requête suivante:"
 
 #: views/admin/timelines/show.php:8
 #, php-format
@@ -158,11 +158,11 @@ msgstr "Neatline Time | %s"
 
 #: views/admin/timelines/show.php:16
 msgid "Edit Items Query"
-msgstr "Modifier la requête d'éléments"
+msgstr "Modifier la requête des objets"
 
 #: views/admin/timelines/show.php:26
 msgid "Items Query"
-msgstr "Requête d'éléments"
+msgstr "Requête des objets"
 
 #: views/public/timelines/browse.php:7 views/public/timelines/browse.php:12
 msgid "Browse Timelines"
