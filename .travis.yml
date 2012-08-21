@@ -1,0 +1,31 @@
+language: php
+
+php:
+  - 5.2
+  - 5.3
+  #- 5.4
+
+env:
+  - OMEKA=stable-1.5
+  - OMEKA=master
+
+before_script:
+  - git clone https://github.com/omeka/Omeka.git omeka
+  - mysql -e "create database IF NOT EXISTS hello_world_test;" -uroot;
+  - export OMEKA_DIR=./omeka
+  - mv omeka/application/config/config.ini.changeme omeka/application/config/config.ini
+  - mv omeka/application/tests/config.ini.changeme omeka/application/tests/config.ini
+  - sed -i 's/db.host = ""/db.host = "localhost"/' omeka/application/tests/config.ini
+  - sed -i 's/db.username = ""/db.username = "root"/' omeka/application/tests/config.ini
+  - sed -i 's/db.dbname = ""/db.dbname = "omeka_test"/' omeka/application/tests/config.ini
+  - sed -i 's/email.to = ""/email.to = "test@example.com"/' omeka/application/tests/config.ini
+  - sed -i 's/email.administator = ""/email.administrator = "admin@example.com"/' omeka/application/tests/config.ini
+  - sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' omeka/application/tests/config.ini
+  - sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' omeka/application/tests/config.ini
+  - sed -i 's/256M/512M/' omeka/application/tests/bootstrap.php
+
+
+script: git co $OMEKA && cd tests && phpunit --coverage-text
+
+notifications:
+  irc: "irc.freenode.org#travis"
