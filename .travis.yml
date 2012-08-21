@@ -5,9 +5,9 @@ php:
   - 5.3
   #- 5.4
 
-env:
-  - OMEKA=stable-1.5
-  - OMEKA=master
+#env:
+  #- OMEKA=stable-1.5
+  #- OMEKA=master
 
 before_script:
   - git clone https://github.com/omeka/Omeka.git omeka
@@ -25,7 +25,7 @@ before_script:
   - sed -i 's/256M/512M/' omeka/application/tests/bootstrap.php
 
 
-script: git checkout $OMEKA && cd tests && phpunit --coverage-text
+script: git checkout stable-1.5 && cd tests && phpunit --coverage-text
 
 notifications:
   irc: "irc.freenode.org#travis"
