@@ -25,7 +25,7 @@ before_script:
   - sed -i 's/256M/512M/' omeka/application/tests/bootstrap.php
 
 
-script: git checkout stable-1.5 && cd tests && phpunit --coverage-text
+script: cd tests && phpunit --coverage-text
 
 notifications:
   irc: "irc.freenode.org#travis"
