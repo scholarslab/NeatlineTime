@@ -11,9 +11,8 @@ env:
 
 before_script: ./travis_setup.sh
 
-script:
-  - echo "directory: `pwd`"
-  - cd tests && phpunit --coverage-text
+script: ./travis_tests.sh
+
 
 #notifications:
   #irc: "irc.freenode.org#slab"
