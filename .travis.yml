@@ -13,6 +13,7 @@ before_script:
   - git clone https://github.com/omeka/Omeka.git omeka
   - mysql -e "create database IF NOT EXISTS omeka_test;" -uroot;
   - export OMEKA_DIR=`pwd`/omeka
+  - cd omeka && git checkout stable-1.5 && cd ../
   - mv omeka/application/config/config.ini.changeme omeka/application/config/config.ini
   - mv omeka/application/tests/config.ini.changeme omeka/application/tests/config.ini
   - sed -i 's/db.host = ""/db.host = "localhost"/' omeka/application/tests/config.ini
@@ -24,7 +25,7 @@ before_script:
   - sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' omeka/application/tests/config.ini
   - sed -i 's/256M/512M/' omeka/application/tests/bootstrap.php
 
-script: cd omeka && git checkout stable-1.5 && cd ../ && cd tests && phpunit --coverage-text
+script: cd tests && phpunit --coverage-text
 
 notifications:
   irc: "irc.freenode.org#travis"
