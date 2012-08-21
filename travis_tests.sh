@@ -5,5 +5,6 @@ if [ -z $PLUGIN_DIR ]; then
 fi
 
 echo "Plugin Directory: $PLUGIN_DIR"
+echo "Omeka Directory: $OMEKA_DIR"
 
 cd $PLUGIN_DIR/tests/ && phpunit --coverage-text 
