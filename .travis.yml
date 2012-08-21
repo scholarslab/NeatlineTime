@@ -11,7 +11,7 @@ php:
 
 before_script:
   - git clone https://github.com/omeka/Omeka.git omeka
-  - mysql -e "create database IF NOT EXISTS hello_world_test;" -uroot;
+  - mysql -e "create database IF NOT EXISTS omeka_test;" -uroot;
   - export OMEKA_DIR=`pwd`/omeka
   - mv omeka/application/config/config.ini.changeme omeka/application/config/config.ini
   - mv omeka/application/tests/config.ini.changeme omeka/application/tests/config.ini
