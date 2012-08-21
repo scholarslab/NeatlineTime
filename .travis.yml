@@ -9,22 +9,7 @@ env:
   - OMEKA_BRANCH=stable-1.5
   - OMEKA_BRANCH=master
 
-before_script:
-  - git clone https://github.com/omeka/Omeka.git omeka
-  - mysql -e "create database IF NOT EXISTS omeka_test;" -uroot;
-  - export OMEKA_DIR=`pwd`/omeka
-  - echo $OMEKA_DIR
-  - cd $OMEKA_DIR && git checkout $OMEKA_BRANCH
-  - mv $OMEKA_DIR/application/config/config.ini.changeme $OMEKA_DIR/application/config/config.ini
-  - mv omeka/application/tests/config.ini.changeme $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/db.host = ""/db.host = "localhost"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/db.username = ""/db.username = "root"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/db.dbname = ""/db.dbname = "omeka_test"/' $OMEKA_DIR/application/tests/config.ini 
-  - sed -i 's/email.to = ""/email.to = "test@example.com"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/email.administator = ""/email.administrator = "admin@example.com"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' $OMEKA_DIR/application/tests/config.ini
-  - sed -i 's/256M/512M/' $OMEKA_DIR/application/tests/bootstrap.php
+before_script: travis_setup.sh
 
 script: cd tests && phpunit --coverage-text
 
