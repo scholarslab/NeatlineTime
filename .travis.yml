@@ -7,11 +7,11 @@ php:
 
 env:
   - OMEKA_BRANCH=stable-1.5
-  - OMEKA_BRANCH=master
+  #- OMEKA_BRANCH=master
 
 before_script: ./travis_setup.sh
 
 script: cd tests && phpunit --coverage-text
 
-notifications:
-  irc: "irc.freenode.org#slab"
+#notifications:
+  #irc: "irc.freenode.org#slab"
