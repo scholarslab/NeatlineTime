@@ -23,10 +23,8 @@ before_script:
   - sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' omeka/application/tests/config.ini
   - sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' omeka/application/tests/config.ini
   - sed -i 's/256M/512M/' omeka/application/tests/bootstrap.php
-  - cd omeka && git checkout $OMEKA && cd ../
 
-
-script: cd tests && phpunit --coverage-text
+script: cd omeka && git checkout $OMEKA && cd ../ && cd tests && phpunit --coverage-text
 
 notifications:
   irc: "irc.freenode.org#travis"
