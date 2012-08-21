@@ -9,7 +9,7 @@ env:
   - OMEKA_BRANCH=stable-1.5
   - OMEKA_BRANCH=master
 
-before_script: travis_setup.sh
+before_script: ./travis_setup.sh
 
 script: cd tests && phpunit --coverage-text
 
