@@ -28,5 +28,3 @@ before_script:
 
 script: cd tests && phpunit --coverage-text
 
-notifications:
-  irc: "irc.freenode.org#travis"
