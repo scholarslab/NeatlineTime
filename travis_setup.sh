@@ -7,9 +7,6 @@ fi
 export PLUGIN_DIR=`pwd`
 export OMEKA_DIR=`pwd`/omeka
 
-echo "Plugin Directory: $PLUGIN_DIR"
-echo "Omeka Directory: $OMEKA_DIR"
-
 mysql -e "create database IF NOT EXISTS omeka_test;" -uroot;
 git clone https://github.com/omeka/Omeka.git $OMEKA_DIR
 
@@ -30,4 +27,7 @@ sed -i 's/email.administator = ""/email.administrator = "admin@example.com"/' $O
 sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/256M/512M/' $OMEKA_DIR/application/tests/bootstrap.php
+
+# symlink the plugin 
+cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR 
 
