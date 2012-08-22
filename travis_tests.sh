@@ -4,7 +4,11 @@ if [ -z $PLUGIN_DIR ]; then
   PLUGIN_DIR=`pwd`
 fi
 
+if [ -z $OMEKA_DIR ]; then
+  OMEKA_DIR=`pwd`/omeka
+fi
+
 echo "Plugin Directory: $PLUGIN_DIR"
 echo "Omeka Directory: $OMEKA_DIR"
 
-cd $PLUGIN_DIR/tests/ && OMEKA_DIR=$OMEKA_DIR phpunit --configuration phpunit_travis.xml
+cd $PLUGIN_DIR/tests/ && phpunit --configuration phpunit_travis.xml
