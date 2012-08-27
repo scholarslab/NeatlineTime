@@ -102,7 +102,9 @@ We rely on the [Github issues tracker][issues] for feedback on issues and improv
 
 ### Translations
 
+* Martin Liebeskind (German)
 * Gillian Price (Spanish)
+* Oguljan Reyimbaeva (Russian)
 * Katina Rogers (French)
 
 ## Copyright
