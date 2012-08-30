@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: 2012-08-25 22:08+0000\n"
+"PO-Revision-Date: 2012-08-30 20:27+0000\n"
 "Last-Translator: Oguljan <or8r@virginia.edu>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/neatline/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -73,15 +73,15 @@ msgstr "Временной график \"%s\" был успешно удале�
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
 "not delete any items associated with this timeline."
-msgstr "Это приведет к удалению графика \"%s\" и связанных с ним мета-данных. Это не приведет к удалению каких-либо отдельных элементов данных, связанных с этим графиком."
+msgstr "Это приведет к удалению временного графика \"%s\" и связанных с ним метаданных. Это не приведет к удалению каких-либо отдельных элементов данных, связанных с этим графиком."
 
 #: forms/timeline.php:17
 msgid "A title for your timeline."
-msgstr "Название вашего графика."
+msgstr "Название вашего временного графика."
 
 #: forms/timeline.php:23
 msgid "A description for your timeline."
-msgstr "Описание вашего графика."
+msgstr "Описание вашего временного графика."
 
 #: forms/timeline.php:29
 msgid "Status"
@@ -89,15 +89,15 @@ msgstr "Статус"
 
 #: forms/timeline.php:30
 msgid "Whether the timeline is public or not."
-msgstr "Имеется ли общественный доступ к графику?"
+msgstr "Имеется ли общественный доступ к временному графику?"
 
 #: forms/timeline.php:37
 msgid "Whether the timeline is featured or not."
-msgstr "Содержит ли график особенные элементы?"
+msgstr "Содержит ли временной график особенные элементы?"
 
 #: forms/timeline.php:43
 msgid "Save Timeline"
-msgstr "Сохранить график."
+msgstr "Сохранить временной график."
 
 #: helpers/NeatlineTimeFunctions.php:292
 msgid "No"
@@ -109,7 +109,7 @@ msgstr "Да"
 
 #: models/NeatlineTimeTimeline.php:93
 msgid "Cannot associate the timeline with a user who doesn't exist."
-msgstr "Невозможно связать график с несуществующим пользователем."
+msgstr "Невозможно связать временной график с несуществующим пользователем."
 
 #: views/admin/timelines/add.php:8
 msgid "Neatline Time | Add a Timeline"
@@ -130,7 +130,7 @@ msgstr "Редактировать метаданные"
 
 #: views/admin/timelines/browse.php:22 views/admin/timelines/browse.php:41
 msgid "Edit Item Query"
-msgstr "Редактировать запрос по элементу данных."
+msgstr "Редактировать запрос по элементам данных."
 
 #: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
@@ -150,7 +150,7 @@ msgstr "Neatline Time | Редактировать запрос по элеме�
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
-msgstr "&#8220;%s&#8221; график oотображает элементы данных, соответствующие следующему запросу:"
+msgstr "&#8220;%s&#8221; временной график oтображает элементы данных, соответствующие следующему запросу:"
 
 #: views/admin/timelines/show.php:8
 #, php-format
