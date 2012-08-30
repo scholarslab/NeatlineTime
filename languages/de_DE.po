@@ -2,13 +2,14 @@
 # 
 # Translators:
 #   <martin.liebeskind@live.de>, 2012.
+# Martin Liebeskind <martin.liebeskind@live.de>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: 2012-08-24 19:19+0000\n"
-"Last-Translator: martinius <martin.liebeskind@live.de>\n"
+"PO-Revision-Date: 2012-08-28 18:57+0000\n"
+"Last-Translator: Martin Liebeskind <martin.liebeskind@live.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/neatline/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
-msgstr "<strong>Warnung</strong>: Die Deinstallation von Neatline Time plugin entfernt alle Einträge der Zeitleisten."
+msgstr "<strong>Warnung</strong>: Die Deinstallation von Neatline Time Plugin entfernt alle benutzerdefinierten Einträge der Zeitleisten."
 
 #: config_form.php:2
 msgid "Item Date"
@@ -50,7 +51,7 @@ msgstr "Objektbeschreibung"
 msgid ""
 "The description field to use when displaying an item on a timeline. Default "
 "is DC:Description"
-msgstr "Das Beschreibungsfeld bei der Darstellung eines Objektes auf der Zeitleiste benutzt. Standard ist DC:Description."
+msgstr "Das Beschreibungsfeld wird bei der Darstellung eines Objektes auf der Zeitleiste benutzt. Standard ist DC:Description."
 
 #: controllers/TimelinesController.php:120
 #, php-format
@@ -72,7 +73,7 @@ msgstr "Die Zeitleiste \"%s\" wurde erfolgreich gelöscht!"
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
 "not delete any items associated with this timeline."
-msgstr "Dies löscht die Zeitleiste \"%s\" und die dazugehörigen Metadaten. Die zugehörigen Objekte werden dabei nicht gelöscht."
+msgstr "Dies löscht die Zeitleiste \"%s\" und die dazugehörigen Metadaten. Die verknüpften Objekte werden dabei nicht gelöscht."
 
 #: forms/timeline.php:17
 msgid "A title for your timeline."
@@ -88,7 +89,7 @@ msgstr "Status"
 
 #: forms/timeline.php:30
 msgid "Whether the timeline is public or not."
-msgstr "Ob die Zeitleiste öffentlicht ist oder nicht."
+msgstr "Ob die Zeitleiste öffentlich ist oder nicht."
 
 #: forms/timeline.php:37
 msgid "Whether the timeline is featured or not."
