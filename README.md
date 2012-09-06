@@ -115,7 +115,7 @@ Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia. 
 [omeka]: http://omeka.org
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
-[license]: LICENSE
+[license]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
 [themeing-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
