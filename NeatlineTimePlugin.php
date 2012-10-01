@@ -8,12 +8,15 @@ class NeatlineTimePlugin
     private static $_hooks = array(
         'install',
         'uninstall',
+        'upgrade',
         'initialize',
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
         'item_browse_sql',
-        'admin_theme_header'
+        'admin_theme_header',
+        'config',
+        'config_form'
     );
 
     private static $_filters = array(
@@ -75,6 +78,8 @@ class NeatlineTimePlugin
 
         $this->_db->query($sqlNeatlineTimeline);
 
+        $this->setDefaultOptions();
+
     }
 
     /**
@@ -87,6 +92,25 @@ class NeatlineTimePlugin
             `{$this->_db->prefix}neatline_time_timelines`";
 
         $this->_db->query($sql);
+
+        delete_option('neatlinetime');
+
+    }
+
+    /**
+     * Timeline upgrade hook.
+     *
+     * Add newer upgrade checks after existing ones.
+     */
+    public function upgrade($oldVersion, $newVersion)
+    {
+
+        // Earlier than version 1.1.
+        if (version_compare($oldVersion, '1.1', '<')) {
+            if (!get_option('neatlinetime')) {
+                $this->setDefaultOptions();
+            }
+        }
 
     }
 
@@ -200,9 +224,8 @@ class NeatlineTimePlugin
 
         $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
         if ($context == 'neatlinetime-json') {
-            $dcDate = $this->_db->getTable('Element')->findByElementSetNameAndElementName('Dublin Core', 'Date');
             $search = new ItemSearch($select);
-            $newParams[0]['element_id'] = $dcDate->id;
+            $newParams[0]['element_id'] = neatlinetime_get_option('item_date');
             $newParams[0]['type'] = 'is not empty';
             $search->advanced($newParams);
         }
@@ -224,6 +247,25 @@ class NeatlineTimePlugin
             queue_css('neatline-time-admin');
         }
 
+    }
+
+    /**
+     * Plugin configuration.
+     */
+    public function config()
+    {
+      $options = $_POST;
+      unset($options['install_plugin']);
+      $options = serialize($options);
+      set_option('neatlinetime', $options);
+    }
+
+    /**
+     * Plugin configuration form.
+     */
+    public function configForm()
+    {
+        include 'config_form.php';
     }
 
     /**
@@ -288,4 +330,18 @@ class NeatlineTimePlugin
 
     }
 
+    protected function setDefaultOptions()
+    {
+        $options = array();
+        $fields = array('Title', 'Description', 'Date');
+
+        foreach ($fields as $field) {
+            $key = 'item_'.strtolower($field);
+            $element = $this->_db->getTable('Element')->findByElementSetNameAndElementName("Dublin Core", "$field");
+            $options[$key] = $element->id;
+        }
+
+        $options = serialize($options);
+        set_option('neatlinetime', $options);
+    }
 }

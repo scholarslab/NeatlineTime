@@ -1,12 +1,25 @@
 # NeatlineTime plugin for Omeka
 
+[![Build
+Status](https://secure.travis-ci.org/scholarslab/NeatlineTime.png?branch=develop,master)](http://travis-ci.org/scholarslab/NeatlineTime)
+
 The NeatlineTime plugin, by the [Scholars' Lab][scholarslab] at the University of Virginia Library, allows you to create timelines for the [Omeka][omeka] publishing platform. It uses the [SIMILE Timeline plugin][simile-timeline].
 
 ## Installation
 
 1. Upload the 'NeatlineTime' plugin directory to your Omeka installation's 'plugins' directory. See [Installing a Plugin][installing-a-plugin].
 
-2. Activate the plugin from the admin → Settings → Plugins page.
+2. Activate the plugin from the Admin → Settings → Plugins page.
+
+3. Configure the plugin to choose which fields you want the plugin to use on
+   the timeline.
+
+    * Item Date: The field you would like to use for item dates on the
+      timeline. The default is DC:Date.
+    * Item Title: The field you would like displayed for the item's title in
+      its information bubble. The default is DC:Title
+    * Item Description: The field you would like displayed for the item's
+      description in its information bubble. The default is DC:Description.
 
 ## Usage
 
@@ -42,13 +55,14 @@ NeatlineTime will attempt to convert the value for a date string into an ISO-860
 
   * January 1, 2012
   * 2012-01-01
-  * 2012
   * 1 Jan 2012
+  * 2012-12-15
 
 To denote spans of time, separate the start and end date with a '/':
 
   * January 1, 2012/February 1, 2012
-  * 2012/2013
+
+NeatlineTime doesn't accept just years (*1066*, for example) because it's not clear what that means. Should that translate to the range *January 1, 1066/December 31, 1066*? Should it be *January 1, 1066*? *June 31, 1066*? Instead of us picking an arbitrary point in the year or marking the entire year, we simply ask that you be more specific.
 
 ### Browsing timelines
 
@@ -71,7 +85,9 @@ The template files available in NeatlineTime include:
 
 ## Contributing to the Project
 
-### Feedback We rely on the [Github issues tracker][issues] for feedback on issues and improvements.
+### Feedback
+
+We rely on the [Github issues tracker][issues] for feedback on issues and improvements.
 
 ### Patches/Pull Requests
 
@@ -82,6 +98,15 @@ The template files available in NeatlineTime include:
 * Send us a pull request, with a clear explanation of the changes. Bonus
   points for topic branches.
 
+## Credits
+
+### Translations
+
+* Martin Liebeskind (German)
+* Gillian Price (Spanish)
+* Oguljan Reyimbaeva (Russian)
+* Katina Rogers (French)
+
 ## Copyright
 
 Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia. See [LICENSE][license] for more information.
@@ -90,7 +115,7 @@ Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia. 
 [omeka]: http://omeka.org
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
-[license]: LICENSE
+[license]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
 [themeing-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"

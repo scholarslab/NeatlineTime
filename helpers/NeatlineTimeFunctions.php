@@ -179,7 +179,7 @@ function timeline_delete_button($timeline = null)
     return button_to(
         uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
         null,
-        'Delete',
+        __('Delete'),
         array('class' => 'delete-confirm')
     );
 
@@ -289,7 +289,7 @@ function neatlinetime_display_search_query($query = null)
 
                     case 'public':
                     case 'featured':
-                        $displayValue = $value ? 'yes' : 'no';
+                        $displayValue = $value ? __('Yes') : __('No');
                     break;
 
                     case 'search':
@@ -305,7 +305,7 @@ function neatlinetime_display_search_query($query = null)
         }
 
         foreach($displayArray as $filter => $value) {
-            $displayList .= '<li class="'.text_to_id($filter).'">'.ucwords($filter).': '.$value.'</li>';
+            $displayList .= '<li class="'.text_to_id($filter).'">'.__(ucwords($filter)).': '.$value.'</li>';
         }
 
         if(array_key_exists('advanced', $query)) {
@@ -468,6 +468,14 @@ function neatlinetime_item_class($item = null) {
  * @return string ISO-8601 date
  */
 function neatlinetime_convert_date($date) {
+  if (preg_match('/^\d{4}$/', $date) > 0) {
+      return false;
+  }
+  try {
+    $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
+    return $newDate->get('c');
+  } catch (Exception $e) {
+  }
   try {
     $newDate = new Zend_Date($date);
     return $newDate->get('c');
@@ -499,3 +507,63 @@ function neatlinetime_items_search_form($props=array(), $formActionUri = null)
     );
 }
 
+/**
+ * Generates a form select populated by all elements and element sets.
+ * 
+ * @param string The NeatlineTime option name. 
+ * @return string HTML.
+ */
+function neatlinetime_option_select($name = null) {
+
+  if ($name) {
+    return select_element(
+            array('name' => $name),
+            neatlinetime_get_option($name),
+            null,
+            array('record_types' => array('Item', 'All'),
+            'sort' => 'alphaBySet')
+    );
+  }
+
+  return false;
+
+}
+
+/**
+ * Gets the value for an option set in the neatlinetime option array.
+ *
+ * @param string The NeatlineTime option name. 
+ * @return string
+ */
+function neatlinetime_get_option($name = null) {
+
+  if ($name) {
+    $options = get_option('neatlinetime');
+    $options = unserialize($options);
+    return $options[$name];
+  }
+
+  return false;
+
+}
+
+/**
+ * Returns the value of an element set in the NeatlineTime config options.
+ *
+ * @param string The NeatlineTime option name.
+ * @param array An array of options.
+ * @param Item
+ * @return string|array|null
+ */
+function neatlinetime_get_item_text($optionName, $options = array(), $item = null) {
+
+    $db = get_db();
+
+    $item = $item ? $item : get_current_item();
+
+    $element = $db->getTable('Element')->find(neatlinetime_get_option($optionName));
+    $elementTexts = $item->getTextsByElement($element);
+
+    return item($element->getElementSet()->name, $element->name, $options, $item);
+
+}
