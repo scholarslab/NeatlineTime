@@ -19,6 +19,7 @@ It's easiest to start with a fresh repository, so the instructions start there.
    * `ant update-pot build-mo` (if there are new translations)
    * `git commit` (if there are new translations)
 1. `ant package`
+1. rename the package file to include the version, not the date-stamp
 1. quick check the zip
 1. test the zip
 1. `git flow release finish $VERSION`
