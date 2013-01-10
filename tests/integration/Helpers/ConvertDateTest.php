@@ -19,4 +19,20 @@ class ConvertDateTest extends NeatlineTime_Test_AppTestCase
             neatlinetime_convert_date('2012')
         );
     }
+
+    // https://github.com/scholarslab/NeatlineTime/issues/45
+    public function testShortYear() {
+        $this->assertEquals(
+            '0135-01-01T00:00:00+00:00', neatlinetime_convert_date('135-01-01')
+        );
+        $this->assertEquals(
+            '0135-01-01T00:00:00+00:00', neatlinetime_convert_date('-135-01-01')
+        );
+        $this->assertEquals(
+            '0035-01-01T00:00:00+00:00', neatlinetime_convert_date('0035-01-01')
+        );
+        $this->assertEquals(
+            '0003-01-01T00:00:00+00:00', neatlinetime_convert_date('0003-01-01')
+        );
+    }
 }
