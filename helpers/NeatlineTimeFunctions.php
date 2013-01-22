@@ -471,17 +471,26 @@ function neatlinetime_convert_date($date) {
   if (preg_match('/^\d{4}$/', $date) > 0) {
       return false;
   }
+
+  $newDate = null;
   try {
     $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
-    return $newDate->get('c');
   } catch (Exception $e) {
+      try {
+          $newDate = new Zend_Date($date);
+      } catch (Exception $e) {
+      }
   }
-  try {
-    $newDate = new Zend_Date($date);
-    return $newDate->get('c');
-  } catch (Exception $e) {
-    return false;
+
+  if (is_null($newDate)) {
+      $date_out = false;
+  } else {
+      $date_out = $newDate->get('c');
+      $date_out = preg_replace('/^(-?)(\d{3}-)/', '${1}0\2',   $date_out);
+      $date_out = preg_replace('/^(-?)(\d{2}-)/', '${1}00\2',  $date_out);
+      $date_out = preg_replace('/^(-?)(\d{1}-)/', '${1}000\2', $date_out);
   }
+  return $date_out;
 
 }
 

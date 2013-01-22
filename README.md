@@ -64,6 +64,21 @@ To denote spans of time, separate the start and end date with a '/':
 
 NeatlineTime doesn't accept just years (*1066*, for example) because it's not clear what that means. Should that translate to the range *January 1, 1066/December 31, 1066*? Should it be *January 1, 1066*? *June 31, 1066*? Instead of us picking an arbitrary point in the year or marking the entire year, we simply ask that you be more specific.
 
+NeatlineTime handles dates with years shorter than 4 digits. For these you'll
+need to pad the years with enough zeros to make them have four digits. For
+example, `476` should be written `0476`.
+
+Also, you can enter in years before common era by putting a negative sign
+before the year. If the date has less than four digits, you'll also need to add
+extra zeros.
+
+So here are some more examples of dates.
+
+  * 0200-01-01
+  * 0002-01-01
+  * -0002-01-01
+  * -2013-01-01
+
 ### Browsing timelines
 
 You can browse existing timelines by clicking on the "Browse Timelines" from your public theme, or the "NeatlineTime" tab in the admin panel.
