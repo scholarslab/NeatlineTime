@@ -1,11 +1,26 @@
 <?php
 
+if (!defined('NEATLINE_TIME_PLUGIN_DIR')) {
+    define('NEATLINE_TIME_PLUGIN_DIR', dirname(__FILE__));
+}
+
+if (!defined('NEATLINE_TIME_HELPERS_DIR')) {
+    define('NEATLINE_TIME_HELPERS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/helpers');
+}
+
+if (!defined('NEATLINE_TIME_FORMS_DIR')) {
+    define('NEATLINE_TIME_FORMS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/forms');
+}
+
+require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
+require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
+
 /**
  * NeatlineTime plugin class
  */
-class NeatlineTimePlugin
+class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 {
-    private static $_hooks = array(
+    protected $_hooks = array(
         'install',
         'uninstall',
         'upgrade',
@@ -14,53 +29,21 @@ class NeatlineTimePlugin
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
         'item_browse_sql',
-        'admin_theme_header',
         'config',
         'config_form'
     );
 
-    private static $_filters = array(
+    protected $_filters = array(
         'admin_navigation_main',
         'public_navigation_main',
-        'define_response_contexts',
-        'define_action_contexts'
+        'response_contexts',
+        'action_contexts'
     );
-
-    private $_db;
-
-    /**
-     * Initializes instance properties and hooks the plugin into Omeka.
-     */
-    public function __construct()
-    {
-
-        $this->_db = get_db();
-        $this->addHooksAndFilters();
-
-    }
-
-    /**
-     * Centralized location where plugin hooks and filters are added
-     */
-    public function addHooksAndFilters()
-    {
-
-        foreach (self::$_hooks as $hookName) {
-            $functionName = Inflector::variablize($hookName);
-            add_plugin_hook($hookName, array($this, $functionName));
-        }
-
-        foreach (self::$_filters as $filterName) {
-            $functionName = Inflector::variablize($filterName);
-            add_filter($filterName, array($this, $functionName));
-        }
-
-    }
 
     /**
      * Timeline install hook
      */
-    public function install()
+    public function hookInstall()
     {
 
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
@@ -85,7 +68,7 @@ class NeatlineTimePlugin
     /**
      * Timeline uninstall hook
      */
-    public function uninstall()
+    public function hookUninstall()
     {
 
         $sql = "DROP TABLE IF EXISTS
@@ -102,8 +85,10 @@ class NeatlineTimePlugin
      *
      * Add newer upgrade checks after existing ones.
      */
-    public function upgrade($oldVersion, $newVersion)
+    public function hookUpgrade($args)
     {
+        $oldVersion = $args['old_version'];
+        $newVersion = $args['new_version'];
 
         // Earlier than version 1.1.
         if (version_compare($oldVersion, '1.1', '<')) {
@@ -117,7 +102,7 @@ class NeatlineTimePlugin
     /**
      * Timeline initialize hook
      */
-    public function initialize()
+    public function hookInitialize()
     {
         add_translation_source(dirname(__FILE__) . '/languages');
     }
@@ -125,29 +110,27 @@ class NeatlineTimePlugin
     /**
      * Timeline define_acl hook
      */
-    public function defineAcl($acl)
+    public function hookDefineAcl($args)
     {
-        if (version_compare(OMEKA_VERSION, '2.0-dev', '>=')) {
-            $acl->addResource('NeatlineTime_Timelines');
-        } else {
-            $acl->loadResourceList(
-                array('NeatlineTime_Timelines' => array('browse', 'add', 'edit', 'editSelf', 'editAll', 'query', 'querySelf', 'queryAll', 'delete', 'deleteSelf', 'deleteAll', 'showNotPublic', 'items', 'itemsSelf', 'itemsAll'))
-            );
-        }
+        $acl = $args['acl'];
+
+        $acl->addResource('NeatlineTime_Timelines');
+
         // All everyone access to browse, show, and items.
         $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse', 'items'));
 
         $acl->allow('researcher', 'NeatlineTime_Timelines', 'showNotPublic');
         $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
-        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'items', 'delete'), new NeatlineTime_OwnershipAclAssertion());
+        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'items', 'delete'), new Omeka_Acl_Assert_Ownership);
 
     }
 
     /**
      * Timeline define_routes hook
      */
-    public function defineRoutes($router)
+    public function hookDefineRoutes($args)
     {
+        $router = $args['router'];
 
         $router->addRoute(
             'timelineActionRoute',
@@ -202,7 +185,7 @@ class NeatlineTimePlugin
     /**
      * Timeline admin_append_to_plugin_uninstall_message hook
      */
-    public function adminAppendToPluginUninstallMessage()
+    public function hookAdminAppendToPluginUninstallMessage()
     {
         $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
           will remove all custom Timeline records.');
@@ -219,7 +202,7 @@ class NeatlineTimePlugin
      *
      * @param Omeka_Db_Select $select
      */
-    public function itemBrowseSql($select)
+    public function hookItemBrowseSql()
     {
 
         $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
@@ -233,26 +216,9 @@ class NeatlineTimePlugin
     }
 
     /**
-     * Include the the neatline CSS changes in the admin header.
-     *
-     * @return void
-     */
-    public function adminThemeHeader()
-    {
-
-        $request = Zend_Controller_Front::getInstance()->getRequest();
-
-        // Queue CSS.
-        if ($request->getModuleName() == 'neatline-time') {
-            queue_css('neatline-time-admin');
-        }
-
-    }
-
-    /**
      * Plugin configuration.
      */
-    public function config()
+    public function hookConfig()
     {
       $options = $_POST;
       unset($options['install_plugin']);
@@ -263,7 +229,7 @@ class NeatlineTimePlugin
     /**
      * Plugin configuration form.
      */
-    public function configForm()
+    public function hookConfigForm()
     {
         include 'config_form.php';
     }
@@ -276,10 +242,15 @@ class NeatlineTimePlugin
      * @param array $nav
      * @return array
      */
-    public function adminNavigationMain($nav)
+    public function filterAdminNavigationMain($nav)
     {
 
-        $nav['Neatline Time'] = uri('neatline-time');
+        $nav[] = array(
+            'label' => __('Neatline Time'),
+            'uri' => url('neatline-time'),
+            'resource' => 'NeatlineTime_Timelines',
+            'privilege' => 'browse'
+        );
         return $nav;
 
     }
@@ -292,10 +263,13 @@ class NeatlineTimePlugin
      * @param array $nav
      * @return array
      */
-    public function publicNavigationMain($nav)
+    public function filterPublicNavigationMain($nav)
     {
 
-        $nav['Browse Timelines'] = uri('neatline-time/timelines');
+        $nav[] = array(
+            'label' => __('Neatline Time'),
+            'uri' => url('neatline-time')
+        );
         return $nav;
 
     }
@@ -303,15 +277,15 @@ class NeatlineTimePlugin
     /**
      * Adds the neatlinetime-json context to response contexts.
      */
-    public function defineResponseContexts($context)
+    public function filterResponseContexts($contexts)
     {
 
-        $context['neatlinetime-json'] = array(
+        $contexts['neatlinetime-json'] = array(
             'suffix'  => 'neatlinetime-json',
             'headers' => array('Content-Type' => 'text/javascript')
         );
 
-        return $context;
+        return $contexts;
 
     }
 
@@ -319,14 +293,14 @@ class NeatlineTimePlugin
      * Adds neatlinetime-json context to the 'items' actions for the
      * NeatlineTime_TimelinesController.
      */
-    public function defineActionContexts($context, $controller)
+    public function filterActionContexts($contexts, $args)
     {
 
-        if ($controller instanceof NeatlineTime_TimelinesController) {
-            $context['items'][] = 'neatlinetime-json';
+        if ($args['controller'] instanceof NeatlineTime_TimelinesController) {
+            $contexts['items'][''] = 'neatlinetime-json';
         }
 
-        return $context;
+        return $contexts;
 
     }
 

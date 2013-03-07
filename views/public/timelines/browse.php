@@ -5,10 +5,10 @@
  
 $head = array('bodyclass' => 'timelines primary',
               'title' => html_escape(__('Browse Timelines')));
-head($head);
+echo head($head);
 ?>
 
-<div id="primary" class="timelines">
+<div class="timelines">
 <h1><?php echo __('Browse Timelines'); ?></h1>
     <?php if (has_timelines_for_loop()) : while ( loop_timelines() ) :?>
     <div class="timeline">
@@ -23,4 +23,4 @@ head($head);
     <p><?php echo __('You have no timelines.'); ?></p>
     <?php endif; ?>
 </div>
-<?php foot(); ?>
+<?php echo foot(); ?>

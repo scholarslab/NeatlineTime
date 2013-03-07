@@ -15,7 +15,7 @@
 function timeline($fieldname, $options = array(), $timeline = null)
 {
 
-    $timeline = $timeline ? $timeline : get_current_timeline();
+    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
 
     $fieldname = strtolower($fieldname);
     $text = $timeline->$fieldname;
@@ -33,111 +33,6 @@ function timeline($fieldname, $options = array(), $timeline = null)
 }
 
 /**
- * Returns the current timeline.
- *
- * @since 1.0
- * @return NeatlineTimeTimeline|null
- */
-function get_current_timeline()
-{
-
-    return __v()->neatlinetimetimeline;
-
-}
-
-/**
- * Sets the current timeline.
- *
- * @since 1.0
- * @param NeatlineTimeTimeline|null
- * @return void
- */
-function set_current_timeline($timeline = null)
-{
-
-    __v()->neatlinetimetimeline = $timeline;
-
-}
-
-/**
- * Sets the timelines for loop
- *
- * @since 1.0
- * @param array $timelines
- * @return void
- */
-function set_timelines_for_loop($timelines)
-{
-
-    __v()->neatlinetimetimelines = $timelines;
-
-}
-
-/**
- * Get the set of timelines for the current loop.
- *
- * @since 1.0
- * @return array
- */
-function get_timelines_for_loop()
-{
-
-    return __v()->neatlinetimetimelines;
-
-}
-
-/**
- * Loops through timelines assigned to the view.
- *
- * @since 1.0
- * @return mixed
- */
-function loop_timelines()
-{
-
-    return loop_records('neatlinetimetimelines', get_timelines_for_loop(), 'set_current_timeline');
-
-}
-
-/**
- * Determines whether there are any timelines in the database.
- *
- * @since 1.0
- * @return boolean
- */
-function has_timelines()
-{
-
-    return (total_timelines() > 0);
-
-}
-
-/**
- * Determines whether there are any timelines to loop on the view.
- *
- * @since 1.0
- * @return boolean
- */
-function has_timelines_for_loop()
-{
-
-    $view = __v();
-    return ($view->neatlinetimetimelines and count($view->neatlinetimetimelines));
-
-}
-
-/**
- * Returns the total number of timelines in the database.
- *
- * @since 1.0
- * @return integer
- */
-function total_timelines()
-{
-    return get_db()->getTable('NeatlineTimeTimeline')->count();
-}
-
-/**
  * Returns a link to a specific timeline.
  *
  * @since 1.0
@@ -151,37 +46,15 @@ function total_timelines()
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
 
-    $timeline = $timeline ? $timeline : get_current_timeline();
+    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
 
     $text = $text ? $text : $timeline->title;
 
     $route = 'neatline-time/timelines/'.$action.'/'.$timeline->id;
-    $uri = uri($route);
+    $uri = url($route);
     $props['href'] = $uri;
 
-    return '<a ' . _tag_attributes($props) . '>' . $text . '</a>';
-
-}
-
-/**
- * Build the delete button.
- *
- * @since 1.0
- * @param NeatlineTimeTimeline|null
- *
- * @return string The delete button.
- **/
-function timeline_delete_button($timeline = null)
-{
-
-    $timeline = $timeline ? $timeline : get_current_timeline();
-
-    return button_to(
-        uri('neatline-time/timelines/delete-confirm/' . $timeline->id),
-        null,
-        __('Delete'),
-        array('class' => 'delete-confirm')
-    );
+    return '<a ' . tag_attributes($props) . '>' . $text . '</a>';
 
 }
 
@@ -193,11 +66,11 @@ function timeline_delete_button($timeline = null)
  */
 function queue_timeline_assets()
 {
-    $headScript = __v()->headScript();
+    $headScript = get_view()->headScript();
     $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
 
     // Check useInternalJavascripts in config.ini.
-    $config = Omeka_Context::getInstance()->getConfig('basic');
+    $config = Zend_Registry::get('bootstrap')->getResource('Config');
     $useInternalJs = isset($config->theme->useInternalJavascripts)
             ? (bool) $config->theme->useInternalJavascripts
             : false;
@@ -215,7 +88,7 @@ function queue_timeline_assets()
 
     $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
 
-    queue_css('neatlinetime-timeline');
+    queue_css_file('neatlinetime-timeline');
 }
 
 /**
@@ -227,9 +100,9 @@ function queue_timeline_assets()
  */
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_timeline();
+    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
     $route = 'neatline-time/timelines/items/'.$timeline->id.'?output=neatlinetime-json';
-    return uri($route);
+    return url($route);
 }
 
 /**
@@ -241,7 +114,7 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
  */
 function neatlinetime_timeline_id($timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_timeline();
+    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
     return text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
 }
 
@@ -442,15 +315,13 @@ function neatlinetime_display_random_featured_timelines($num = 1) {
  * @return string
  */
 function neatlinetime_item_class($item = null) {
-    $item = $item ? $item : get_current_item();
-    
     $classArray = array('item');
 
-    if ($itemTypeName = $item->Type->name) {
+    if ($itemTypeName = metadata($item, 'item_type_name')) {
         $classArray[] = text_to_id($itemTypeName);
     }
 
-    if ($dcTypes = item('Dublin Core', 'Type', 'all', $item)) {
+    if ($dcTypes = metadata($item, array('Dublin Core', 'Type'), array('all' => true))) {
         foreach ($dcTypes as $type) {
             $classArray[] = text_to_id($type);
         }
@@ -506,10 +377,17 @@ function neatlinetime_convert_date($date) {
  */
 function neatlinetime_items_search_form($props=array(), $formActionUri = null)
 {
-    return __v()->partial(
-        'timelines/query-form.php',
+    //return get_view()->partial(
+        //'timelines/query-form.php',
+        //array(
+            //'isPartial'      => true,
+            //'formAttributes' => $props,
+            //'formActionUri'  => $formActionUri
+        //)
+    //);
+    return get_view()->partial(
+        'items/search-form.php',
         array(
-            'isPartial'      => true,
             'formAttributes' => $props,
             'formActionUri'  => $formActionUri
         )
@@ -525,16 +403,19 @@ function neatlinetime_items_search_form($props=array(), $formActionUri = null)
 function neatlinetime_option_select($name = null) {
 
   if ($name) {
-    return select_element(
-            array('name' => $name),
-            neatlinetime_get_option($name),
-            null,
-            array('record_types' => array('Item', 'All'),
-            'sort' => 'alphaBySet')
-    );
+    return get_view()->formSelect(
+                    $name,
+                    neatlinetime_get_option($name),
+                    array(),
+                    get_table_options('Element', null, array(
+                        'record_types' => array('Item', 'All'),
+                        'sort' => 'alphaBySet')
+                    )
+                );
+
   }
 
-  return false;
+    return false;
 
 }
 
@@ -566,13 +447,8 @@ function neatlinetime_get_option($name = null) {
  */
 function neatlinetime_get_item_text($optionName, $options = array(), $item = null) {
 
-    $db = get_db();
+    $element = get_db()->getTable('Element')->find(neatlinetime_get_option($optionName));
 
-    $item = $item ? $item : get_current_item();
-
-    $element = $db->getTable('Element')->find(neatlinetime_get_option($optionName));
-    $elementTexts = $item->getTextsByElement($element);
-
-    return item($element->getElementSet()->name, $element->name, $options, $item);
+    return metadata($item, array($element->getElementSet()->name, $element->name), $options);
 
 }

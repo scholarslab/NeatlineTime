@@ -57,19 +57,4 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
         $this->addDisplayGroup(array('submit'), 'timeline_submit');
     }
 
-    /**
-     * Overrides the default decorators in Omeka Form to remove escaping from
-     * element descriptions.
-     **/
-    public function getDefaultElementDecorators()
-    {
-        return array(
-            'ViewHelper', 
-            'Errors', 
-            array(array('InputsTag' => 'HtmlTag'), array('tag' => 'div', 'class' => 'inputs')), 
-            array('Description', array('tag' => 'p', 'class' => 'hint', 'escape' => false)), 
-            'Label', 
-            array(array('FieldTag' => 'HtmlTag'), array('tag' => 'div', 'class' => 'field'))
-        );
-    }
 }

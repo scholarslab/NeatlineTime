@@ -1,4 +1,7 @@
 <?php
+
+//require_once NEATLINE_TIME_TIMELINE_PLUGIN_DIR . '/models/NeatlineTimeTimeline.php';
+
 /**
  * Test the NeatlineTimeTimeline model.
  */
@@ -10,8 +13,16 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
         $this->db = new Omeka_Db($this->dbAdapter);
         $this->timeline = new NeatlineTimeTimeline($this->db);
         $this->user = new User($this->db);
+        $bootstrap = new Omeka_Test_Bootstrap;
+        $bootstrap->getContainer()->db = $this->db;
+        Zend_Registry::set('bootstrap', $bootstrap);
     }
-    
+
+    public function tearDown()
+    {
+        Zend_Registry::_unsetInstance();
+    }
+
     public function testGetSetProperties()
     {
         $this->timeline->title = 'Timeline Title';
@@ -64,13 +75,4 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
             "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
-    public function testAddedBy()
-    {
-        
-        $this->timeline->title = 'Timeline Title';
-        $this->timeline->creator_id = $this->user->id;
-
-        $this->assertTrue($this->timeline->addedBy($this->user));
-        $this->assertEquals($this->user->id, $this->timeline->creator_id);
-    }
 }

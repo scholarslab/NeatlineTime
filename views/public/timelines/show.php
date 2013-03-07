@@ -5,18 +5,16 @@
 
 queue_timeline_assets();
 $head = array('bodyclass' => 'timelines primary',
-              'title' => timeline('title')
+              'title' => metadata($neatline_time_timeline, 'title')
               );
-head($head);
+echo head($head);
 ?>
-<h1><?php echo timeline('title'); ?></h1>
+<h1><?php echo metadata($neatline_time_timeline, 'title'); ?></h1>
 
-<div id="primary">
 
     <!-- Construct the timeline. -->
     <?php echo $this->partial('timelines/_timeline.php'); ?>
 
-    <?php echo timeline('description'); ?>
+    <?php echo metadata($neatline_time_timeline, 'description'); ?>
 
-</div>
-<?php foot(); ?>
+<?php echo foot(); ?>
