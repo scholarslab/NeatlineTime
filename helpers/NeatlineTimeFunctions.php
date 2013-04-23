@@ -350,64 +350,65 @@ function neatlinetime_display_search_query($query = null)
  * @return array Array of findBy() parameters
  */
 function neatlinetime_convert_search_filters($query) {
-    $perms  = array();
-    $filter = array();
-    $order  = array();
 
-    //Show only public items
-    if (@$query['public']) {
-        $perms['public'] = true;
-    }
+    $params = array();
 
-    //Here we add some filtering for the request
-    // User-specific item browsing
-    if ($userToView = @$query['user']) {
-        if (is_numeric($userToView)) {
-            $filter['user'] = $userToView;
+    foreach($query as $paramName => $paramValue) {
+        if (is_string($paramValue) && trim($paramValue) == '') {
+            continue;
+        }
+
+        switch($paramName) {
+            case 'user':
+                if (is_numeric($paramValue)) {
+                    $params['user'] = $paramValue;
+                }
+            break;
+
+            case 'public':
+            case 'featured':
+            case 'random':
+            case 'hasImage':
+                $params[$paramName] = is_true($paramValue);
+            break;
+
+            case 'recent':
+                if (!is_true($paramValue)) {
+                    $params['recent'] = false;
+                }
+            break;
+
+            case 'tag':
+            case 'tags':
+                $params['tags'] = $paramValue;
+            break;
+
+            case 'search':
+                $params['search'] = $paramValue;
+                //Don't order by recent-ness if we're doing a search
+                unset($params['recent']);
+            break;
+
+            case 'advanced':
+                //We need to filter out the empty entries if any were provided
+                foreach ($paramValue as $k => $entry) {
+                    if (empty($entry['element_id']) || empty($entry['type'])) {
+                        unset($paramValue[$k]);
+                    }
+                }
+                if (count($paramValue) > 0) {
+                    $params['advanced_search'] = $paramValue;
+                }
+            break;
+
+            default:
+                $params[$paramName] = $paramValue;
+            break;
+
         }
     }
 
-    if (@$query['featured']) {
-        $filter['featured'] = true;
-    }
-
-    if ($collection = @$query['collection']) {
-        $filter['collection'] = $collection;
-    }
-
-    if ($type = @$query['type']) {
-        $filter['type'] = $type;
-    }
-
-    if (($tag = @$query['tag']) || ($tag = @$query['tags'])) {
-        $filter['tags'] = $tag;
-    }
-
-    if ($excludeTags = @$query['excludeTags']) {
-        $filter['excludeTags'] = $excludeTags;
-    }
-
-    if ($search = @$query['search']) {
-        $filter['search'] = $search;
-    }
-
-    //The advanced or 'itunes' search
-    if ($advanced = @$query['advanced']) {
-
-        //We need to filter out the empty entries if any were provided
-        foreach ($advanced as $k => $entry) {
-            if (empty($entry['element_id']) || empty($entry['type'])) {
-                unset($advanced[$k]);
-            }
-        }
-        $filter['advanced_search'] = $advanced;
-    };
-
-    if ($range = @$query['range']) {
-        $filter['range'] = $range;
-    }
-
-    return array_merge($perms, $filter, $order);
+    return $params;
 }
 
 /**
