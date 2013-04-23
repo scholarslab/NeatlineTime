@@ -2,9 +2,6 @@
 
 class NeatlineTimeTimelineTable extends Omeka_Db_Table {
 
-    // Set to ensure our table alias is 'ntt'.
-    protected $_alias = 'ntt';
-
     /**
      * Filter public/not public timelines.
      *
@@ -17,9 +14,9 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
         $isPublic = (bool) $isPublic;
 
         if ($isPublic) {
-            $select->where('ntt.public = 1');
+            $select->where('neatline_time_timelines.public = 1');
         } else {
-            $select->where('ntt.public = 0');
+            $select->where('neatline_time_timelines.public = 0');
         }
     }
 
@@ -34,9 +31,9 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
         $isFeatured = (bool) $isFeatured;
 
         if ($isFeatured) {
-            $select->where('ntt.featured = 1');
+            $select->where('neatline_time_timelines.featured = 1');
         } else {
-            $select->where('ntt.featured = 0');
+            $select->where('neatline_time_timelines.featured = 0');
         }
     }
 
@@ -51,7 +48,7 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
         $userId = (int) $userId;
 
         if ($userId) {
-            $select->where('ntt.creator_id = ?', $userId);
+            $select->where('neatline_time_timelines.creator_id = ?', $userId);
         }
     }
 
@@ -92,27 +89,14 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
             $this->orderSelectByRandom($select);
         }
 
-        $select->group("ntt.id");
+        $select->group("neatline_time_timelines.id");
     }
 
-    /**
-     * This is a kind of simple factory that spits out proper beginnings
-     * of SQL statements when retrieving items
-     *
-     * @return Omeka_Db_Select
-     */
     public function getSelect()
     {
         $select = parent::getSelect();
-
-        $acl = Omeka_Context::getInstance()->acl;
-        if ($acl && $acl->has('NeatlineTime_Timelines')) {
-            $has_permission =  $acl->isAllowed(current_user(), 'NeatlineTime_Timelines', 'showNotPublic');
-            if (!$has_permission) {
-                $select->where('ntt.public = 1');
-            }
-        }
-
+        $permissions = new Omeka_Db_Select_PublicPermissions('NeatlineTime_Timelines');
+        $permissions->apply($select, 'neatline_time_timelines', null);
         return $select;
     }
 }

@@ -23,25 +23,11 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $this->_authenticateUser($this->user);
 
         // Set up Neatline Time.
-        $plugin_broker = get_plugin_broker();
-        $this->_addPluginHooksAndFilters($plugin_broker, 'NeatlineTime');
         $plugin_helper = new Omeka_Test_Helper_Plugin;
         $plugin_helper->setUp('NeatlineTime');
 
-        $this->_dbHelper = Omeka_Test_Helper_Db::factory($this->core);
-
-    }
-
-    /**
-     * Install the plugin.
-     *
-     * @return void.
-     */
-    public function _addPluginHooksAndFilters($plugin_broker, $plugin_name)
-    {
-
-        $plugin_broker->setCurrentPluginDirName($plugin_name);
-        new NeatlineTimePlugin;
+        Omeka_Test_Resource_Db::$dropTables = true;
+        Omeka_Test_Resource_Db::$runInstaller = true;
 
     }
 

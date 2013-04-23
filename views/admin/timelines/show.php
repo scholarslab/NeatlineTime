@@ -7,10 +7,10 @@ queue_timeline_assets();
 $head = array('bodyclass' => 'timelines primary', 
               'title' => __('Neatline Time | %s', timeline('title'))
               );
-head($head);
+echo head($head);
 ?>
-  <h1><?php echo timeline('title'); ?> <span class="view-public-page">[ <a href="<?php echo html_escape(public_uri('neatline-time/timelines/show/'.timeline('id'))); ?>"><?php echo __('View Public Page'); ?></a> ]</h1>
-<?php if (has_permission(get_current_timeline(), 'edit')): ?>
+  <h1><?php echo timeline('title'); ?> <span class="view-public-page">[ <a href="<?php echo html_escape(public_url('neatline-time/timelines/show/'.timeline('id'))); ?>"><?php echo __('View Public Page'); ?></a> ]</h1>
+<?php if (is_allowed(get_current_record('neatline_time_timeline'), 'edit')): ?>
 <p id="edit-timeline" class="edit-button">
     <?php echo link_to_timeline(__('Edit Metadata'), array('class' => 'edit'), 'edit'); ?>
     <?php echo link_to_timeline(__('Edit Items Query'), array('class' => 'edit'), 'query'); ?>
