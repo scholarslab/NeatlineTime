@@ -9,13 +9,14 @@ It's easiest to start with a fresh repository, so the instructions start there.
 1. `cd omeka/plugins`
 1. `git clone git@github.com:scholarslab/NeatlineTime.git`
 1. `cd NeatlineTime`
+1. `git checkout develop`
 1. `git flow init`
 1. `git flow release start $VERSION`
 1. Bump the version number by editing:
    * `plugin.ini`
 1. `git commit`
 1. Update i18n:
-   * `tx pull`
+   * `tx pull --all`
    * `ant update-pot build-mo` (if there are new translations)
    * `git commit` (if there are new translations)
 1. `ant package`

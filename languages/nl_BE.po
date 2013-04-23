@@ -1,168 +1,174 @@
 # Translation for the Neatline Time plugin for Omeka.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+#   <anita.ruijmen@libis.kuleuven.be>, 2012.
+# Sam Alloing <>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: NeatlineTime\n"
-"Report-Msgid-Bugs-To: http://github.com/scholarslab/NeatlineTime/issues\n"
+"Project-Id-Version: Neatline\n"
+"Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2012-10-07 09:33+0000\n"
+"Last-Translator: Sam Alloing <>\n"
+"Language-Team: Dutch (Belgium) (http://www.transifex.com/projects/p/neatline/language/nl_BE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl_BE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: NeatlineTimePlugin.php:207
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
-msgstr ""
+msgstr "<strong>Waarschuwing</strong>: Verwijderen van de Neatline Time plugin zal alle aangepaste Timeline records verwijderen."
 
 #: config_form.php:2
 msgid "Item Date"
-msgstr ""
+msgstr "Voorwerp datum"
 
 #: config_form.php:8
 msgid ""
 "The date field to use to retrieve and display items on a timeline. Default "
 "is DC:Date."
-msgstr ""
+msgstr "Het gebruikte datum veld om items op de tijdsbalk op te halen en weer te geven.  Standaardwaarde is DC:Date."
 
 #: config_form.php:14
 msgid "Item Title"
-msgstr ""
+msgstr "Voorwerp titel"
 
 #: config_form.php:21
 msgid ""
-"The title field to use when displaying an item on a timeline. Default is DC:"
-"Title"
-msgstr ""
+"The title field to use when displaying an item on a timeline. Default is "
+"DC:Title"
+msgstr "Het gebruikte titel veld om items weer te geven op een tijdsbalk. Standaardwaarde is DC:Title"
 
 #: config_form.php:27
 msgid "Item Description"
-msgstr ""
+msgstr "Voorwerp beschrijving"
 
 #: config_form.php:33
 msgid ""
 "The description field to use when displaying an item on a timeline. Default "
 "is DC:Description"
-msgstr ""
+msgstr "Het gebruikte beschrijving veld om items weer te geven op een tijdsbalk. Standaardwaarde is DC:Description"
 
 #: controllers/TimelinesController.php:120
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
-msgstr ""
+msgstr "De tijdsbalk \"%s\" met succes toegevoegd!"
 
 #: controllers/TimelinesController.php:128
 #, php-format
 msgid "The timeline \"%s\" was successfully changed!"
-msgstr ""
+msgstr "De tijdsbalk \"%s\" werd succesvol gewijzigd!"
 
 #: controllers/TimelinesController.php:136
 #, php-format
 msgid "The timeline \"%s\" was successfully deleted!"
-msgstr ""
+msgstr "De tijdsbalk \"%s\" werd succesvol verwijderd!"
 
 #: controllers/TimelinesController.php:144
 #, php-format
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
 "not delete any items associated with this timeline."
-msgstr ""
+msgstr "Dit zal de tijdsbalk \"%s\" en de geassocieerde metadata verwijderen. Dit zal geen geassocieerde items verwijderen van deze tijdsbalk."
 
 #: forms/timeline.php:17
 msgid "A title for your timeline."
-msgstr ""
+msgstr "Een titel voor uw tijdsbalk."
 
 #: forms/timeline.php:23
 msgid "A description for your timeline."
-msgstr ""
+msgstr "Een beschrijving voor uw tijdsbalk."
 
 #: forms/timeline.php:29
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: forms/timeline.php:30
 msgid "Whether the timeline is public or not."
-msgstr ""
+msgstr "Of de tijdsbalk al dan niet publiek is."
 
 #: forms/timeline.php:37
 msgid "Whether the timeline is featured or not."
-msgstr ""
+msgstr "Of de tijdsbalk al dan niet aanbevolen is."
 
 #: forms/timeline.php:43
 msgid "Save Timeline"
-msgstr ""
+msgstr "Bewaar tijdsbalk"
+
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "No"
+msgstr "Neen"
+
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "Yes"
+msgstr "Ja"
 
 #: models/NeatlineTimeTimeline.php:93
 msgid "Cannot associate the timeline with a user who doesn't exist."
-msgstr ""
+msgstr "De tijdsbalk kan niet geassocieerd worden met een onbestaande gebruiker. "
 
 #: views/admin/timelines/add.php:8
 msgid "Neatline Time | Add a Timeline"
-msgstr ""
+msgstr "Neatline Time | Voeg tijdsbalk toe"
 
 #: views/admin/timelines/browse.php:7
 msgid "Neatline Time | Browse Timelines"
-msgstr ""
+msgstr "Neatline Time | Verken tijdsbalk"
 
 #: views/admin/timelines/browse.php:11 views/admin/timelines/browse.php:57
 msgid "Add a Timeline"
-msgstr ""
+msgstr "Voeg een tijdsbalk toe"
 
 #: views/admin/timelines/browse.php:21 views/admin/timelines/browse.php:34
 #: views/admin/timelines/show.php:15
 msgid "Edit Metadata"
-msgstr ""
+msgstr "Bewerk metadata"
 
 #: views/admin/timelines/browse.php:22 views/admin/timelines/browse.php:41
 msgid "Edit Item Query"
-msgstr ""
+msgstr "Bewerk voorwerp zoekvraag"
 
 #: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
-msgstr ""
+msgstr "Er zijn geen tijdsbalken"
 
 #: views/admin/timelines/edit.php:7
 #, php-format
 msgid "Neatline Time | Edit \"%s\" Metadata"
-msgstr ""
-
-#: views/admin/timelines/query-form.php:2
-msgid "Advanced Search"
-msgstr ""
+msgstr "Neatline Time | Bewerk \"%s\" metadata"
 
 #: views/admin/timelines/query.php:7
 #, php-format
 msgid "Neatline Time | Edit \"%s\" Items Query"
-msgstr ""
+msgstr "Neatline Time | Bewerk \"%s\" voorwerp zoekvraag"
 
 #: views/admin/timelines/query.php:20 views/admin/timelines/show.php:27
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
-msgstr ""
+msgstr "De &#8220;%s&#8221; tijdsbalk toont items die overeenstemt met de volgende zoekvraag:"
 
 #: views/admin/timelines/show.php:8
 #, php-format
 msgid "Neatline Time | %s"
-msgstr ""
+msgstr "Neatline Time | %s"
 
 #: views/admin/timelines/show.php:16
 msgid "Edit Items Query"
-msgstr ""
+msgstr "Bewerk voorwerpen zoekvraag"
 
 #: views/admin/timelines/show.php:26
 msgid "Items Query"
-msgstr ""
+msgstr "Voorwerpen zoekvraag"
 
 #: views/public/timelines/browse.php:7 views/public/timelines/browse.php:12
 msgid "Browse Timelines"
-msgstr ""
+msgstr "Verken tijdsbalk"
 
 #: views/public/timelines/browse.php:23
 msgid "You have no timelines."
-msgstr ""
+msgstr "U heeft geen tijdsbalken"
