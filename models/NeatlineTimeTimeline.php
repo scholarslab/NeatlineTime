@@ -44,4 +44,13 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
         $this->query = serialize($query);
     }
 
+    /**
+     * Get the routing parameters or the URL string to this record.
+     */
+    public function getRecordUrl($action = 'show')
+    {
+        $urlHelper = new Omeka_View_Helper_Url;
+        $params = array('action' => $action, 'id' => $this->id);
+        return $urlHelper->url($params, 'timelineActionRoute');
+    }
 }

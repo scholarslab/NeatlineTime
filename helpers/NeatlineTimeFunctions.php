@@ -54,7 +54,9 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
     $uri = url($route);
     $props['href'] = $uri;
 
-    return '<a ' . tag_attributes($props) . '>' . $text . '</a>';
+    //return '<a ' . tag_attributes($props) . '>' . $text . '</a>';
+    //
+    return link_to($timeline, $action, $text, $props);
 
 }
 
