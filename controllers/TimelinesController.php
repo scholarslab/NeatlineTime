@@ -43,7 +43,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
 
         if(isset($_GET['search'])) {
-            $timeline->query = serialize($_GET);
+            $timeline->query = $_GET;
             $timeline->save();
             $this->_helper->flashMessenger($this->_getEditSuccessMessage($timeline), 'success');
             $this->_helper->redirector->gotoRoute(array('action' => 'index'));
