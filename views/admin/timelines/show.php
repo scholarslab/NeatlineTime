@@ -25,7 +25,7 @@ echo head($head);
     <?php if ($query = timeline('query')) : ?>
         <h2><?php echo __('Items Query'); ?></h2>
         <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:',timeline('title')); ?></strong></p>
-        <?php echo neatlinetime_display_search_query(timeline('query')); ?>
+        <?php echo item_search_filters($query); ?>
     <?php endif; ?>
 
 </div>

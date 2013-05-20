@@ -16,7 +16,7 @@ echo head($head);
 </script>
     <?php if ($query = timeline('query')) : ?>
     <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', timeline('title')) ?></strong></p>
-    <?php echo neatlinetime_display_search_query($query); ?>
+        <?php echo item_search_filters($query); ?>
     <?php endif; ?>
     <?php echo neatlinetime_items_search_form(array(), current_url()); ?>
 <?php echo foot(); ?>
