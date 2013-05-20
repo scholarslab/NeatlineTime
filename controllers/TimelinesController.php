@@ -64,7 +64,6 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
 
         $query = $timeline->query ? unserialize($timeline->query) : array();
-        $query = neatlinetime_convert_search_filters($query);
         $items = get_db()->getTable('Item')->findBy($query, null);
 
         $this->view->neatline_time_timeline = $timeline;
