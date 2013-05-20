@@ -18,5 +18,5 @@ echo head($head);
     <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', timeline('title')) ?></strong></p>
         <?php echo item_search_filters($query); ?>
     <?php endif; ?>
-    <?php echo neatlinetime_items_search_form(array(), current_url()); ?>
+    <?php echo items_search_form(array(), current_url()); ?>
 <?php echo foot(); ?>

@@ -201,35 +201,6 @@ function neatlinetime_convert_date($date) {
 }
 
 /**
- * Returns the HTML for an item search form
- *
- * This was copied with modifications from 
- * application/helpers/ItemFunctions.php in the Omeka source.
- *
- * @param array $props
- * @param string $formActionUri
- * @return string
- */
-function neatlinetime_items_search_form($props=array(), $formActionUri = null)
-{
-    //return get_view()->partial(
-        //'timelines/query-form.php',
-        //array(
-            //'isPartial'      => true,
-            //'formAttributes' => $props,
-            //'formActionUri'  => $formActionUri
-        //)
-    //);
-    return get_view()->partial(
-        'items/search-form.php',
-        array(
-            'formAttributes' => $props,
-            'formActionUri'  => $formActionUri
-        )
-    );
-}
-
-/**
  * Generates a form select populated by all elements and element sets.
  * 
  * @param string The NeatlineTime option name. 
