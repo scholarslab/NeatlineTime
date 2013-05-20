@@ -170,6 +170,13 @@ function neatlinetime_display_search_query($query = null)
                     case 'range':
                         $displayValue = $value;
                     break;
+
+                    case 'exhibit':
+                        if (function_exists('exhibit_builder_get_exhibit_by_id')) {
+                            $exhibit = exhibit_builder_get_exhibit_by_id($value);
+                        }
+                        $displayValue = $exhibit->title;
+                    break;
                 }
                 if ($displayValue) {
                     $displayArray[$filter] = $displayValue;
