@@ -11,24 +11,14 @@
  * @param array $options
  * @param NeatlineTimeTimeline|null
  * @return string
+ * @deprecated
  */
 function timeline($fieldname, $options = array(), $timeline = null)
 {
 
     $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
 
-    $fieldname = strtolower($fieldname);
-    $text = $timeline->$fieldname;
-
-    if(isset($options['snippet'])) {
-        $text = nls2p(snippet($text, 0, (int)$options['snippet']));
-    }
-
-    if ($fieldname == 'query') {
-        $text = unserialize($text);
-    }
-
-    return $text;
+    return metadata($timeline, $fieldname, $options);
 
 }
 
@@ -40,8 +30,8 @@ function timeline($fieldname, $options = array(), $timeline = null)
  * @param array Attributes for the <a> tag. (optional)
  * @param string The action for the link. Default is 'show'.
  * @param NeatlineTimeTimeline|null
- *
  * @return string HTML
+ * @deprecated
  **/
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {

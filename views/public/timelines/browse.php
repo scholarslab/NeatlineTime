@@ -13,7 +13,7 @@ echo head($head);
     <?php if ($total_results) : ?>
     <?php foreach (loop('Neatline_Time_Timelines') as $timeline): ?>
     <div class="timeline">
-        <h2><?php echo link_to_timeline(); ?></h2>
+        <h2><?php echo link_to($timeline, 'show', $timeline->title); ?></h2>
         <?php echo snippet_by_word_count(metadata($timeline, 'description'), '10'); ?>
     </div>
     <?php endforeach; ?>

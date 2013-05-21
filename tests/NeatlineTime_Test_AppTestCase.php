@@ -51,9 +51,6 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $timeline = new NeatlineTimeTimeline;
 
         foreach ($data as $k => $v) {
-            if ($k == 'query') {
-                $v = serialize($v);
-            }
             $timeline->$k = $v;
         }
 

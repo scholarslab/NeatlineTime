@@ -28,17 +28,17 @@ echo head($head);
         <?php foreach (loop('Neatline_Time_Timelines') as $timeline): ?>
         <tr>
             <td class="timeline-title title">
-                <?php echo link_to_timeline(); ?>
+                <?php echo link_to($timeline, 'show', $timeline->title); ?>
                 <ul class="action-links group">
                         <?php if (is_allowed($timeline, 'edit')): ?>
-                        <li><?php echo link_to_timeline(__('Edit Metadata'), array(), 'edit'); ?></li>
+                        <li><?php echo link_to($timeline, 'edit', __('Edit Metadata')); ?></li>
                         <?php endif; ?>
                         <?php if (is_allowed($timeline, 'query')): ?>
-                        <li><?php echo link_to_timeline(__('Edit Item Query'), array(), 'query'); ?></li>
+                        <li><?php echo link_to($timeline, 'query', __('Edit Item Query')); ?></li>
                         <?php endif; ?>
 
                         <?php if (is_allowed($timeline, 'delete')): ?>
-                        <li><?php echo link_to_timeline(__('Delete'), array('class' => 'delete-confirm'), 'delete-confirm'); ?></li>
+                        <li><?php echo link_to($timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm')); ?></li>
                         <?php endif; ?>
                 </ul>
             </td>
