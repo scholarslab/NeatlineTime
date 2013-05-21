@@ -11,9 +11,11 @@ foreach ($items as $item) {
 
     $itemDates = neatlinetime_get_item_text('item_date', array('all' => true), $item);
 
+    $fileUrl = null;
     if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
         $fileUrl = metadata($file, 'square_thumbnail_uri');
     }
+
     if (!empty($itemDates)) {
       foreach ($itemDates as $itemDate) {
             $itemDate = $itemDate;
