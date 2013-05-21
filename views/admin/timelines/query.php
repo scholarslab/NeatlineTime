@@ -3,7 +3,7 @@
  * The edit query view for a specific Timeline.
  */
 
-$timelineTitle = 'foobar'; //metadata($neatline_time_timeline, 'title');
+$timelineTitle = metadata($neatline_time_timeline, 'title');
 $title = __('Neatline Time | Edit "%s" Items Query', strip_formatting($timelineTitle));
 $head = array('bodyclass' => 'timelines primary', 'title' => $title);
 echo head($head);
