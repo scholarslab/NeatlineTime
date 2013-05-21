@@ -50,12 +50,6 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 
     $text = $text ? $text : $timeline->title;
 
-    $route = 'neatline-time/timelines/'.$action.'/'.$timeline->id;
-    $uri = url($route);
-    $props['href'] = $uri;
-
-    //return '<a ' . tag_attributes($props) . '>' . $text . '</a>';
-    //
     return link_to($timeline, $action, $text, $props);
 
 }
