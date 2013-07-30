@@ -1,8 +1,8 @@
 # Translation for the Neatline Time plugin for Omeka.
 # 
 # Translators:
-#   <gbp2q@virginia.edu>, 2012.
-# Jeremy Boggs <jeremy@clioweb.org>, 2012.
+# gbp2q <gbp2q@virginia.edu>, 2012
+# Jeremy Boggs <jeremy@clioweb.org>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Neatline\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: NeatlineTimePlugin.php:207
 msgid ""

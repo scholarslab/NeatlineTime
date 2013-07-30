@@ -1,7 +1,7 @@
 # Translation for the Neatline Time plugin for Omeka.
 # 
 # Translators:
-#   <katina.rogers@gmail.com>, 2012.
+# katinalynn <katina.rogers@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Neatline\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: NeatlineTimePlugin.php:207
 msgid ""
