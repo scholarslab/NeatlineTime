@@ -1,15 +1,16 @@
 # Translation for the Neatline Time plugin for Omeka.
 # 
 # Translators:
-#   <anita.ruijmen@libis.kuleuven.be>, 2012.
-# Sam Alloing <>, 2012.
+# aruijmen <anita.ruijmen@libis.kuleuven.be>, 2012
+# dewulfevy <evy.dewulf@libis.kuleuven.be>, 2013
+# Sam Alloing <sam.alloing@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: 2012-10-07 09:33+0000\n"
-"Last-Translator: Sam Alloing <>\n"
+"PO-Revision-Date: 2013-06-23 16:26+0000\n"
+"Last-Translator: Sam Alloing <sam.alloing@gmail.com>\n"
 "Language-Team: Dutch (Belgium) (http://www.transifex.com/projects/p/neatline/language/nl_BE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgstr "Het gebruikte beschrijving veld om items weer te geven op een tijdsbalk.
 #: controllers/TimelinesController.php:120
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
-msgstr "De tijdsbalk \"%s\" met succes toegevoegd!"
+msgstr "De tijdsbalk \"%s\" werd met succes toegevoegd!"
 
 #: controllers/TimelinesController.php:128
 #, php-format
@@ -134,7 +135,7 @@ msgstr "Bewerk voorwerp zoekvraag"
 
 #: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
-msgstr "Er zijn geen tijdsbalken"
+msgstr "Er zijn geen tijdsbalken."
 
 #: views/admin/timelines/edit.php:7
 #, php-format
@@ -171,4 +172,4 @@ msgstr "Verken tijdsbalk"
 
 #: views/public/timelines/browse.php:23
 msgid "You have no timelines."
-msgstr "U heeft geen tijdsbalken"
+msgstr "U heeft geen tijdsbalken."

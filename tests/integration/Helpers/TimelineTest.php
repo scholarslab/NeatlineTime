@@ -24,7 +24,5 @@ class TimelineTest extends NeatlineTime_Test_AppTestCase
         // Timeline Description
         $this->assertEquals('Timeline description.', timeline('description'));
 
-        // Check if timeline('query') returns an array.
-        $this->assertTrue(is_array(timeline('query')));
     }
 }

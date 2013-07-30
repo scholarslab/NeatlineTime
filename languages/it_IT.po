@@ -1,28 +1,24 @@
 # Translation for the Neatline Time plugin for Omeka.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: NeatlineTime\n"
-"Report-Msgid-Bugs-To: http://github.com/scholarslab/NeatlineTime/issues\n"
+"Project-Id-Version: Neatline\n"
+"Report-Msgid-Bugs-To: http://github.com/scholarslab/\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2012-06-18 15:59+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Italian (Italy) (http://www.transifex.com/projects/p/neatline/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: NeatlineTimePlugin.php:190
+#: NeatlineTimePlugin.php:207
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
-msgstr ""
-
-#: NeatlineTimePlugin.php:249 NeatlineTimePlugin.php:270
-msgid "Neatline Time"
 msgstr ""
 
 #: config_form.php:2
@@ -41,8 +37,8 @@ msgstr ""
 
 #: config_form.php:21
 msgid ""
-"The title field to use when displaying an item on a timeline. Default is DC:"
-"Title"
+"The title field to use when displaying an item on a timeline. Default is "
+"DC:Title"
 msgstr ""
 
 #: config_form.php:27
@@ -55,22 +51,22 @@ msgid ""
 "is DC:Description"
 msgstr ""
 
-#: controllers/TimelinesController.php:78
+#: controllers/TimelinesController.php:120
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
 msgstr ""
 
-#: controllers/TimelinesController.php:86
+#: controllers/TimelinesController.php:128
 #, php-format
 msgid "The timeline \"%s\" was successfully changed!"
 msgstr ""
 
-#: controllers/TimelinesController.php:94
+#: controllers/TimelinesController.php:136
 #, php-format
 msgid "The timeline \"%s\" was successfully deleted!"
 msgstr ""
 
-#: controllers/TimelinesController.php:102
+#: controllers/TimelinesController.php:144
 #, php-format
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
@@ -101,7 +97,19 @@ msgstr ""
 msgid "Save Timeline"
 msgstr ""
 
-#: views/admin/timelines/add.php:7
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "No"
+msgstr ""
+
+#: helpers/NeatlineTimeFunctions.php:292
+msgid "Yes"
+msgstr ""
+
+#: models/NeatlineTimeTimeline.php:93
+msgid "Cannot associate the timeline with a user who doesn't exist."
+msgstr ""
+
+#: views/admin/timelines/add.php:8
 msgid "Neatline Time | Add a Timeline"
 msgstr ""
 
@@ -109,20 +117,20 @@ msgstr ""
 msgid "Neatline Time | Browse Timelines"
 msgstr ""
 
-#: views/admin/timelines/browse.php:16 views/admin/timelines/browse.php:53
-#: views/admin/timelines/browse.php:59
+#: views/admin/timelines/browse.php:11 views/admin/timelines/browse.php:57
 msgid "Add a Timeline"
 msgstr ""
 
-#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:28
+#: views/admin/timelines/browse.php:21 views/admin/timelines/browse.php:34
+#: views/admin/timelines/show.php:15
 msgid "Edit Metadata"
 msgstr ""
 
-#: views/admin/timelines/browse.php:37
+#: views/admin/timelines/browse.php:22 views/admin/timelines/browse.php:41
 msgid "Edit Item Query"
 msgstr ""
 
-#: views/admin/timelines/browse.php:59
+#: views/admin/timelines/browse.php:57
 msgid "There are no timelines."
 msgstr ""
 
@@ -136,29 +144,29 @@ msgstr ""
 msgid "Neatline Time | Edit \"%s\" Items Query"
 msgstr ""
 
-#: views/admin/timelines/query.php:16 views/admin/timelines/show.php:20
+#: views/admin/timelines/query.php:20 views/admin/timelines/show.php:27
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
 msgstr ""
 
-#: views/admin/timelines/show.php:9
+#: views/admin/timelines/show.php:8
 #, php-format
 msgid "Neatline Time | %s"
 msgstr ""
 
-#: views/admin/timelines/show.php:19
-msgid "Items Query"
+#: views/admin/timelines/show.php:16
+msgid "Edit Items Query"
 msgstr ""
 
-#: views/admin/timelines/show.php:29
-msgid "Edit Items Query"
+#: views/admin/timelines/show.php:26
+msgid "Items Query"
 msgstr ""
 
 #: views/public/timelines/browse.php:7 views/public/timelines/browse.php:12
 msgid "Browse Timelines"
 msgstr ""
 
-#: views/public/timelines/browse.php:24
+#: views/public/timelines/browse.php:23
 msgid "You have no timelines."
 msgstr ""

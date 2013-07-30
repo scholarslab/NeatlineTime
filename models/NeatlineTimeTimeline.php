@@ -2,10 +2,8 @@
 /**
  * NeatlineTimeTimeline record.
  */
-class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Interface
+class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_Acl_Resource_Interface
 {
-
-    CONST RESOURCE_ID = 'NeatlineTime_Timelines';
 
     public $title;
     public $description;
@@ -18,43 +16,12 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
 
     /**
      * Mixin initializer.
-     *
-     * Adds the PublicFeatured mixin to timeline records.
      */
     protected function _initializeMixins()
     {
-        $this->_mixins[] = new PublicFeatured($this);
-    }
-
-    /**
-     * Things to do in the beforeInsert() hook:
-     *
-     * Set the creator_id to the current user.
-     *
-     * @since 1.0
-     * @return void
-     */
-    protected function beforeInsert()
-    {
-        $now = Zend_Date::now()->toString(self::DATE_FORMAT);
-        $this->added = $now;
-        $this->modified = $now;
-        if (!$this->creator_id && ($user = Omeka_Context::getInstance()->getCurrentUser())) {
-            $this->setAddedBy($user);
-        }
-    }
-
-    /**
-     * Things to do in the beforeSave() hook:
-     *
-     * Explicitly set the modified timestamp.
-     *
-     * @since 1.0
-     * @return void
-     */
-    protected function beforeSave()
-    {
-        $this->modified = Zend_Date::now()->toString(self::DATE_FORMAT);
+        $this->_mixins[] = new Mixin_Owner($this, 'creator_id');
+        $this->_mixins[] = new Mixin_PublicFeatured($this);
+        $this->_mixins[] = new Mixin_Timestamp($this);
     }
 
     /**
@@ -68,30 +35,22 @@ class NeatlineTimeTimeline extends Omeka_Record implements Zend_Acl_Resource_Int
      */
     public function getResourceId()
     {
-        return self::RESOURCE_ID;
+        return 'NeatlineTime_Timelines';
+    }
+
+    protected function beforeSave()
+    {
+        $query = $this->query;
+        $this->query = serialize($query);
     }
 
     /**
-     * Checks whether a Timeline was created by a given user
-     *
-     * @param User
-     * @return boolean
+     * Get the routing parameters or the URL string to this record.
      */
-    public function addedBy($user)
+    public function getRecordUrl($action = 'show')
     {
-        return ($user->id == $this->creator_id);
-    }
-
-    /**
-     * Set the user who added the timeline.
-     *
-     * @param User $user
-     */
-    public function setAddedBy(User $user)
-    {
-        if (!$user->exists()) {
-            throw new RuntimeException(__("Cannot associate the timeline with a user who doesn't exist."));
-        }
-        $this->creator_id = $user->id;
+        $urlHelper = new Omeka_View_Helper_Url;
+        $params = array('action' => $action, 'id' => $this->id);
+        return $urlHelper->url($params, 'timelineActionRoute');
     }
 }

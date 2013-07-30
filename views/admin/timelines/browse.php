@@ -5,56 +5,57 @@
 
 $head = array('bodyclass' => 'timelines primary', 
               'title' => html_escape(__('Neatline Time | Browse Timelines')));
-head($head);
+echo head($head);
 ?>
-<h1><?php echo $head['title']; ?></h1>
-<p id="add-timeline" class="add-button"><a class="add" href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?></a></p>
-<div id="primary">
 <?php echo flash(); ?>
-<?php if (has_timelines_for_loop()) : ?>
+<?php if ($total_results) : ?>
 <div class="pagination"><?php echo pagination_links(); ?></div>
+<div class="table-actions">
+<?php if (is_allowed('NeatlineTime_Timelines', 'add')): ?>
+    <a href="<?php echo html_escape(url('neatline-time/timelines/add')); ?>" class="small green button">
+        <?php echo __('Add a Timeline'); ?>
+    </a>
+<?php endif; ?>
+</div>
 <table>
     <thead id="timelines-table-head">
         <tr>
         <th><?php echo __('Title'); ?></th>
         <th><?php echo __('Description'); ?></th>
-        <th><?php echo __('Edit Metadata'); ?></th>
-        <th><?php echo __('Edit Item Query'); ?></th>
-        <th><?php echo __('Delete'); ?></th>
         </tr>
     </thead>
     <tbody id="types-table-body">
-<?php while (loop_timelines()) : ?>
+        <?php foreach (loop('Neatline_Time_Timelines') as $timeline): ?>
         <tr>
-            <td class="timeline-title"><?php echo link_to_timeline(); ?></td>
-            <td><?php echo snippet_by_word_count(timeline('description'), '50'); ?></td>
-            <td>
-            <?php
-            if (has_permission(get_current_timeline(), 'edit')) {
-                echo link_to_timeline(__('Edit Metadata'), array('class' => 'edit'), 'edit');
-            }
-            ?>
+            <td class="timeline-title title">
+                <?php echo link_to($timeline, 'show', $timeline->title); ?>
+                <ul class="action-links group">
+                        <?php if (is_allowed($timeline, 'edit')): ?>
+                        <li><?php echo link_to($timeline, 'edit', __('Edit Metadata')); ?></li>
+                        <?php endif; ?>
+                        <?php if (is_allowed($timeline, 'query')): ?>
+                        <li><?php echo link_to($timeline, 'query', __('Edit Item Query')); ?></li>
+                        <?php endif; ?>
+
+                        <?php if (is_allowed($timeline, 'delete')): ?>
+                        <li><?php echo link_to($timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm')); ?></li>
+                        <?php endif; ?>
+                </ul>
             </td>
-            <td>
-            <?php
-            if (has_permission(get_current_timeline(), 'query')) {
-                echo link_to_timeline(__('Edit Item Query'), array('class' => 'query'), 'query');
-            }
-            ?>
-            </td>
-            <td>
-            <?php
-            if (has_permission(get_current_timeline(), 'delete')) {
-                echo timeline_delete_button(get_current_timeline());
-            }
-            ?>
-            </td>
+            <td><?php echo snippet_by_word_count(metadata($timeline, 'description'), '10'); ?></td>
         </tr>
-<?php endwhile; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>
-<?php else : ?>
-    <p><?php echo __('There are no timelines.'); ?> <?php if (has_permission('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(uri('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?>.</a><?php endif; ?></p>
+<div class="table-actions">
+<?php if (is_allowed('NeatlineTime_Timelines', 'add')): ?>
+    <a href="<?php echo html_escape(url('neatline-time/timelines/add')); ?>" class="small green button">
+        <?php echo __('Add a Timeline'); ?>
+    </a>
 <?php endif; ?>
 </div>
-<?php foot(); ?>
+
+<?php else : ?>
+    <p><?php echo __('There are no timelines.'); ?> <?php if (is_allowed('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(url('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?>.</a><?php endif; ?></p>
+<?php endif; ?>
+<?php echo foot(); ?>

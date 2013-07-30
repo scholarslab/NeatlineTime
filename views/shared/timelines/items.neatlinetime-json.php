@@ -4,16 +4,18 @@
  */
 
 $neatlineTimeEvents = array();
-while (loop_items()) {
-    $itemTitle = neatlinetime_get_item_text('item_title');
-    $itemLink = abs_item_uri();
-    $itemDescription =  neatlinetime_get_item_text('item_description');
+foreach ($items as $item) {
+    $itemTitle = neatlinetime_get_item_text('item_title', array(), $item);
+    $itemLink = record_url($item);
+    $itemDescription =  neatlinetime_get_item_text('item_description', array(), $item);
 
-    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true));
+    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true), $item);
 
-    if ($file = get_db()->getTable('File')->findWithImages(item('id'), 0)) {
-        $fileUrl = file_display_uri($file, 'square_thumbnail'); 
+    $fileUrl = null;
+    if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
+        $fileUrl = metadata($file, 'square_thumbnail_uri');
     }
+
     if (!empty($itemDates)) {
       foreach ($itemDates as $itemDate) {
             $itemDate = $itemDate;
@@ -30,7 +32,7 @@ while (loop_items()) {
 
                 $neatlineTimeEvent['title'] = $itemTitle;
                 $neatlineTimeEvent['link'] = $itemLink;
-                $neatlineTimeEvent['classname'] = neatlinetime_item_class();
+                $neatlineTimeEvent['classname'] = neatlinetime_item_class($item);
 
                 if ($fileUrl) {
                     $neatlineTimeEvent['image'] = $fileUrl;

@@ -2,92 +2,51 @@
 /**
  * Timelines Controller
  */
-class NeatlineTime_TimelinesController extends Omeka_Controller_Action
+class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionController
 {
     /**
      * Initialization.
-     *
-     * Checks version of Omeka and sets the controller's model accordingly.
-     * (Omeka 2.0 does this differently.).
-     *
-     * Sets the recordsPerPage using the per_page_admin setting.
-     *
-     * Checks the ACL for the model, and returns a 404 accordingly.
      *
      * @todo Add our own setting for recordsPerPage instead of using setting
      * intended for Omeka Items.
      */
     public function init()
     {
-        $modelName = 'NeatlineTimeTimeline';
-        if (version_compare(OMEKA_VERSION, '2.0-dev', '>=')) {
-            $this->_helper->db->setDefaultModelName($modelName);
-        } else {
-            $this->_modelClass = $modelName;
-        }
+        $this->_helper->db->setDefaultModelName('NeatlineTimeTimeline');
 
         $this->_browseRecordsPerPage = get_option('per_page_admin');
 
-        try {
-            $this->_table = $this->getTable($modelName);
-            $this->aclResource = $this->findById();
-        } catch (Omeka_Controller_Exception_404 $e) {}
     }
 
     public function addAction()
     {
-        $timeline = new NeatlineTimeTimeline;
-
-        try {
-            if ($timeline->saveForm($_POST)) {
-                $successMessage = $this->_getAddSuccessMessage($timeline);
-                if ($successMessage != '') {
-                    $this->flashSuccess($successMessage);
-                }
-                $this->_redirect('neatline-time/timelines');
-            }
-        } catch (Omeka_Validator_Exception $e) {
-            $this->flashValidationErrors($e);
-        }
-
         require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
         $form = new NeatlineTime_Form_Timeline;
-
         $this->view->form = $form;
+        parent::addAction();
     }
 
     public function editAction()
     {
-        $timeline = $this->findById();
-
-        try {
-            if ($timeline->saveForm($_POST)) {
-                $successMessage = $this->_getEditSuccessMessage($timeline);
-                if ($successMessage != '') {
-                    $this->flashSuccess($successMessage);
-                }
-                $this->_redirect('neatline-time/timelines');
-            }
-        } catch (Omeka_Validator_Exception $e) {
-            $this->flashValidationErrors($e);
-        }
+        $timeline = $this->_helper->db->findById();
 
         require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
         $form = new NeatlineTime_Form_Timeline;
         $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public, 'featured' => $timeline->featured));
 
         $this->view->form = $form;
-        $this->view->neatlinetimetimeline = $timeline;
+        parent::editAction();
     }
 
     public function queryAction()
     {
-        $timeline = $this->findById();
+        $timeline = $this->_helper->db->findById();
 
         if(isset($_GET['search'])) {
-            $timeline->query = serialize($_GET);
-            $timeline->forceSave();
-            $this->redirect->goto('index');
+            $timeline->query = $_GET;
+            $timeline->save();
+            $this->_helper->flashMessenger($this->_getEditSuccessMessage($timeline), 'success');
+            $this->_helper->redirector->gotoRoute(array('action' => 'index'));
         }
         else {
             $queryArray = unserialize($timeline->query);
@@ -97,18 +56,17 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_Action
             $_REQUEST = $queryArray;
         }
 
-        $this->view->neatlinetimetimeline = $timeline;
+        $this->view->neatline_time_timeline = $timeline;
     }
 
     public function itemsAction()
     {
-        $timeline = $this->findById();
+        $timeline = $this->_helper->db->findById();
 
         $query = $timeline->query ? unserialize($timeline->query) : array();
-        $query = neatlinetime_convert_search_filters($query);
         $items = get_db()->getTable('Item')->findBy($query, null);
 
-        $this->view->neatlinetimetimeline = $timeline;
+        $this->view->neatline_time_timeline = $timeline;
         $this->view->items = $items;
     }
 
