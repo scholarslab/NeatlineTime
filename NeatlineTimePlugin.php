@@ -161,7 +161,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
                 'neatline-time',
                 array(
                     'module'        => 'neatline-time',
-                    'controller'    => 'timelines'
+                    'controller'    => 'timelines',
+                    'action'        => 'browse'
                     )
                 )
             );
