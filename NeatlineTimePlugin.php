@@ -97,6 +97,18 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             }
         }
 
+        if (version_compare($oldVersion, '2.0.2', '<') && version_compare($oldVersion, '2.0', '>') ) {
+            if ($timelines = get_records('NeatlineTimeTimeline')) {
+                foreach ($timelines as $timeline) {
+                    $query = unserialize($timeline->query);
+                    while (!is_array($query)) {
+                        $query = unserialize($query);
+                    }
+                    $timeline->query = serialize($query);
+                    $timeline->save();
+                }
+            }
+        }
     }
 
     /**
