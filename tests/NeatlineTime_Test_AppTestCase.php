@@ -26,7 +26,6 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $plugin_helper = new Omeka_Test_Helper_Plugin;
         $plugin_helper->setUp('NeatlineTime');
 
-        Omeka_Test_Resource_Db::$dropTables = true;
         Omeka_Test_Resource_Db::$runInstaller = true;
 
     }
