@@ -75,4 +75,32 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
             "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
+    public function testQuerySerialization() {
+        $this->dbAdapter->appendLastInsertIdToStack('1');
+        $this->timeline->title = 'Timeline Title';
+        $this->timeline->query = array('range' => '1');
+        $this->timeline->save();
+
+        $this->assertTrue(is_array(unserialize($this->timeline->query)));
+        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+
+    }
+
+    public function testDontReserializeQuery()
+    {
+        $this->dbAdapter->appendLastInsertIdToStack('1');
+        $this->timeline->title = 'Timeline Title';
+        $this->timeline->query = serialize(array('range' => '1'));
+        $this->timeline->save();
+
+        $this->assertTrue(is_array(unserialize($this->timeline->query)));
+        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+
+        $this->timeline->public = 1;
+        $this->timeline->save();
+
+        $this->assertTrue(is_array(unserialize($this->timeline->query)));
+        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+
+    }
 }

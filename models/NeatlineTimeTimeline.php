@@ -41,7 +41,9 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     protected function beforeSave()
     {
         $query = $this->query;
-        $this->query = serialize($query);
+        if (is_array($query)) {
+          $this->query = serialize($query);
+        }
     }
 
     /**
