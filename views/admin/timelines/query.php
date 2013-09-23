@@ -13,7 +13,9 @@ echo head($head);
        Omeka.Search.activateSearchButtons; 
     });
 </script>
+    <?php if($query = unserialize($neatline_time_timeline->query)) : ?>
     <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', $timelineTitle) ?></strong></p>
-    <?php echo item_search_filters(unserialize($neatline_time_timeline->query)); ?>
+    <?php echo item_search_filters($query); ?>
+    <?php endif; ?>
     <?php echo items_search_form(array(), current_url()); ?>
 <?php echo foot(); ?>
