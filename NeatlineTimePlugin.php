@@ -30,14 +30,16 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'admin_append_to_plugin_uninstall_message',
         'item_browse_sql',
         'config',
-        'config_form'
+        'config_form',
+        'exhibit_builder_page_head'
     );
 
     protected $_filters = array(
         'admin_navigation_main',
         'public_navigation_main',
         'response_contexts',
-        'action_contexts'
+        'action_contexts',
+        'exhibit_layouts'
     );
 
     /**
@@ -248,6 +250,15 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
+     * Add timeline assets for exhibit pages using the timeline layout.
+     */
+    public function hookExhibitBuilderPageHead($args)
+    {
+        if (array_key_exists('neatline-time', $args['layouts'])) {
+            queue_timeline_assets();
+        }
+    }
+    /**
      * Timeline admin_navigation_main filter.
      *
      * Adds a button to the admin's main navigation.
@@ -315,6 +326,21 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         return $contexts;
 
+    }
+
+    /**
+     * Register an exhibit layout for displaying a timeline.
+     *
+     * @param array $layouts Exhibit layout specs.
+     * @return array
+     */
+    public function filterExhibitLayouts($layouts)
+    {
+        $layouts['neatline-time'] = array(
+            'name' => __('Neatline Time'),
+            'description' => __('Embed a NeatlineTime timeline.')
+        );
+        return $layouts;
     }
 
     protected function setDefaultOptions()
