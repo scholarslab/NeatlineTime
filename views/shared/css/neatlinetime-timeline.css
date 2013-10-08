@@ -6,7 +6,6 @@
 .neatlinetime-timeline {
     height: 250px;
     margin-bottom: 20px;
-    font-family:Verdana, sans-serif;
     border: 1px solid rgba(90,80,100, 0.5);
 }
 
@@ -46,9 +45,7 @@
 /* Text label for events on the top band. */
 .neatlinetime-timeline .timeline-event-label {
     /*background: rgba(0,0,0, 0.05);*/
-    font-family:Georgia, serif;
     font-size: 14px !important;
-    color: rgba(0,0,0,0.6);
 }
 
 /* Hide the icons for events on the top band.*/
@@ -86,7 +83,6 @@ of whatever you set for width/height, if you want a circle.
 
 /* Styles for the month label on the top band. */
 .neatlinetime-timeline .timeline-date-label {
-    color: rgba(0,0,0,0.3);
 }
 
 /* Styles for the year label on the top band. */
@@ -94,11 +90,12 @@ of whatever you set for width/height, if you want a circle.
     color:rgba(190, 160, 5, 0.75);
     font-weight:bold;
     height:1.5em !important;
+    font-size: 12px !important;
 }
 
 /* Styles for the date label on the bottom band. */
 .neatlinetime-timeline .timeline-band-1 .timeline-date-label {
-    color: rgba(255,255,255,0.5);
+    font-size: 12px !important;
 }
 
 /* Title inside an event bubble. */
@@ -137,7 +134,6 @@ elements inside the event body.
 /* The timestamp at the bottom of an event bubble.*/
 .timeline-event-bubble-time {
     font-weight:bold;
-    color: rgba(0,0,0,0.5);
     text-align:right;
     padding:10px 20px !important;
     clear:both;
