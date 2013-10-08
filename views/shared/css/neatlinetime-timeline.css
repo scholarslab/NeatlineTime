@@ -182,4 +182,5 @@ div.simileAjax-bubble-close {
 
 .simileAjax-bubble-arrow-point-down-pngTranslucent {
     background-image:  url('../images/bubble-arrow-point-down.png') !important;
+    background-position: top center !important;
 }
