@@ -47,7 +47,7 @@
 .neatlinetime-timeline .timeline-event-label {
     /*background: rgba(0,0,0, 0.05);*/
     font-family:Georgia, serif;
-    font-size: 1.2em;
+    font-size: 14px !important;
     color: rgba(0,0,0,0.6);
 }
 
@@ -103,7 +103,7 @@ of whatever you set for width/height, if you want a circle.
 
 /* Title inside an event bubble. */
 .timeline-event-bubble-title {
-    font-size: 1.5em !important;
+    font-size: 14px !important;
     border:none !important;
     padding: 40px 20px 0 !important;
 }
@@ -121,7 +121,7 @@ of whatever you set for width/height, if you want a circle.
 }
 /* The event description inside an event bubble. */
 .timeline-event-bubble-body {
-    font-size: 1.2em !important;
+    font-size: 12px !important;
     border-width: 1px 0 !important;
     padding:10px 20px !important;
 }
@@ -141,6 +141,7 @@ elements inside the event body.
     text-align:right;
     padding:10px 20px !important;
     clear:both;
+    font-size: 12px !important;
 }
 
 /* Bubble background images. Ugh. */
