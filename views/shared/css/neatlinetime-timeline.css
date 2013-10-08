@@ -116,8 +116,8 @@ of whatever you set for width/height, if you want a circle.
 .timeline-event-bubble-image {
     width: 60px;
     height: 60px;
-    padding-right: 20px;
-    padding-top: 40px;
+    margin-right: 20px;
+    margin-top: 40px;
 }
 /* The event description inside an event bubble. */
 .timeline-event-bubble-body {
