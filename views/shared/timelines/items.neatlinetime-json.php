@@ -7,7 +7,7 @@ $neatlineTimeEvents = array();
 foreach ($items as $item) {
     $itemTitle = strip_formatting(neatlinetime_get_item_text('item_title', array(), $item));
     $itemLink = record_url($item);
-    $itemDescription =  neatlinetime_get_item_text('item_description', array(), $item);
+    $itemDescription =  neatlinetime_get_item_text('item_description', array('snippet' => '200'), $item);
 
     $itemDates = neatlinetime_get_item_text('item_date', array('all' => true), $item);
 
