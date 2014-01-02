@@ -99,4 +99,17 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
         $permissions->apply($select, 'neatline_time_timelines', null);
         return $select;
     }
+
+    /**
+     * Return the columns to be used for creating an HTML select of timelines.
+     *
+     * @return array
+     */
+    public function _getColumnPairs()
+    {
+        return array(
+            'neatline_time_timelines.id',
+            'neatline_time_timelines.title'
+        );
+    }
 }
