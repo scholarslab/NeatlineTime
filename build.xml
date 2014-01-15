@@ -348,7 +348,7 @@
       <arg value="-F"/>
       <arg value="-o"/>
       <arg file="${pot.temp}"/>
-      <fileset dir="." includes="**/*.php **/*.phtml" excludes="tests/"/>
+      <fileset dir="." includes="**/*.php **/*.phtml" excludes="tests/ build/ dist/"/>
     </apply>
     <exec executable="msgcomm">
       <arg value="--omit-header" />

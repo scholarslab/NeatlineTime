@@ -15,14 +15,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: NeatlineTimePlugin.php:190
+#: NeatlineTimePlugin.php:205
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
 msgstr ""
 
-#: NeatlineTimePlugin.php:249 NeatlineTimePlugin.php:270
+#: NeatlineTimePlugin.php:273 NeatlineTimePlugin.php:294
+#: NeatlineTimePlugin.php:340
 msgid "Neatline Time"
+msgstr ""
+
+#: NeatlineTimePlugin.php:341
+msgid "Embed a NeatlineTime timeline."
 msgstr ""
 
 #: config_form.php:2
@@ -114,7 +119,7 @@ msgstr ""
 msgid "Add a Timeline"
 msgstr ""
 
-#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:28
+#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:30
 msgid "Edit Metadata"
 msgstr ""
 
@@ -136,7 +141,7 @@ msgstr ""
 msgid "Neatline Time | Edit \"%s\" Items Query"
 msgstr ""
 
-#: views/admin/timelines/query.php:16 views/admin/timelines/show.php:20
+#: views/admin/timelines/query.php:17 views/admin/timelines/show.php:21
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
@@ -147,11 +152,11 @@ msgstr ""
 msgid "Neatline Time | %s"
 msgstr ""
 
-#: views/admin/timelines/show.php:19
+#: views/admin/timelines/show.php:20
 msgid "Items Query"
 msgstr ""
 
-#: views/admin/timelines/show.php:29
+#: views/admin/timelines/show.php:31
 msgid "Edit Items Query"
 msgstr ""
 
@@ -161,4 +166,8 @@ msgstr ""
 
 #: views/public/timelines/browse.php:24
 msgid "You have no timelines."
+msgstr ""
+
+#: views/shared/exhibit_layouts/neatline-time/form.php:8
+msgid "Select a timeline"
 msgstr ""
