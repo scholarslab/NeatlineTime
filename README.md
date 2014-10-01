@@ -37,7 +37,7 @@ Creating a timeline is a two-step process:
 
 2. Give your timeline a title and description, and choose whether you wish to make the timeline public and featured. Save your changes.
 
-  ![Add a Timeline Form](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-add.png)
+  ![Add a Timeline Form](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-add-timeline.png)
 
 3. To choose which items appear on your timeline, click the "Edit Query" link beside your existing timeline.
 
@@ -89,7 +89,7 @@ You can browse existing timelines by clicking on the "Browse Timelines" from you
 
 You can always see your timeline by click the title of the timeline in the admin. The URL for your timelines will be 'neatline-time/timelines/show/[id]', where [id] is the ID number for your timeline.
 
-  ![Public Show](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-public-show).png
+  ![Public Show](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-public-show.png)
 
 ### Modifying theme templates for Neatline Time
 
