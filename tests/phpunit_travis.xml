@@ -1,7 +1,8 @@
 <phpunit bootstrap="bootstrap.php"
   convertErrorsToExceptions="true"
   convertWarningsToExceptions="true"
-  colors="true">
+  colors="true"
+  verbose="true">
 
   <!--<php>-->
     <!--<includePath>..</includePath>-->
@@ -12,5 +13,9 @@
     <directory>integration</directory>
     <directory>unit</directory>
   </testsuite>
+
+  <php>
+    <ini name="display_errors" value="1"/>
+  </php>
 
 </phpunit>
