@@ -5,9 +5,22 @@ require 'tempfile'
 require 'inifile'
 
 task :default => [
-  # 'php:unit',
-  # 'jasmine:ci',
+  'php:unit',
 ]
+
+namespace :php do
+  desc 'Run unit tests.'
+  task :unit, [:filter] do |t, args|
+    filter_by = args[:filter]
+    if filter_by.nil? then
+      filter_params = ""
+    else
+      filter_params = " --filter #{filter_by}"
+    end
+
+    sh %{cd tests/ && phpunit --configuration phpunit.xml #{filter_params}}
+  end
+end
 
 class PackageTask < Rake::PackageTask
   def package_dir_path()
