@@ -66,7 +66,6 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
     public function testUpdateSetsModifiedDate()
     {
         $this->dbAdapter->appendLastInsertIdToStack('1');
-        $this->collection->id = '1';
         $this->timeline->title = 'Timeline Title';
         $this->timeline->save();
 
