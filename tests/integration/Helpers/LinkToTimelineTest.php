@@ -9,7 +9,7 @@ class LinkToTimelineTest extends NeatlineTime_Test_AppTestCase
     /**
      * Tests whether link_to_timeline() returns the correct link for a timeline.
      *
-     * @uses link_to_timeline()
+     * @uses ::link_to_timeline
      */
     public function testLinkToTimeline()
     {

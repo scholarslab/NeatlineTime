@@ -9,7 +9,7 @@ class TimelineTest extends NeatlineTime_Test_AppTestCase
     /**
      * Tests whether timeline() returns the correct value.
      *
-     * @uses timeline()
+     * @uses ::timeline
      **/
     public function testTimelineValue() 
     {
