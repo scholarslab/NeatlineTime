@@ -12,9 +12,5 @@ fi
 echo "Plugin Directory: $PLUGIN_DIR"
 echo "Omeka Directory: $OMEKA_DIR"
 
-cd $PLUGIN_DIR/tests/ && phpunit --configuration phpunit_travis.xml --coverage-text &> travis.out
-ec=$?
-
-cat travis.out
-
-[[ "$ec" -eq "0" ]]
+cd $PLUGIN_DIR/tests/
+phpunit --configuration phpunit_travis.xml
