@@ -101,6 +101,6 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array(unserialize($this->timeline->query)));
         $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
     }
+
 }

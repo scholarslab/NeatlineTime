@@ -39,7 +39,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'public_navigation_main',
         'response_contexts',
         'action_contexts',
-        'exhibit_layouts'
+        'exhibit_layouts',
+        'filterDateDisplay' => array('Display', 'Item', 'Dublin Core', 'Date')
     );
 
     /**
@@ -357,4 +358,19 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         $options = serialize($options);
         set_option('neatlinetime', $options);
     }
+
+    public function filterDateDisplay($text, $args) {
+        try {
+            $dateStr = neatlinetime_convert_date($text);
+            $date    = new Zend_Date($dateStr, Zend_Date::ISO_8601);
+            if ($date->get(Zend_Date::YEAR) <= 0) {
+                $date->sub('1', Zend_Date::YEAR);
+            }
+            $text    = $date->toString(Zend_Date::DATE_MEDIUM);
+            $text    = preg_replace("/-(\\d+)/", "\\1 BCE", $text);
+        } catch (Exception $e) {
+        }
+        return $text;
+    }
+
 }
