@@ -1,26 +1,20 @@
 
 # Release Checklist
 
-It's easiest to start with a fresh repository, so the instructions start there.
+The instructions assume that you're releasing from within a `NeatlineTime`
+plugin directory within a working Omeka instance.
 
 1. `VERSION=42.0.13` — We'll use this value later.
-1. `git clone git://github.com/omeka/Omeka.git` — We need Omeka for generating
-  translations.
-1. `cd omeka/plugins`
-1. `git clone git@github.com:scholarslab/NeatlineTime.git`
-1. `cd NeatlineTime`
-1. `git checkout develop`
-1. `git flow init`
 1. `git flow release start $VERSION`
 1. Bump the version number by editing:
    * `plugin.ini`
 1. `git commit`
 1. Update i18n:
    * `tx pull --all`
-   * `ant update-pot build-mo` (if there are new translations)
+   * `rake update_pot build_mo` (if there are new translations)
    * `git commit` (if there are new translations)
-1. `ant package`
-1. rename the package file to include the version, not the date-stamp
+1. Make sure there aren't any extraneous files lying around.
+1. `rake package`
 1. quick check the zip
 1. test the zip
 1. `git flow release finish $VERSION`
