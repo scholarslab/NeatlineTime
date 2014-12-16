@@ -61,7 +61,9 @@ end
 
 desc 'Updates POT files.'
 task :update_pot do
-  files = (Dir["*.{php,phtml}"] + Dir["**/*.{php,phtml}"]).select { |p| ! (p.start_with?("tests/") || p.start_with?("pkg/"))}
+  files = (Dir["*.{php,phtml}"] + Dir["**/*.{php,phtml}"]).select do |p|
+    ! (p.start_with?("tests/") || p.start_with?("pkg/"))
+  end
   puts files.inspect
   lang_dir = "languages"
   core_pot = "../../application/languages/Omeka.pot"
@@ -72,8 +74,8 @@ task :update_pot do
   pot_duplicates = Tempfile.new("-duplicates.pot")
   pot_duplicates.close
 
-    sh %{xgettext -L php --from-code=utf-8 -k__ --flag=__:1:pass-php-format --omit-header -F -o #{pot_temp.path} #{files.join(' ')}}
-  
+  sh %{xgettext -L php --from-code=utf-8 -k__ --flag=__:1:pass-php-format --omit-header -F -o #{pot_temp.path} #{files.join(' ')}}
+
 
   sh %{msgcomm --omit-header -o #{pot_duplicates.path} #{pot_temp.path} #{core_pot}}
 
@@ -83,7 +85,6 @@ task :update_pot do
 
   pot_temp.close(true)
   pot_duplicates.close(true)
-  
 end
 
 desc 'Builds MO files from existing PO files.'
