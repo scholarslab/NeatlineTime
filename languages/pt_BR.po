@@ -1,173 +1,176 @@
 # Translation for the Neatline Time plugin for Omeka.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Jeremy Boggs <jeremy@clioweb.org>, 2014
+# Tel, 2014
+# Tel, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: NeatlineTime\n"
+"Project-Id-Version: Neatline\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarslab/NeatlineTime/issues\n"
 "POT-Creation-Date: 2012-05-24 14:30-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-05-12 18:42+0000\n"
+"Last-Translator: Tel\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/neatline/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: NeatlineTimePlugin.php:205
 msgid ""
 "<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
 "          will remove all custom Timeline records."
-msgstr ""
+msgstr "<strong>Aviso</strong>:Desinstalar o plugin Neatline Time\nremoverá todos os entradas customizados do Timeline."
 
 #: NeatlineTimePlugin.php:273 NeatlineTimePlugin.php:294
 #: NeatlineTimePlugin.php:340
 msgid "Neatline Time"
-msgstr ""
+msgstr "Neatline Time"
 
 #: NeatlineTimePlugin.php:341
 msgid "Embed a NeatlineTime timeline."
-msgstr ""
+msgstr "Incorporar uma linha do tempo NeatlineTime."
 
 #: config_form.php:2
 msgid "Item Date"
-msgstr ""
+msgstr "Data do Item"
 
 #: config_form.php:8
 msgid ""
 "The date field to use to retrieve and display items on a timeline. Default "
 "is DC:Date."
-msgstr ""
+msgstr "O campo \"data\" a ser utilizado para buscar e mostrar itens na linha do tempo. O padrão é DC:Date."
 
 #: config_form.php:14
 msgid "Item Title"
-msgstr ""
+msgstr "Título do Item"
 
 #: config_form.php:21
 msgid ""
-"The title field to use when displaying an item on a timeline. Default is DC:"
-"Title"
-msgstr ""
+"The title field to use when displaying an item on a timeline. Default is "
+"DC:Title"
+msgstr "O campo \"título\" a ser utilizado quando mostrar um item na linha do tempo. O padrão é DC:Título."
 
 #: config_form.php:27
 msgid "Item Description"
-msgstr ""
+msgstr "Descrição do Item"
 
 #: config_form.php:33
 msgid ""
 "The description field to use when displaying an item on a timeline. Default "
 "is DC:Description"
-msgstr ""
+msgstr "O campo \"descrição\" a ser usado quando mostrar um item na linha do tempo. O padrão é DC:Descrição."
 
 #: controllers/TimelinesController.php:78
 #, php-format
 msgid "The timeline \"%s\" was successfully added!"
-msgstr ""
+msgstr "A linha do tempo \"%s\" foi adicionada com sucesso!"
 
 #: controllers/TimelinesController.php:86
 #, php-format
 msgid "The timeline \"%s\" was successfully changed!"
-msgstr ""
+msgstr "A linha do tempo \"%s\" foi modificada com sucesso!"
 
 #: controllers/TimelinesController.php:94
 #, php-format
 msgid "The timeline \"%s\" was successfully deleted!"
-msgstr ""
+msgstr "A linha do tempo \"%s\" foi removida com sucesso!"
 
 #: controllers/TimelinesController.php:102
 #, php-format
 msgid ""
 "This will delete the timeline \"%s\" and its associated metadata. This will "
 "not delete any items associated with this timeline."
-msgstr ""
+msgstr "Isso removerá a linha do tempo \"%s\" e os metadados associados. Isso não removerá nenhum item associado a essa linha do tempo."
 
 #: forms/timeline.php:17
 msgid "A title for your timeline."
-msgstr ""
+msgstr "Um título para sua linha do tempo."
 
 #: forms/timeline.php:23
 msgid "A description for your timeline."
-msgstr ""
+msgstr "Uma descrição para sua linha do tempo."
 
 #: forms/timeline.php:29
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: forms/timeline.php:30
 msgid "Whether the timeline is public or not."
-msgstr ""
+msgstr "Se a sua linha do tempo é pública ou não."
 
 #: forms/timeline.php:37
 msgid "Whether the timeline is featured or not."
-msgstr ""
+msgstr "Se a linha do tempo está destacada ou não."
 
 #: forms/timeline.php:43
 msgid "Save Timeline"
-msgstr ""
+msgstr "Salvar Linha do tempo"
 
 #: views/admin/timelines/add.php:7
 msgid "Neatline Time | Add a Timeline"
-msgstr ""
+msgstr "Neatline Time | Adicionar linha do tempo"
 
 #: views/admin/timelines/browse.php:7
 msgid "Neatline Time | Browse Timelines"
-msgstr ""
+msgstr "Neatline Time | Listar Linhas do tempo"
 
 #: views/admin/timelines/browse.php:16 views/admin/timelines/browse.php:53
 #: views/admin/timelines/browse.php:59
 msgid "Add a Timeline"
-msgstr ""
+msgstr "Inserir uma Linha do tempo"
 
-#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:34
+#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:30
 msgid "Edit Metadata"
-msgstr ""
+msgstr "Editar Metadados"
 
 #: views/admin/timelines/browse.php:37
 msgid "Edit Item Query"
-msgstr ""
+msgstr "Editar um item de busca"
 
 #: views/admin/timelines/browse.php:59
 msgid "There are no timelines."
-msgstr ""
+msgstr "Não há nenhuma linha do tempo."
 
 #: views/admin/timelines/edit.php:7
 #, php-format
 msgid "Neatline Time | Edit \"%s\" Metadata"
-msgstr ""
+msgstr "Neatline Time | Editar metadados de \"%s\""
 
 #: views/admin/timelines/query.php:7
 #, php-format
 msgid "Neatline Time | Edit \"%s\" Items Query"
-msgstr ""
+msgstr "Neatline Time | Editar itens de busca \"%s\""
 
-#: views/admin/timelines/query.php:20 views/admin/timelines/show.php:24
+#: views/admin/timelines/query.php:17 views/admin/timelines/show.php:21
 #, php-format
 msgid ""
 "The &#8220;%s&#8221; timeline displays items that match the following query:"
-msgstr ""
+msgstr "A linha do tempo &#8220;%s&#8221; mostra os itens que seguem os seguintes critérios:"
 
 #: views/admin/timelines/show.php:9
 #, php-format
 msgid "Neatline Time | %s"
-msgstr ""
+msgstr "Neatline Time | %s"
 
-#: views/admin/timelines/show.php:23
+#: views/admin/timelines/show.php:20
 msgid "Items Query"
-msgstr ""
+msgstr "Itens de Busca"
 
-#: views/admin/timelines/show.php:35
+#: views/admin/timelines/show.php:31
 msgid "Edit Items Query"
-msgstr ""
+msgstr "Editar Itens de Busca"
 
 #: views/public/timelines/browse.php:7 views/public/timelines/browse.php:12
 msgid "Browse Timelines"
-msgstr ""
+msgstr "Listar linhas do tempo"
 
 #: views/public/timelines/browse.php:24
 msgid "You have no timelines."
-msgstr ""
+msgstr "Você não tem linhas do tempo."
 
 #: views/shared/exhibit_layouts/neatline-time/form.php:8
 msgid "Select a timeline"
-msgstr ""
+msgstr "Selecionar uma linha do tempo"
