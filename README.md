@@ -33,21 +33,23 @@ Creating a timeline is a two-step process:
 
 1. From the admin → NeatlineTime page, click the "Add New Timeline" button to begin creating a timeline.
 
+  ![Browse Timelines](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-browse.png)
+
 2. Give your timeline a title and description, and choose whether you wish to make the timeline public and featured. Save your changes.
 
-  ![Browse Timelines](http://23.21.98.97/wp-content/uploads/2011/05/timeline_1.png)
+  ![Add a Timeline Form](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-add-timeline.png)
 
 3. To choose which items appear on your timeline, click the "Edit Query" link beside your existing timeline.
 
-  ![Edit Query Link](http://23.21.98.97/wp-content/uploads/2011/05/timeline_3.png)
+  ![Edit Query Link](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-timeline-saved.png)
 
 4. This will take you to a form similar to Omeka's advanced search form. From here, you can perform a search for any items in your archive, and if those items contain a valid date in their Dublin Core:Date field, they will be displayed on the timeline.
 
-  ![Edit Query](http://23.21.98.97/wp-content/uploads/2011/05/timeline_4.png)
+  ![Edit Query](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-item-query.png)
 
 5. With a query defined, the matching items will be rendered on the timeline:
 
-  ![Timeline](http://23.21.98.97/wp-content/uploads/2011/05/timeline_51.png)
+  ![Timeline](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-admin-show.png)
 
 #### Dates for Items
 
@@ -87,7 +89,7 @@ You can browse existing timelines by clicking on the "Browse Timelines" from you
 
 You can always see your timeline by click the title of the timeline in the admin. The URL for your timelines will be 'neatline-time/timelines/show/[id]', where [id] is the ID number for your timeline.
 
-  ![Public Show](http://23.21.98.97/wp-content/uploads/2011/05/timeline_6.png)
+  ![Public Show](http://neatline.org/wp-content/uploads/2014/01/neatlinetime-public-show.png)
 
 ### Modifying theme templates for Neatline Time
 

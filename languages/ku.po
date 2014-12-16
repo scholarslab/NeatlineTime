@@ -1,0 +1,173 @@
+# Translation for the Neatline Time plugin for Omeka.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Neatline\n"
+"Report-Msgid-Bugs-To: http://github.com/scholarslab/NeatlineTime/issues\n"
+"POT-Creation-Date: 2012-05-24 14:30-0500\n"
+"PO-Revision-Date: 2012-06-18 15:59+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Kurdish (http://www.transifex.com/projects/p/neatline/language/ku/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ku\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: NeatlineTimePlugin.php:205
+msgid ""
+"<strong>Warning</strong>: Uninstalling the Neatline Time plugin\n"
+"          will remove all custom Timeline records."
+msgstr ""
+
+#: NeatlineTimePlugin.php:273 NeatlineTimePlugin.php:294
+#: NeatlineTimePlugin.php:340
+msgid "Neatline Time"
+msgstr ""
+
+#: NeatlineTimePlugin.php:341
+msgid "Embed a NeatlineTime timeline."
+msgstr ""
+
+#: config_form.php:2
+msgid "Item Date"
+msgstr ""
+
+#: config_form.php:8
+msgid ""
+"The date field to use to retrieve and display items on a timeline. Default "
+"is DC:Date."
+msgstr ""
+
+#: config_form.php:14
+msgid "Item Title"
+msgstr ""
+
+#: config_form.php:21
+msgid ""
+"The title field to use when displaying an item on a timeline. Default is "
+"DC:Title"
+msgstr ""
+
+#: config_form.php:27
+msgid "Item Description"
+msgstr ""
+
+#: config_form.php:33
+msgid ""
+"The description field to use when displaying an item on a timeline. Default "
+"is DC:Description"
+msgstr ""
+
+#: controllers/TimelinesController.php:78
+#, php-format
+msgid "The timeline \"%s\" was successfully added!"
+msgstr ""
+
+#: controllers/TimelinesController.php:86
+#, php-format
+msgid "The timeline \"%s\" was successfully changed!"
+msgstr ""
+
+#: controllers/TimelinesController.php:94
+#, php-format
+msgid "The timeline \"%s\" was successfully deleted!"
+msgstr ""
+
+#: controllers/TimelinesController.php:102
+#, php-format
+msgid ""
+"This will delete the timeline \"%s\" and its associated metadata. This will "
+"not delete any items associated with this timeline."
+msgstr ""
+
+#: forms/timeline.php:17
+msgid "A title for your timeline."
+msgstr ""
+
+#: forms/timeline.php:23
+msgid "A description for your timeline."
+msgstr ""
+
+#: forms/timeline.php:29
+msgid "Status"
+msgstr ""
+
+#: forms/timeline.php:30
+msgid "Whether the timeline is public or not."
+msgstr ""
+
+#: forms/timeline.php:37
+msgid "Whether the timeline is featured or not."
+msgstr ""
+
+#: forms/timeline.php:43
+msgid "Save Timeline"
+msgstr ""
+
+#: views/admin/timelines/add.php:7
+msgid "Neatline Time | Add a Timeline"
+msgstr ""
+
+#: views/admin/timelines/browse.php:7
+msgid "Neatline Time | Browse Timelines"
+msgstr ""
+
+#: views/admin/timelines/browse.php:16 views/admin/timelines/browse.php:53
+#: views/admin/timelines/browse.php:59
+msgid "Add a Timeline"
+msgstr ""
+
+#: views/admin/timelines/browse.php:34 views/admin/timelines/show.php:30
+msgid "Edit Metadata"
+msgstr ""
+
+#: views/admin/timelines/browse.php:37
+msgid "Edit Item Query"
+msgstr ""
+
+#: views/admin/timelines/browse.php:59
+msgid "There are no timelines."
+msgstr ""
+
+#: views/admin/timelines/edit.php:7
+#, php-format
+msgid "Neatline Time | Edit \"%s\" Metadata"
+msgstr ""
+
+#: views/admin/timelines/query.php:7
+#, php-format
+msgid "Neatline Time | Edit \"%s\" Items Query"
+msgstr ""
+
+#: views/admin/timelines/query.php:17 views/admin/timelines/show.php:21
+#, php-format
+msgid ""
+"The &#8220;%s&#8221; timeline displays items that match the following query:"
+msgstr ""
+
+#: views/admin/timelines/show.php:9
+#, php-format
+msgid "Neatline Time | %s"
+msgstr ""
+
+#: views/admin/timelines/show.php:20
+msgid "Items Query"
+msgstr ""
+
+#: views/admin/timelines/show.php:31
+msgid "Edit Items Query"
+msgstr ""
+
+#: views/public/timelines/browse.php:7 views/public/timelines/browse.php:12
+msgid "Browse Timelines"
+msgstr ""
+
+#: views/public/timelines/browse.php:24
+msgid "You have no timelines."
+msgstr ""
+
+#: views/shared/exhibit_layouts/neatline-time/form.php:8
+msgid "Select a timeline"
+msgstr ""
