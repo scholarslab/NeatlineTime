@@ -100,7 +100,7 @@ var NeatlineTime = {
     bandInfos[1].syncWith = 0;
     bandInfos[1].highlight = true;
 
-    tl = Timeline.create(document.getElementById(timelineId), bandInfos);
+    var tl = Timeline.create(document.getElementById(timelineId), bandInfos);
     tl.loadJSON(timelineData, function(json, url) {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
