@@ -107,7 +107,7 @@ var NeatlineTime = {
             // If centerDate is set, use it, otherwise use the earliest date
             var earliestDate = eventSource.getEarliestDate();
             console.log("earliestDate: " + earliestDate);
-            if (centerDate === undefined) {
+            if (centerDate === '0000-00-00') {
               centerDate = earliestDate;
               console.log("centerDate: " + centerDate);
             }
