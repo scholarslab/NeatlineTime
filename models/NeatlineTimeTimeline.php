@@ -11,6 +11,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     public $creator_id = 0;
     public $public = 0;
     public $featured = 0;
+    public $center_date;
     public $added;
     public $modified;
 

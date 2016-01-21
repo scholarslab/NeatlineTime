@@ -47,7 +47,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookInstall()
     {
-
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -56,6 +55,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             `creator_id` INT UNSIGNED NOT NULL,
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
+            `center_date` date NOT NULL default '0000-00-00',
             `added` timestamp NOT NULL default '0000-00-00 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
@@ -111,6 +111,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
                 }
             }
         }
+
+        // Add another if for next version to hit database update for center date
     }
 
     /**
