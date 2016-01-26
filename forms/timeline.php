@@ -38,11 +38,12 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
             'multiOptions' => array('0' => 'Not Featured', '1' => 'Featured')
         ));
 
-        // Need to document correct format for the date
+
         // Set the center date for the timeline
         $this->addElement('text', 'center_date', array(
             'label'       => __('Center Date'),
-            'description' => __('Set the center date of your timeline.')
+            'description' => __('Set the center date of your timeline. Please use format YYYY-MM-DD.'),
+            'validator' => array('date')
         ));
 
         // Submit

@@ -105,6 +105,7 @@ var NeatlineTime = {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
             // If centerDate is set, use it, otherwise use the earliest date
+            console.log(centerDate);
             var earliestDate = eventSource.getEarliestDate();
             console.log("earliestDate: " + earliestDate);
             if (centerDate === '0000-00-00') {

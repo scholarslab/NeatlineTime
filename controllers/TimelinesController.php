@@ -36,6 +36,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
 
         $this->view->form = $form;
         parent::editAction();
+
     }
 
     public function queryAction()
