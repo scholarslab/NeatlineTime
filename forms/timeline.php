@@ -38,6 +38,14 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
             'multiOptions' => array('0' => 'Not Featured', '1' => 'Featured')
         ));
 
+
+        // Set the center date for the timeline
+        $this->addElement('text', 'center_date', array(
+            'label'       => __('Center Date'),
+            'description' => __('Set the center date of your timeline. Please use format YYYY-MM-DD.'),
+            'validator' => array('date')
+        ));
+
         // Submit
         $this->addElement('submit', 'submit', array(
             'label' => __('Save Timeline')
@@ -45,10 +53,11 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
 
         // Group the title, description, and public fields
         $this->addDisplayGroup(
-            array('title', 
+            array('title',
                   'description',
                   'public',
-                  'featured'
+                  'featured',
+                  'center_date',
                  ),
             'timeline_info'
         );

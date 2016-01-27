@@ -59,8 +59,8 @@ var NeatlineTime = {
           elmt.appendChild(divWiki);
       };
   },
-
-  loadTimeline: function(timelineId, timelineData) {
+// may need to set a default value of none/false to centerDate
+  loadTimeline: function(timelineId, timelineData, centerDate) {
     NeatlineTime._monkeyPatchFillInfoBubble();
     var eventSource = new Timeline.DefaultEventSource();
 
@@ -100,11 +100,21 @@ var NeatlineTime = {
     bandInfos[1].syncWith = 0;
     bandInfos[1].highlight = true;
 
-    tl = Timeline.create(document.getElementById(timelineId), bandInfos);
+    var tl = Timeline.create(document.getElementById(timelineId), bandInfos);
     tl.loadJSON(timelineData, function(json, url) {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
-            tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
+            // If centerDate is set, use it, otherwise use the earliest date
+            console.log(centerDate);
+            var earliestDate = eventSource.getEarliestDate();
+            console.log("earliestDate: " + earliestDate);
+            if (centerDate === '0000-00-00') {
+              centerDate = earliestDate;
+              console.log("centerDate: " + centerDate);
+            }
+            var parsedDate = Timeline.DateTime.parseGregorianDateTime(centerDate);
+            console.log('parseddate: ', parsedDate);
+            tl.getBand(0).setCenterVisibleDate(parsedDate);
         }
     });
 

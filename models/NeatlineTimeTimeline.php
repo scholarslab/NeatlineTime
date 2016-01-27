@@ -11,6 +11,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     public $creator_id = 0;
     public $public = 0;
     public $featured = 0;
+    public $center_date;
     public $added;
     public $modified;
 
@@ -54,5 +55,18 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
         $urlHelper = new Omeka_View_Helper_Url;
         $params = array('action' => $action, 'id' => $this->id);
         return $urlHelper->url($params, 'timelineActionRoute');
+    }
+
+    /**
+    *
+    **/
+    protected function _validate()
+    {
+      $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
+      if ($this->center_date == '') {
+        $this->center_date = '0000-00-00';
+      } elseif ($this->center_date !== '0000-00-00' && !$validator->isValid($this->center_date)) {
+        $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
+      } 
     }
 }
