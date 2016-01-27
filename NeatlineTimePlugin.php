@@ -112,7 +112,18 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             }
         }
 
-        // Add another if for next version to hit database update for center date
+        if (version_compare($oldversion, '2.1', '<')) {
+          $rows = $this->_db->query(
+            "show columns from {$this->_db->prefix}neatline_time_timelines where field='center_date';"
+          );
+
+          if (empty($rows)) {
+            $sqlNeatlineTimeline = "ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
+            ADD COLUMN `center_date` date NOT NULL default '0000-00-00'";
+
+            $this->_db->query($sqlNeatlineTimeline);
+          }
+        }
     }
 
     /**
