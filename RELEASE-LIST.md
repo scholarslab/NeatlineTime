@@ -18,7 +18,7 @@ plugin directory within a working Omeka instance.
 1. quick check the zip
 1. test the zip
 1. `git flow release finish $VERSION`
-1. `git push`
+1. `git push --all`
 1. `git push --tags`
 1. upload the zip to http://omeka.org/add-ons/plugins/.
 
