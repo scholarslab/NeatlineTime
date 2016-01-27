@@ -27,18 +27,28 @@ class LinkToTimelineTest extends NeatlineTime_Test_AppTestCase
         );
 
         $linkDefault = link_to_timeline();
-        $this->assertTag($matcher, $linkDefault);
+        $url = record_url($timeline);
+        $title = $timeline->title;
+        $this->assertEquals(
+            $linkDefault, "<a href=\"${url}\">${title}</a>"
+        );
 
         $linkText = 'New Text';
         $linkWithNewText = link_to_timeline($linkText);
         $matcher['content'] = $linkText;
-        $this->assertTag($matcher, $linkWithNewText);
+        $this->assertEquals(
+            $linkWithNewText,
+            "<a href=\"${url}\">${linkText}</a>"
+        );
 
         $linkToEditWithProps = link_to_timeline(null, array('class' => 'edit'), 'edit');
         $matcher['content'] = $timeline->title;
         $matcher['attributes']['class'] = 'edit';
-        $matcher['attributes']['href'] = record_url($timeline, 'edit');
-        $this->assertTag($matcher, $linkToEditWithProps);
+        $matcher['attributes']['href'] = $url = record_url($timeline, 'edit');
+        $this->assertEquals(
+            $linkToEditWithProps,
+            "<a href=\"${url}\" class=\"edit\">${title}</a>"
+        );
 
     }
 }
