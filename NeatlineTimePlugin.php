@@ -117,7 +117,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             "show columns from {$this->_db->prefix}neatline_time_timelines where field='center_date';"
           );
 
-          if (empty($rows)) {
+          if ($rows->rowCount() === 0) {
             $sqlNeatlineTimeline = "ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
             ADD COLUMN `center_date` date NOT NULL default '0000-00-00'";
 
