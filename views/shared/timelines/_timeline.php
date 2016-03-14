@@ -14,16 +14,18 @@
 <script src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 <script>
   jQuery(document).ready(function($) {
-
+        // hackily put the timelinejs css into the head
         $('head').append('<link rel="stylesheet" type="text/css" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">');
 
         var centerDate = '<?php echo $this->center_date; ?>';
 
+        // get the location for the json data
         var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 
         $.getJSON(jsonTimelineUri, function(data) {
           console.log('data ', data);
           var timelineEvents = new Array();
+
           for (var i = 0; i < data.events.length; i++) {
             // Parse the date string into Y, M, D
             var entryStartDate = data.events[i].start;
@@ -35,6 +37,7 @@
             // Create the slide object for the record
             var timelineEntry = {
               "text": {
+                "headline": data.events[i].title,
                 "text": data.events[i].description,
               },
               "start_date": {
@@ -43,13 +46,16 @@
                   "day": entryStartDay
               },
             };
+            // Add the slide to the events
             timelineEvents.push(timelineEntry);
           }
 
+          // create the collection of slides
           var slides = {
             "events": timelineEvents
           };
 
+          // initialize the timeline instance
           window.timeline = new TL.Timeline('timeline-embed', slides);
 
         });
