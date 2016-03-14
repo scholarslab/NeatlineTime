@@ -27,9 +27,10 @@
           for (var i = 0; i < data.events.length; i++) {
             // Parse the date string into Y, M, D
             var entryStartDate = data.events[i].start;
-            var entryStartYear = entryStartDate.split('-')[0];
-            var entryStartMonth = entryStartDate.split('-')[1];
-            var entryStartDay = entryStartDate.split('-')[2].slice(0, 2);
+            var parsedDate = entryStartDate.split('-');
+            var entryStartYear = parsedDate[0];
+            var entryStartMonth = parsedDate[1];
+            var entryStartDay = parsedDate[2].slice(0, 2);
 
             // Create the slide object for the record
             var timelineEntry = {
