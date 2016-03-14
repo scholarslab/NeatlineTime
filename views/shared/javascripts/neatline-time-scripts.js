@@ -102,18 +102,22 @@ var NeatlineTime = {
 
     var tl = Timeline.create(document.getElementById(timelineId), bandInfos);
     tl.loadJSON(timelineData, function(json, url) {
+      // log the timelineData, and see what's there
+      // figure out what's creating the timelineData json
+      // console.log("json: ", json);
+      // console.log("timelineData: ", timelineData);
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
             // If centerDate is set, use it, otherwise use the earliest date
-            console.log(centerDate);
+            // console.log(centerDate);
             var earliestDate = eventSource.getEarliestDate();
-            console.log("earliestDate: " + earliestDate);
+            // console.log("earliestDate: " + earliestDate);
             if (centerDate === '0000-00-00') {
               centerDate = earliestDate;
-              console.log("centerDate: " + centerDate);
+              // console.log("centerDate: " + centerDate);
             }
             var parsedDate = Timeline.DateTime.parseGregorianDateTime(centerDate);
-            console.log('parseddate: ', parsedDate);
+            // console.log('parseddate: ', parsedDate);
             tl.getBand(0).setCenterVisibleDate(parsedDate);
         }
     });
