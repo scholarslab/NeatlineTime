@@ -6,8 +6,8 @@
 ?>
 
 <!-- Container. -->
-<!-- <div id="<?php //echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
-</div> -->
+<div id="<?php echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
+</div>
 
 <div id='timeline-embed' style="width: 100%; height: 600px"></div>
 
@@ -25,17 +25,25 @@
           console.log('data ', data);
           var timelineEvents = new Array();
           for (var i = 0; i < data.events.length; i++) {
+            // Parse the date string into Y, M, D
+            var entryStartDate = data.events[i].start;
+            var entryStartYear = entryStartDate.split('-')[0];
+            var entryStartMonth = entryStartDate.split('-')[1];
+            var entryStartDay = entryStartDate.split('-')[2].slice(0, 2);
+
+            // Create the slide object for the record
             var timelineEntry = {
               "text": {
                 "text": data.events[i].description,
               },
               "start_date": {
-                  "year": "1963"
+                  "year": entryStartYear,
+                  "month": entryStartMonth,
+                  "day": entryStartDay
               },
             };
             timelineEvents.push(timelineEntry);
           }
-          // console.log("timeline events: ", JSON.stringify(timelineEvents));
 
           var slides = {
             "events": timelineEvents
@@ -43,7 +51,6 @@
 
           window.timeline = new TL.Timeline('timeline-embed', slides);
 
-          console.log(JSON.stringify(slides));
         });
 
         NeatlineTime.loadTimeline(
