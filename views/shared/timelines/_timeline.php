@@ -3,11 +3,14 @@
  * Timeline display partial.
  */
 
+ // Get the timeline
+ $timeline = get_current_record('neatline_time_timeline');
+
 ?>
 
 <!-- Container. -->
-<div id="<?php echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
-</div>
+<!-- <div id="<?php //echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
+</div> -->
 
 <div id='timeline-embed' style="width: 100%; height: 600px"></div>
 
@@ -23,11 +26,13 @@
         var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 
         $.getJSON(jsonTimelineUri, function(data) {
+          console.log('json loc: ', jsonTimelineUri);
           console.log('data ', data);
           var timelineEvents = new Array();
 
           for (var i = 0; i < data.events.length; i++) {
             // Parse the date string into Y, M, D
+            // Assumes YYYY-MM-DD
             var entryStartDate = data.events[i].start;
             var parsedDate = entryStartDate.split('-');
             var entryStartYear = parsedDate[0];
@@ -52,6 +57,12 @@
 
           // create the collection of slides
           var slides = {
+            "title": {
+              "text": {
+                "headline": '<?php echo $timeline->title; ?>',
+                "text": '<?php echo $timeline->description; ?>'
+              }
+            },
             "events": timelineEvents
           };
 
@@ -60,10 +71,10 @@
 
         });
 
-        NeatlineTime.loadTimeline(
-            '<?php echo neatlinetime_timeline_id(); ?>',
-            '<?php echo neatlinetime_json_uri_for_timeline(); ?>',
-            centerDate
-        );
+        // NeatlineTime.loadTimeline(
+        //     '<?php //echo neatlinetime_timeline_id(); ?>',
+        //     '<?php //echo neatlinetime_json_uri_for_timeline(); ?>',
+        //     centerDate
+        // );
     });
 </script>
