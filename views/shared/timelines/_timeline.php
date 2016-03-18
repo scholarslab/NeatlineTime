@@ -29,20 +29,10 @@
           // console.log('data ', data);
           var timelineEvents = new Array();
 
-          // Since end is reserved by jquery, change the end key to finish
-          var stringData = JSON.stringify(data);
-          var cleanedData = stringData.replace(/"end":/g, '"finishDate":');
-          cleanedData = JSON.parse(cleanedData);
-          console.log(cleanedData);
-
           for (var i = 0; i < data.events.length; i++) {
             // Parse the date string into Y, M, D
             // Assumes YYYY-MM-DD
-            var startDate = parseDate(cleanedData.events[i].start);
-            // console.log('finishDate: ', cleanedData.events[i][finishDate]);
-            // var endDate = parseDate(cleanedData.events[i].finishDate);
-            // console.log(startDate);
-            // console.log(endDate);
+            var startDate = parseDate(data.events[i].start);
 
             // Create the slide object for the record
             var timelineEntry = {
@@ -57,11 +47,23 @@
               },
             };
 
+            // If the record has an end date, include it
+            if (data.events[i].end) {
+              var endDate = parseDate(data.events[i].end);
+
+              timelineEntry["end_date"] = {
+                "year": endDate[0],
+                "month": endDate[1],
+                "day": endDate[2]
+              };
+            }
+
+            // If the record has a file attachment, include that
+            // TODO: determine how timelinejs handles multiples files and non-image files
             if (data.events[i].image) {
               timelineEntry["media"] = { "url": data.events[i].image };
             }
 
-            console.log(timelineEntry);
             // Add the slide to the events
             timelineEvents.push(timelineEntry);
           }
@@ -81,9 +83,7 @@
           window.timeline = new TL.Timeline('timeline-embed', slides);
 
           function parseDate(entryDateString) {
-            console.log(entryDateString);
             var entryDate = entryDateString;
-            // console.log('entrydate', entryDateString);
 
             var parsedDate = entryDate.split('-');
 
