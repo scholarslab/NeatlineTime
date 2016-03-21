@@ -20,8 +20,6 @@
         // hackily put the timelinejs css into the head
         $('head').append('<link rel="stylesheet" type="text/css" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">');
 
-        var centerDate = '<?php echo $this->center_date; ?>';
-
         // get the location for the json data
         var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 
@@ -37,7 +35,7 @@
             // Create the slide object for the record
             var timelineEntry = {
               "text": {
-                "headline": data.events[i].title,
+                "headline": "<a href=" + data.events[i].link + ">" + data.events[i].title + "</a>",
                 "text": data.events[i].description,
               },
               "start_date": {
@@ -58,8 +56,11 @@
               };
             }
 
-            // If the record has a file attachment, include that
-            // TODO: determine how timelinejs handles multiples files and non-image files
+            // If the record has a file attachment, include that.
+            // Limits based on returned JSON:
+              // If multiple images are attached to the record, it only shows the first.
+              // If a pdf is attached, it does not show it or indicate it.
+              // If an mp3 is attached in Files, it does not appear.
             if (data.events[i].image) {
               timelineEntry["media"] = { "url": data.events[i].image };
             }
@@ -95,11 +96,5 @@
           };
 
         });
-
-        // NeatlineTime.loadTimeline(
-        //     '<?php //echo neatlinetime_timeline_id(); ?>',
-        //     '<?php //echo neatlinetime_json_uri_for_timeline(); ?>',
-        //     centerDate
-        // );
     });
 </script>
