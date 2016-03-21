@@ -1,6 +1,6 @@
 <?php
 
-//require_once NEATLINE_TIME_TIMELINE_PLUGIN_DIR . '/models/NeatlineTimeTimeline.php';
+require_once '../models/NeatlineTimeTimeline.php';
 
 /**
  * Test the NeatlineTimeTimeline model.
@@ -60,7 +60,7 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotNull($this->timeline->modified);
         $this->assertThat(new Zend_Date($this->timeline->modified), $this->isInstanceOf('Zend_Date'),
-            "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");        
+            "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
     public function testUpdateSetsModifiedDate()

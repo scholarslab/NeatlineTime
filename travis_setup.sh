@@ -21,13 +21,16 @@ mv $OMEKA_DIR/application/tests/config.ini.changeme $OMEKA_DIR/application/tests
 # set up testing config
 sed -i 's/db.host = ""/db.host = "localhost"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/db.username = ""/db.username = "root"/' $OMEKA_DIR/application/tests/config.ini
-sed -i 's/db.dbname = ""/db.dbname = "omeka_test"/' $OMEKA_DIR/application/tests/config.ini 
+sed -i 's/db.dbname = ""/db.dbname = "omeka_test"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/email.to = ""/email.to = "test@example.com"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/email.administator = ""/email.administrator = "admin@example.com"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/256M/512M/' $OMEKA_DIR/application/tests/bootstrap.php
 
-# symlink the plugin 
-cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR 
+# symlink the plugin
+cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR
 
+# Run composer install
+cd $PLUGIN_DIR
+composer install
