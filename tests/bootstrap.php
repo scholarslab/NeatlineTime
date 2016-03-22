@@ -9,5 +9,5 @@ if (!($omekaDir = getenv('OMEKA_DIR'))) {
 
 require_once $omekaDir . '/application/tests/bootstrap.php';
 echo $omekaDir;
-require_once 'NeatlineTime_Test_AppTestCase.php';
+require_once $omekaDir . '/plugins/NeatlineTime/tests/NeatlineTime_Test_AppTestCase.php';
 echo 'got here';
