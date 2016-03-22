@@ -39,7 +39,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
         return 'NeatlineTime_Timelines';
     }
 
-    protected function beforeSave()
+    protected function beforeSave($args)
     {
         $query = $this->query;
         if (is_array($query)) {
@@ -67,6 +67,6 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
         $this->center_date = '0000-00-00';
       } elseif ($this->center_date !== '0000-00-00' && !$validator->isValid($this->center_date)) {
         $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
-      } 
+      }
     }
 }
