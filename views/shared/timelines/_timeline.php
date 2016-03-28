@@ -5,14 +5,9 @@
 
  // Get the timeline
  $timeline = get_current_record('neatline_time_timeline');
-
 ?>
 
-<!-- Container. -->
-<!-- <div id="<?php //echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
-</div> -->
-
-<div id='timeline-embed' style="width: 100%; height: 600px"></div>
+<div id="timeline-<?php echo $timeline->id; ?>" style="width: 100%; height: 600px"></div>
 
 <script src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 <script>
@@ -24,7 +19,7 @@
         var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 
         $.getJSON(jsonTimelineUri, function(data) {
-          console.log('data ', data);
+          // console.log('data ', data);
           var timelineEvents = new Array();
 
           for (var i = 0; i < data.events.length; i++) {
@@ -84,8 +79,10 @@
             "events": timelineEvents
           };
 
+          var timelineDivID = '<?php echo $timeline->id; ?>';
+
           // initialize the timeline instance
-          window.timeline = new TL.Timeline('timeline-embed', slides);
+          window.timeline = new TL.Timeline('timeline-' + timelineDivID, slides);
 
           function parseDate(entryDateString) {
             var entryDate = entryDateString;
