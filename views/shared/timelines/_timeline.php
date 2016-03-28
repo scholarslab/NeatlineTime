@@ -24,7 +24,7 @@
         var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 
         $.getJSON(jsonTimelineUri, function(data) {
-          // console.log('data ', data);
+          console.log('data ', data);
           var timelineEvents = new Array();
 
           for (var i = 0; i < data.events.length; i++) {
@@ -35,8 +35,7 @@
             // Create the slide object for the record
             var timelineEntry = {
               "text": {
-                "headline": "<a href=" + data.events[i].link + ">" + data.events[i].title + "</a>",
-                "text": data.events[i].description,
+                "headline": "<a href=" + data.events[i].link + ">" + data.events[i].title + "</a>"
               },
               "start_date": {
                   "year": startDate[0],
@@ -44,6 +43,11 @@
                   "day": startDate[2]
               },
             };
+
+            // If the item has a description, include it
+            if (data.events[i].description) {
+              timelineEntry.text["text"] = data.events[i].description;
+            }
 
             // If the record has an end date, include it
             if (data.events[i].end) {
