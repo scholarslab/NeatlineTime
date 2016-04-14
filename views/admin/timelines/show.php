@@ -38,4 +38,13 @@ echo item_search_filters($query);
 <?php echo link_to($neatline_time_timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm big red button')); ?>
 </div>
 </div>
+<script>
+  var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
+
+  $.getJSON(jsonTimelineUri, function(data) {
+    if (data.events.length > 100) {
+      alert("Adding more than 100 items to the timeline will create slow render times.");
+    }
+  });
+</script>
 <?php foot(); ?>
