@@ -69,7 +69,7 @@ function queue_timeline_assets()
         $headScript->appendScript($timelineVariables);
         $headScript->appendFile(src('timeline-api.js', 'javascripts/simile/timeline-api'));
     } else {
-        $headScript->appendFile('http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+        $headScript->appendFile('https://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
     }
 
     $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
