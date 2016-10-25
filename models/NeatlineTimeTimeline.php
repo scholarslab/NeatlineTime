@@ -64,9 +64,9 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     {
       $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
       if ($this->center_date == '') {
-        $this->center_date = '0000-00-00';
-      } elseif ($this->center_date !== '0000-00-00' && !$validator->isValid($this->center_date)) {
+        $this->center_date = null;
+      } elseif (isset($this->center_date) && !$validator->isValid($this->center_date)) {
         $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
-      } 
+      }
     }
 }
