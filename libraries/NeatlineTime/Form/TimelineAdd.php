@@ -2,7 +2,7 @@
 /**
  * Form for Timeline records.
  */
-class NeatlineTime_Form_Timeline extends Omeka_Form
+class NeatlineTime_Form_TimelineAdd extends Omeka_Form
 {
     public function init()
     {
@@ -64,6 +64,7 @@ class NeatlineTime_Form_Timeline extends Omeka_Form
 
         // Add the submit to a separate display group.
         $this->addDisplayGroup(array('submit'), 'timeline_submit');
-    }
 
+        $this->addElement('sessionCsrfToken', 'csrf_token');
+    }
 }

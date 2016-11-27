@@ -20,8 +20,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
 
     public function addAction()
     {
-        require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
-        $form = new NeatlineTime_Form_Timeline;
+        $form = new NeatlineTime_Form_TimelineAdd;
         $this->view->form = $form;
         parent::addAction();
     }
@@ -30,13 +29,16 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     {
         $timeline = $this->_helper->db->findById();
 
-        require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
-        $form = new NeatlineTime_Form_Timeline;
-        $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public, 'featured' => $timeline->featured, 'center_date' => $timeline->center_date));
-
+        $form = new NeatlineTime_Form_TimelineAdd;
+        $form->setDefaults(array(
+            'title' => $timeline->title,
+            'description' => $timeline->description,
+            'public' => $timeline->public,
+            'featured' => $timeline->featured,
+            'center_date' => $timeline->center_date,
+        ));
         $this->view->form = $form;
         parent::editAction();
-
     }
 
     public function queryAction()
@@ -65,7 +67,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
 
         $query = $timeline->query ? unserialize($timeline->query) : array();
-        $items = get_db()->getTable('Item')->findBy($query, null);
+        $items = $this->_helper->db->getTable('Item')->findBy($query, null);
 
         $this->view->neatline_time_timeline = $timeline;
         $this->view->items = $items;
