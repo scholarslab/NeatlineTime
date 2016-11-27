@@ -30,7 +30,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'define_acl',
         'define_routes',
         'admin_append_to_plugin_uninstall_message',
-        'item_browse_sql',
+        'items_browse_sql',
         'config',
         'config_form',
         'public_head',
@@ -258,15 +258,20 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
-     * Filter the items_browse_sql to return only items that have a non-empty
-     * value for the DC:Date field, when using the neatlinetime-json context.
-     * Uses the ItemSearch model (models/ItemSearch.php) to add the check for
-     * a non-empty DC:Date.
+     * Hook used to alter the query for items.
      *
-     * @param Omeka_Db_Select $select
+     * @param array $args
      */
-    public function hookItemBrowseSql()
+    public function hookItemsBrowseSql($args)
     {
+        // Filter the items_browse_sql to return only items that have a non-empty
+        // value for the DC:Date field, when using the neatlinetime-json context.
+        // Uses the ItemSearch model (models/ItemSearch.php) to add the check for
+        // a non-empty DC:Date.
+
+        $db = $this->_db;
+        $select = $args['select'];
+        $params = $args['params'];
 
         $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
         if ($context == 'neatlinetime-json') {
