@@ -2,82 +2,49 @@
 
 class NeatlineTimeTimelineTable extends Omeka_Db_Table
 {
-
     /**
-     * Filter public/not public timelines.
-     *
-     * @see self::applySearchFilters()
-     * @param Omeka_Db_Select $select
-     * @param bool $isPublic Whether to retrieve only public timelines.
-     * @return void
-     */
-    public function filterByPublic(Omeka_Db_Select $select, $isPublic)
-    {
-        $isPublic = (bool) $isPublic;
-
-        if ($isPublic) {
-            $select->where('neatline_time_timelines.public = 1');
-        } else {
-            $select->where('neatline_time_timelines.public = 0');
-        }
-    }
-
-    /**
-     * Apply a featured/not featured filter to the select object.
-     *
-     * @see self::applySearchFilters()
-     * @param Omeka_Db_Select $select
-     * @param bool $isFeatured
-     */
-    public function filterByFeatured(Omeka_Db_Select $select, $isFeatured)
-    {
-        $isFeatured = (bool) $isFeatured;
-
-        if ($isFeatured) {
-            $select->where('neatline_time_timelines.featured = 1');
-        } else {
-            $select->where('neatline_time_timelines.featured = 0');
-        }
-    }
-
-    /**
-     * Order SELECT results randomly.
-     *
-     * @param Zend_Db_Select
-     * @return void
-     */
-    public function orderSelectByRandom($select)
-    {
-        $select->order('RAND()');
-    }
-
-    /**
-     * Possible options: 'public','user', and 'featured'.
-     *
      * @param Omeka_Db_Select
      * @param array
      * @return void
      */
     public function applySearchFilters($select, $params)
     {
-        if (isset($params['user'])) {
-            $userId = $params['user'];
-            $this->filterByUser($select, $userId);
+        $alias = $this->getTableAlias();
+        $boolean = new Omeka_Filter_Boolean;
+        $genericParams = array();
+        foreach ($params as $key => $value) {
+            if ($value === null || (is_string($value) && trim($value) == '')) {
+                continue;
+            }
+            switch ($key) {
+                case 'user':
+                case 'owner':
+                case 'user_id':
+                case 'owner_id':
+                    $this->filterByUser($select, $value, 'owner_id');
+                    break;
+                case 'public':
+                    $this->filterByPublic($select, $boolean->filter($value));
+                    break;
+                case 'featured':
+                    $this->filterByFeatured($select, $boolean->filter($value));
+                    break;
+                case 'added_since':
+                    $this->filterBySince($select, $value, 'added');
+                    break;
+                case 'modified_since':
+                    $this->filterBySince($select, $value, 'modified');
+                    break;
+                default:
+                    $genericParams[$key] = $value;
+            }
         }
 
-        if(isset($params['public'])) {
-            $this->filterByPublic($select, $params['public']);
+        if (!empty($genericParams)) {
+            parent::applySearchFilters($select, $genericParams);
         }
 
-        if(isset($params['featured'])) {
-            $this->filterByFeatured($select, $params['featured']);
-        }
-
-        if(isset($params['random'])) {
-            $this->orderSelectByRandom($select);
-        }
-
-        $select->group("neatline_time_timelines.id");
+        $select->group($alias . '.id');
     }
 
     public function getSelect()
@@ -95,9 +62,7 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table
      */
     public function _getColumnPairs()
     {
-        return array(
-            'neatline_time_timelines.id',
-            'neatline_time_timelines.title'
-        );
+        $alias = $this->getTableAlias();
+        return array($alias . '.id', $alias . '.title');
     }
 }

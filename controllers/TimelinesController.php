@@ -5,6 +5,15 @@
 class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionController
 {
     /**
+     * The number of records to browse per page.
+     *
+     * @var string
+     */
+    protected $_browseRecordsPerPage = 100;
+
+    protected $_autoCsrfProtection = true;
+
+    /**
      * Initialization.
      *
      * @todo Add our own setting for recordsPerPage instead of using setting
@@ -13,9 +22,20 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     public function init()
     {
         $this->_helper->db->setDefaultModelName('NeatlineTimeTimeline');
+    }
 
-        $this->_browseRecordsPerPage = get_option('per_page_admin');
+    /**
+     * The browse action.
+     *
+     */
+    public function browseAction()
+    {
+        if (!$this->getParam('sort_field')) {
+            $this->setParam('sort_field', 'added');
+            $this->setParam('sort_dir', 'd');
+        }
 
+        parent::browseAction();
     }
 
     public function addAction()
@@ -104,5 +124,4 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     {
         return __('This will delete the timeline "%s" and its associated metadata. This will not delete any items associated with this timeline.', $timeline->title);
     }
-
 }

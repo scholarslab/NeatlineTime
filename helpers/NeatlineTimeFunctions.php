@@ -121,7 +121,7 @@ function neatlinetime_timeline_id($timeline = null)
 function neatlinetime_display_random_featured_timelines($num = 1) {
   $html = '';
 
-  $timelines = get_db()->getTable('NeatlineTimeTimeline')->findBy(array('random' => 1, 'featured' => 1), $num);
+  $timelines = get_db()->getTable('NeatlineTimeTimeline')->findBy(array('sort_field' => 'random', 'featured' => 1), $num);
 
   if ($timelines) {
     foreach ($timelines as $timeline) {
