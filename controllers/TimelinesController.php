@@ -41,6 +41,8 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     public function addAction()
     {
         $form = new NeatlineTime_Form_TimelineAdd;
+        $defaults = json_decode(get_option('neatline_time_defaults'), true) ?: array();
+        $form->setDefaults($defaults);
         $this->view->form = $form;
         parent::addAction();
     }

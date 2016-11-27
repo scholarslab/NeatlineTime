@@ -94,3 +94,24 @@ unset($elements['']);
         </div>
     </div>
 </fieldset>
+<fieldset id="fieldset-neatline-time-default"><legend><?php echo __('Default Parameters'); ?></legend>
+    <p class="explanation">
+        <?php echo __('These parameters are used as defaults for all timelines.'); ?>
+        <?php echo __('They can be overridden in the form of each timeline.'); ?>
+    </p>
+    <?php $parameters = json_decode(get_option('neatline_time_defaults'), true) ?: array(); ?>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_defaults[center_date]', __('Center Date')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+            echo $this->formText('neatline_time_defaults[center_date]', empty($parameters['center_date']) ? '' : $parameters['center_date'], null);
+            ?>
+            <p class="explanation">
+                <?php echo __('Set the default center date for the timeline.'); ?>
+                <?php echo __('The format should be "YYYY-MM-DD".'); ?>
+            </p>
+        </div>
+    </div>
+</fieldset>

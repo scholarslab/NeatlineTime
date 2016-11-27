@@ -51,16 +51,29 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
             'label' => __('Save Timeline')
         ));
 
-        // Group the title, description, and public fields
+        // Group the title, description, and public/featured fields.
         $this->addDisplayGroup(
-            array('title',
-                  'description',
-                  'public',
-                  'featured',
-                  'center_date',
-                 ),
-            'timeline_info'
-        );
+            array(
+                'title',
+                'description',
+                'public',
+                'featured',
+            ),
+            'timeline_info',
+            array(
+                'legend' => __('About the timeline'),
+                'description' => __('Set the main metadata of the timeline.'),
+        ));
+        $this->addDisplayGroup(
+            array(
+                'center_date',
+            ),
+            'timeline_parameters',
+            array(
+                'legend' => __('Specific parameters'),
+                'description' => __('Set the specific parameters of the timeline.')
+                    . ' ' . __('If not set, the defaults set in the config page will apply.'),
+        ));
 
         // Add the submit to a separate display group.
         $this->addDisplayGroup(array('submit'), 'timeline_submit');

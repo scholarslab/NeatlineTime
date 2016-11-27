@@ -90,3 +90,7 @@ if (version_compare($oldVersion, '2.1.7', '<')) {
     ";
     $db->query($sql);
 }
+
+if (version_compare($oldVersion, '2.1.8', '<')) {
+    set_option('neatline_time_defaults', json_encode($this->_options['neatline_time_defaults']));
+}

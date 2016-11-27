@@ -43,6 +43,9 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'neatlinetime' => null,
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
+        'neatline_time_defaults' => array(
+            'center_date' => '',
+        ),
         'neatline_time_render_year' => 'skip',
     );
 
@@ -78,6 +81,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         $this->_db->query($sqlNeatlineTimeline);
 
+        $this->_options['neatline_time_defaults'] = json_encode($this->_options['neatline_time_defaults']);
         $this->_setDefaultOptions();
         $this->_installOptions();
     }
@@ -224,6 +228,9 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         foreach ($this->_options as $optionKey => $optionValue) {
             if (isset($post[$optionKey])) {
+                if (is_array($optionValue)) {
+                    $post[$optionKey] = json_encode($post[$optionKey]);
+                }
                 set_option($optionKey, $post[$optionKey]);
             }
         }
