@@ -23,16 +23,16 @@ require_once NEATLINE_TIME_PLUGIN_DIR  . '/models/NeatlineTimeTimelineTable.php'
 class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array(
-        'install',
-        'uninstall',
-        'upgrade',
         'initialize',
-        'define_acl',
-        'define_routes',
-        'admin_append_to_plugin_uninstall_message',
-        'items_browse_sql',
+        'install',
+        'upgrade',
+        'uninstall',
+        'uninstall_message',
         'config',
         'config_form',
+        'define_acl',
+        'define_routes',
+        'items_browse_sql',
         'public_head',
         'admin_head',
         'exhibit_builder_page_head'
@@ -54,6 +54,14 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
     );
+
+    /**
+     * Timeline initialize hook
+     */
+    public function hookInitialize()
+    {
+        add_translation_source(dirname(__FILE__) . '/languages');
+    }
 
     /**
      * Timeline install hook
@@ -78,20 +86,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         $this->setDefaultOptions();
         $this->_installOptions();
-    }
-
-    /**
-     * Timeline uninstall hook
-     */
-    public function hookUninstall()
-    {
-
-        $sql = "DROP TABLE IF EXISTS
-            `{$this->_db->prefix}neatline_time_timelines`";
-
-        $this->_db->query($sql);
-
-        $this->_uninstallOptions();
     }
 
     /**
@@ -162,11 +156,29 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
-     * Timeline initialize hook
+     * Timeline uninstall hook
      */
-    public function hookInitialize()
+    public function hookUninstall()
     {
-        add_translation_source(dirname(__FILE__) . '/languages');
+
+        $sql = "DROP TABLE IF EXISTS
+        `{$this->_db->prefix}neatline_time_timelines`";
+
+        $this->_db->query($sql);
+
+        $this->_uninstallOptions();
+    }
+
+    /**
+     * Display the uninstall message.
+     */
+    public function hookUninstallMessage()
+    {
+        $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
+          will remove all custom Timeline records.');
+
+        echo '<p>'.$string.'</p>';
+
     }
 
     /**
@@ -242,18 +254,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
                 array('page'        => '\d+')
                 )
             );
-
-    }
-
-    /**
-     * Timeline admin_append_to_plugin_uninstall_message hook
-     */
-    public function hookAdminAppendToPluginUninstallMessage()
-    {
-        $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
-          will remove all custom Timeline records.');
-
-        echo '<p>'.$string.'</p>';
 
     }
 
