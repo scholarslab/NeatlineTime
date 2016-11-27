@@ -14,6 +14,7 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         'item_date_end' => '',
         'render_year' => 'skip',
         'center_date' => '',
+        'viewer' => '{}',
     );
 
     /**

@@ -76,6 +76,17 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     }
 
     /**
+     * Returns the json parameters of the viewer.
+     *
+     * @uses ::getParameter()
+     * @return string The parameters of the viewer.
+     */
+    public function getViewerParameters()
+    {
+        return $this->getParameter('viewer') ?: '{}';
+    }
+
+    /**
      * Get the query.
      */
     public function getQuery()
@@ -117,6 +128,7 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
             case 'item_date_end':
             case 'render_year':
             case 'center_date':
+            case 'viewer':
                 return $this->getParameter($property);
             default:
                 return parent::getProperty($property);

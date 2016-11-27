@@ -139,4 +139,23 @@ unset($elements['']);
             </p>
         </div>
     </div>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_defaults[viewer]', __('Viewer')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+            echo $this->formTextarea('neatline_time_defaults[viewer]',
+                $defaults['viewer'],
+                array(
+                    'rows' => 10,
+                    'cols' => 60,
+            ));
+            ?>
+            <p class="explanation">
+                <?php echo __('Set the default params of the viewer as json, or let empty for the included default.'); ?>
+                <?php echo __('Currently, only "bandInfos" and "centerDate" are managed.'); ?>
+            </p>
+        </div>
+    </div>
 </fieldset>

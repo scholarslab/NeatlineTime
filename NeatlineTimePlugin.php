@@ -50,6 +50,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'item_date_end' => '',
             'render_year' => 'skip',
             'center_date' => '',
+            'viewer' => '{}',
         ),
     );
 
@@ -215,7 +216,12 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     public function hookConfigForm($args)
     {
         $defaults = get_option('neatline_time_defaults');
-        $defaults = json_decode($defaults, true) ?: $this->_options['neatline_time_defaults'];
+        $defaults = json_decode($defaults, true);
+        $defaults = empty($defaults)
+            // Set default parameters.
+            ? $this->_options['neatline_time_defaults']
+            // Add possible new default parameters to avoid a notice.
+            : array_merge($this->_options['neatline_time_defaults'], $defaults);
 
         $view = $args['view'];
         echo $view->partial(
@@ -293,7 +299,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             return;
         }
 
-        // Default neatline library.
+        // Default simile library.
         queue_css_file('neatlinetime-timeline');
 
         queue_js_file('neatline-time-scripts');

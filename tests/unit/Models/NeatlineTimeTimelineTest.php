@@ -39,6 +39,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
             'item_date_end' => '',
             'render_year' => 'january_1',
             'center_date' => '',
+            'viewer' => '{}',
         );
         $this->timeline->setParameters($parameters);
 

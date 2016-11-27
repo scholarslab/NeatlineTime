@@ -59,46 +59,60 @@ var NeatlineTime = {
             elmt.appendChild(divWiki);
         };
     },
-    // may need to set a default value of none/false to centerDate
-    loadTimeline: function(timelineId, timelineData, centerDate) {
+
+    loadTimeline: function(timelineId, timelineData, params) {
         NeatlineTime._monkeyPatchFillInfoBubble();
         var eventSource = new Timeline.DefaultEventSource();
 
         var defaultTheme = Timeline.getDefaultTheme();
         defaultTheme.mouseWheel = 'zoom';
+        // defaultTheme.autoWidth = true;
 
-        var bandInfos = [
-            Timeline.createBandInfo({
-                eventSource:    eventSource,
-                width:          "80%",
-                intervalUnit:   Timeline.DateTime.MONTH,
-                intervalPixels: 100,
-                zoomIndex:      10,
-                zoomSteps:      new Array(
-                    {pixelsPerInterval: 280,  unit: Timeline.DateTime.HOUR},
-                    {pixelsPerInterval: 140,  unit: Timeline.DateTime.HOUR},
-                    {pixelsPerInterval:  70,  unit: Timeline.DateTime.HOUR},
-                    {pixelsPerInterval:  35,  unit: Timeline.DateTime.HOUR},
-                    {pixelsPerInterval: 400,  unit: Timeline.DateTime.DAY},
-                    {pixelsPerInterval: 200,  unit: Timeline.DateTime.DAY},
-                    {pixelsPerInterval: 100,  unit: Timeline.DateTime.DAY},
-                    {pixelsPerInterval:  50,  unit: Timeline.DateTime.DAY},
-                    {pixelsPerInterval: 400,  unit: Timeline.DateTime.MONTH},
-                    {pixelsPerInterval: 200,  unit: Timeline.DateTime.MONTH},
-                    {pixelsPerInterval: 100,  unit: Timeline.DateTime.MONTH} // DEFAULT zoomIndex
-                )
-            }),
-            Timeline.createBandInfo({
-                overview:       true,
-                eventSource:    eventSource,
-                width:          "20%",
-                intervalUnit:   Timeline.DateTime.YEAR,
-                intervalPixels: 200
-            })
-        ];
+        var bandInfos = [];
+        if (typeof params.bandInfos !== 'undefined' && params.bandInfos.length) {
+            for (i = 0; i < params.bandInfos.length; ++i) {
+                if (typeof params.bandInfos[i].eventSource === 'undefined') {
+                    params.bandInfos[i].eventSource = eventSource;
+                }
+                bandInfos[i] = Timeline.createBandInfo(params.bandInfos[i]);
+            }
+        } else {
+            bandInfos = [
+                Timeline.createBandInfo({
+                    eventSource: eventSource,
+                    width: "80%",
+                    intervalUnit: Timeline.DateTime.MONTH,
+                    intervalPixels: 100,
+                    zoomIndex: 10,
+                    zoomSteps: new Array(
+                        {pixelsPerInterval: 280, unit: Timeline.DateTime.HOUR},
+                        {pixelsPerInterval: 140, unit: Timeline.DateTime.HOUR},
+                        {pixelsPerInterval: 70, unit: Timeline.DateTime.HOUR},
+                        {pixelsPerInterval: 35, unit: Timeline.DateTime.HOUR},
+                        {pixelsPerInterval: 400, unit: Timeline.DateTime.DAY},
+                        {pixelsPerInterval: 200, unit: Timeline.DateTime.DAY},
+                        {pixelsPerInterval: 100, unit: Timeline.DateTime.DAY},
+                        {pixelsPerInterval: 50, unit: Timeline.DateTime.DAY},
+                        {pixelsPerInterval: 400, unit: Timeline.DateTime.MONTH},
+                        {pixelsPerInterval: 200, unit: Timeline.DateTime.MONTH},
+                        {pixelsPerInterval: 100, unit: Timeline.DateTime.MONTH} // DEFAULT zoomIndex
+                    )
+                }),
+                Timeline.createBandInfo({
+                    overview: true,
+                    eventSource: eventSource,
+                    width: "20%",
+                    intervalUnit: Timeline.DateTime.YEAR,
+                    intervalPixels: 200
+                })
+            ];
+        }
 
-        bandInfos[1].syncWith = 0;
-        bandInfos[1].highlight = true;
+        // Process all bands except first.
+        for (i = 1; i < bandInfos.length; ++i) {
+            bandInfos[i].syncWith = 0;
+            bandInfos[i].highlight = true;
+        }
 
         var tl = Timeline.create(document.getElementById(timelineId), bandInfos);
         tl.loadJSON(timelineData, function(json, url) {
@@ -108,6 +122,7 @@ var NeatlineTime = {
         // console.log("timelineData: ", timelineData);
             if (json.events.length > 0) {
                 eventSource.loadJSON(json, url);
+                var centerDate = params.centerDate;
                 // console.log("centerDate: " + centerDate);
                 if (!centerDate) {
                     centerDate = new Date().toJSON().slice(0,10);

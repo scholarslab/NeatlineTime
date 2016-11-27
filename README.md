@@ -116,6 +116,46 @@ This parameter applies with a range of dates too, for example "1939/1945".
 In all cases, it's recommended to follow the standard [ISO 8601] as much as
 possible and to be as specific as possible.
 
+### Parameters of the viewer
+
+Some parameters of the viewer may be customized for each timeline. Currently,
+only the `CenterDate` and the `bandInfos` are managed for the Simile timeline.
+The default is automatically included when the field is empty.
+
+```javascript
+{
+bandInfos:
+    [
+        {
+            width: "80%",
+            intervalUnit: Timeline.DateTime.MONTH,
+            intervalPixels: 100,
+            zoomIndex: 10,
+            zoomSteps: new Array(
+                {pixelsPerInterval: 280, unit: Timeline.DateTime.HOUR},
+                {pixelsPerInterval: 140, unit: Timeline.DateTime.HOUR},
+                {pixelsPerInterval: 70, unit: Timeline.DateTime.HOUR},
+                {pixelsPerInterval: 35, unit: Timeline.DateTime.HOUR},
+                {pixelsPerInterval: 400, unit: Timeline.DateTime.DAY},
+                {pixelsPerInterval: 200, unit: Timeline.DateTime.DAY},
+                {pixelsPerInterval: 100, unit: Timeline.DateTime.DAY},
+                {pixelsPerInterval: 50, unit: Timeline.DateTime.DAY},
+                {pixelsPerInterval: 400, unit: Timeline.DateTime.MONTH},
+                {pixelsPerInterval: 200, unit: Timeline.DateTime.MONTH},
+                {pixelsPerInterval: 100, unit: Timeline.DateTime.MONTH} // DEFAULT zoomIndex
+            )
+        },
+        {
+            overview: true,
+            width: "20%",
+            intervalUnit: Timeline.DateTime.YEAR,
+            intervalPixels: 200
+        }
+    ]
+}
+```
+
+
 ### Browsing timelines
 
 You can browse existing timelines by clicking on the "Browse Timelines" from
@@ -140,6 +180,14 @@ The template files available in NeatlineTime include:
 
 * timelines/browse.php - The template for browsing existing timelines.
 * timelines/show.php - The template for showing a specific timeline.
+
+### Modifying the viewer
+
+The template file used to load the timeline is `views/shared/javascripts/neatline-time-script.js`.
+
+You can copy it in your themes/my_theme/javascripts folder to customize it. The
+same for the default css. See the main [wiki][simile-timeline], an [example of use]
+with Neatline, and the [examples] of customization on the wiki.
 
 
 Contributing to the Project
@@ -211,6 +259,8 @@ Credits
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
 [Knightlab timeline]: https://timeline.knightlab.com
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
+[example of use]: https://docs.neatline.org/working-with-the-simile-timeline-widget.html
+[examples]: http://www.simile-widgets.org/timeline/examples/index.html
 [Apache licence v2]: https://www.apache.org/licenses/LICENSE-2.0.html
 [license]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"

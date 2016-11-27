@@ -14,14 +14,14 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
         // Title
         $this->addElement('text', 'title', array(
             'label' => __('Title'),
-            'description' => __('A title for this timeline.')
+            'description' => __('A title for this timeline.'),
         ));
 
         // Description
         $this->addElement('textarea', 'description', array(
             'label' => __('Description'),
             'description' => __('A description for this timeline.'),
-            'attribs' => array('class' => 'html-editor', 'rows' => '15')
+            'attribs' => array('class' => 'html-editor', 'rows' => '15'),
         ));
 
         // Public/Not Public
@@ -83,12 +83,20 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
             'description' => __('Set the center date of the timeline.')
                 . ' ' . __('The format should be "YYYY-MM-DD".')
                 . ' ' . __('An empty value means "now", "0000-00-00" the earliest date, and "9999-99-99" the latest date.'),
-            'validator' => array('date')
+            'validator' => array('date'),
+        ));
+
+        // Set the params of the viewer.
+        $this->addElement('textarea', 'viewer', array(
+            'label' => __('Viewer'),
+            'description' => __('Set the params of the viewer as json, or let empty for the included default.')
+                . ' ' . __('Currently, only "bandInfos" and "centerDate" are managed.'),
+            'attribs' => array('rows' => '10'),
         ));
 
         // Submit
         $this->addElement('submit', 'submit', array(
-            'label' => __('Save Timeline')
+            'label' => __('Save Timeline'),
         ));
 
         // Group the title, description, and public/featured fields.
@@ -112,6 +120,7 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
                 'item_date_end',
                 'render_year',
                 'center_date',
+                'viewer',
             ),
             'timeline_parameters',
             array(

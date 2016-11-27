@@ -11,13 +11,16 @@ if (empty($timeline)) $timeline = get_current_record('neatline_time_timeline');
 <div id="<?php echo neatlinetime_timeline_id(); ?>" class="neatlinetime-timeline">
 </div>
 <script>
-  jQuery(document).ready(function($) {
-        var centerDate = <?php echo json_encode($timeline->getProperty('center_date')); ?>;
+    jQuery(document).ready(function($) {
+        var params = <?php echo $timeline->getViewerParameters(); ?>;
+        if (typeof params.centerDate === 'undefined') {
+            params.centerDate = <?php echo json_encode($timeline->getProperty('center_date')); ?>;
+        }
 
         NeatlineTime.loadTimeline(
             '<?php echo neatlinetime_timeline_id($timeline); ?>',
             '<?php echo neatlinetime_json_uri_for_timeline($timeline); ?>',
-            centerDate
+            params
         );
     });
 </script>
