@@ -16,14 +16,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         Zend_Registry::set('bootstrap', $bootstrap);
 
         //The process don't use the default install process, so force options.
-        set_option('neatline_time_defaults', json_encode(array(
-            'item_title' => 50,
-            'item_description' => 41,
-            'item_date' => 40,
-            'item_date_end' => '',
-            'render_year' => 'skip',
-            'center_date' => '',
-        )));
+        set_option('neatline_time_defaults', json_encode(NeatlineTime_Test_AppTestCase::$options));
     }
 
     public function tearDown()
@@ -38,7 +31,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $this->timeline->public = '1';
         $this->timeline->featured = '1';
         $this->timeline->owner_id = $this->user->id;
-        $this->timeline->query = setQuery(array('range' => '1'));
+        $this->timeline->setQuery(array('range' => '1'));
         $parameters = array(
             'item_title' => 50,
             'item_description' => 42,

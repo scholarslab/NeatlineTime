@@ -7,6 +7,15 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
     private $_dbHelper;
 
+    public static $options = array(
+        'item_title' => 50,
+        'item_description' => 41,
+        'item_date' => 40,
+        'item_date_end' => '',
+        'render_year' => 'skip',
+        'center_date' => '',
+    );
+
     /**
      * Spin up the plugins and prepare the database.
      *

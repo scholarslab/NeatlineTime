@@ -18,6 +18,9 @@ class NeatlineTimeGetOptionTest extends NeatlineTime_Test_AppTestCase
 
         $this->db = get_db();
         $this->_elementTable = $this->db->getTable('Element');
+
+        //The process don't use the default install process, so force options.
+        set_option('neatline_time_defaults', json_encode(NeatlineTime_Test_AppTestCase::$options));
     }
 
     /**

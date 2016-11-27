@@ -48,7 +48,7 @@ echo item_search_filters($query);
 var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
 $.getJSON(jsonTimelineUri, function(data) {
     if (data.events.length > 100) {
-        alert(<?php echo json_endode(__('Adding more than 100 items to the timeline will create slow render times.')); ?>);
+        alert(<?php echo json_encode(__('Adding more than 100 items to the timeline will create slow render times.')); ?>);
     }
 });
 </script>
