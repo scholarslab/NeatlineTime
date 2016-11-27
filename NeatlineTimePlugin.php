@@ -47,6 +47,15 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     );
 
     /**
+     * @var array Options and their default values.
+     */
+    protected $_options = array(
+        'neatlinetime' => null,
+        // Can be 'simile' or 'knightlab'.
+        'neatline_time_library' => 'simile',
+    );
+
+    /**
      * Timeline install hook
      */
     public function hookInstall()
@@ -68,7 +77,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         $this->_db->query($sqlNeatlineTimeline);
 
         $this->setDefaultOptions();
-
+        $this->_installOptions();
     }
 
     /**
@@ -82,8 +91,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         $this->_db->query($sql);
 
-        delete_option('neatlinetime');
-
+        $this->_uninstallOptions();
     }
 
     /**
@@ -146,6 +154,10 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             ";
 
             $this->_db->query($sql);
+        }
+
+        if (version_compare($oldversion, '2.1.3', '<')) {
+            set_option('neatline_time_library', $this->_options['neatline_time_library']);
         }
     }
 
@@ -267,22 +279,39 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
-     * Plugin configuration.
+     * Shows plugin configuration page.
+     *
+     * @return void
      */
-    public function hookConfig()
+    public function hookConfigForm($args)
     {
-      $options = $_POST;
-      unset($options['install_plugin']);
-      $options = serialize($options);
-      set_option('neatlinetime', $options);
+        $view = $args['view'];
+        echo $view->partial(
+            'plugins/neatline-time-config-form.php',
+            array());
     }
 
     /**
-     * Plugin configuration form.
+     * Processes the configuration form.
+     *
+     * @return void
      */
-    public function hookConfigForm()
+    public function hookConfig($args)
     {
-        include 'config_form.php';
+        $post = $args['post'];
+
+        // Set the specified values, else the standard values of Omeka.
+        $options = array();
+        $options['item_title'] = isset($post['item_title']) ? (integer) $post['item_title'] : 50;
+        $options['item_description'] = isset($post['item_description']) ? (integer) $post['item_description'] : 41;
+        $options['item_date'] = isset($post['item_date']) ? (integer) $post['item_date'] : 40;
+        $post['neatlinetime'] = serialize($options);
+
+        foreach ($this->_options as $optionKey => $optionValue) {
+            if (isset($post[$optionKey])) {
+                set_option($optionKey, $post[$optionKey]);
+            }
+        }
     }
 
     public function hookAdminHead($args)
@@ -328,6 +357,14 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     private function _head($args)
     {
+        $library = get_option('neatline_time_library');
+        if ($library == 'knightlab') {
+            queue_css_url('//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css');
+            queue_js_url('//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js');
+            return;
+        }
+
+        // Default neatline library.
         queue_css_file('neatlinetime-timeline');
 
         queue_js_file('neatline-time-scripts');
@@ -450,6 +487,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         }
 
         $options = serialize($options);
+        $this->_options['neatlinetime'] = $options;
         set_option('neatlinetime', $options);
     }
 }

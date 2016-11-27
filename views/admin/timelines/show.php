@@ -13,7 +13,13 @@ echo head($head);
 <div id="primary" class="seven columns alpha">
 
     <!-- Construct the timeline. -->
-    <?php echo $this->partial('timelines/_timeline.php', array('center_date' => metadata($neatline_time_timeline, 'center_date'))); ?>
+    <?php
+    $library = get_option('neatline_time_library') ?: 'simile';
+    $libraryPartial = $library == 'simile' ? '_timeline' : '_timeline_' . $library;
+    echo $this->partial('timelines/' . $libraryPartial . '.php',
+        array(
+            'center_date' => metadata($neatline_time_timeline, 'center_date'),
+    )); ?>
 
 <?php
 $query = unserialize($neatline_time_timeline->query);

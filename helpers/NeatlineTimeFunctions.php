@@ -53,6 +53,14 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
  */
 function queue_timeline_assets()
 {
+    $library = get_option('neatline_time_library');
+    if ($library == 'knightlab') {
+        queue_css_url('//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css');
+        queue_js_url('//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js');
+        return;
+    }
+
+    // Default neatline library.
     queue_css_file('neatlinetime-timeline');
 
     queue_js_file('neatline-time-scripts');
