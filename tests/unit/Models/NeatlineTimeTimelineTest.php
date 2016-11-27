@@ -14,6 +14,16 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $bootstrap = new Omeka_Test_Bootstrap;
         $bootstrap->getContainer()->db = $this->db;
         Zend_Registry::set('bootstrap', $bootstrap);
+
+        //The process don't use the default install process, so force options.
+        set_option('neatline_time_defaults', json_encode(array(
+            'item_title' => 50,
+            'item_description' => 41,
+            'item_date' => 40,
+            'item_date_end' => '',
+            'render_year' => 'skip',
+            'center_date' => '',
+        )));
     }
 
     public function tearDown()
@@ -29,6 +39,15 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $this->timeline->featured = '1';
         $this->timeline->owner_id = $this->user->id;
         $this->timeline->query = serialize(array('range' => '1'));
+        $parameters = array(
+            'item_title' => 50,
+            'item_description' => 42,
+            'item_date' => 43,
+            'item_date_end' => '',
+            'render_year' => 'january_1',
+            'center_date' => '',
+        );
+        $this->timeline->setParameters($parameters);
 
         $this->assertEquals('Timeline Title', $this->timeline->title);
         $this->assertEquals('Timeline Description', $this->timeline->description);
@@ -36,7 +55,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $this->timeline->featured);
         $this->assertEquals($this->user->id, $this->timeline->owner_id);
         $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertEquals($parameters, json_decode($this->timeline->parameters, true));
     }
 
     public function testInsertSetsAddedDate()

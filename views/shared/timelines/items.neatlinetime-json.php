@@ -16,16 +16,19 @@ foreach ($items as $item) {
     $itemLink = record_url($item);
     $itemDescription =  neatlinetime_metadata($item, 'item_description', array('snippet' => '200'), $timeline);
     $itemDates = neatlinetime_metadata($item, 'item_date', array('all' => true, 'no_filter' => true), $timeline);
+    $itemDatesEnd = neatlinetime_metadata($item, 'item_date_end', array('all' => true, 'no_filter' => true), $timeline);
 
-    $fileUrl = null;
-    if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
-        $fileUrl = metadata($file, 'square_thumbnail_uri');
-    }
+    $file = get_db()->getTable('File')->findWithImages($item->id, 0);
+    $fileUrl = $file ? metadata($file, 'square_thumbnail_uri') : null;
 
     if (!empty($itemDates)) {
-        foreach ($itemDates as $itemDate) {
+        foreach ($itemDates as $key => $itemDate) {
             $neatlineTimeEvent = array();
-            list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate, $timeline->getProperty('render_year'));
+            if (empty($itemDatesEnd[$key])) {
+                list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate, $timeline->getProperty('render_year'));
+            } else {
+                list($dateStart, $dateEnd) = neatlinetime_convert_two_dates($itemDate, $itemDatesEnd[$key], $timeline->getProperty('render_year'));
+            }
             if ($dateStart) {
                 $neatlineTimeEvent['start'] = $dateStart;
 

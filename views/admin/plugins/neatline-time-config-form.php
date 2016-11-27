@@ -76,6 +76,27 @@ unset($elements['']);
             ?>
             <p class="explanation">
                 <?php echo __('The date field to use to retrieve and display items on a timeline. Default is DC:Date.'); ?>
+                <?php echo __('Items with empty value for this field will be skipped.'); ?>
+            </p>
+        </div>
+    </div>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_defaults[item_date_end]', __('Item End Date')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+                $elements = array('' =>__('None')) + $elements;
+                echo $this->formSelect('neatline_time_defaults[item_date_end]',
+                    $defaults['item_date_end'],
+                    array(),
+                    $elements);
+            ?>
+            <p class="explanation">
+                <?php echo __('If set, this field will be used to set the end of a period.'); ?>
+                <?php echo __('If should be different from the main date.'); ?>
+                <?php echo __('In that case, the previous field will be the start date.'); ?>
+                <?php echo __('In all cases, it is possible to set a range in one field with a "/", like "1939-09-01/1945-05-08".'); ?>
             </p>
         </div>
     </div>

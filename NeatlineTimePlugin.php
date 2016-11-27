@@ -47,6 +47,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'item_title' => 50,
             'item_description' => 41,
             'item_date' => 40,
+            'item_date_end' => '',
             'render_year' => 'skip',
             'center_date' => '',
         ),

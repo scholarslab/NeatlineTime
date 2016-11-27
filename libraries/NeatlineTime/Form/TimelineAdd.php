@@ -55,6 +55,14 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
             ));
         }
 
+        $values = array('' =>__('None')) + $values;
+        $this->addElement('select', 'item_date_end', array(
+            'label' => __('Item End Date'),
+            'description' => __('If set, the process will use the other date as a start date.'),
+            'multiOptions' => $values,
+            'value' => false,
+        ));
+
         // Set fhe mode to render a year.
         $values = array(
             'skip' => __('Skip the record'),
@@ -99,6 +107,7 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
                 'item_title',
                 'item_description',
                 'item_date',
+                'item_date_end',
                 'render_year',
                 'center_date',
             ),

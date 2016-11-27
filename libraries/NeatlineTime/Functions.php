@@ -113,6 +113,10 @@ function neatlinetime_metadata($record, $metadata, $options = array(), $timeline
                 $metadata = array($element->getElementSet()->name, $element->name);
             }
         }
+        // Avoid some useless process.
+        elseif ($metadata == 'item_date_end') {
+            return array();
+        }
     }
     return metadata($record, $metadata, $options);
 }
@@ -270,6 +274,22 @@ function neatlinetime_convert_date($date, $renderYear = null)
  */
 function neatlinetime_convert_any_date($date, $renderYear = null)
 {
+    return neatlinetime_convert_two_dates($date, null, $renderYear);
+}
+
+/**
+ * Generates an array of one or two ISO-8601 dates from two strings.
+ *
+ * @todo manage the case where the start is empty and the end is set.
+ *
+ * @see Zend_Date
+ * @param string $date
+ * @param string $dateEnd
+ * @param string renderYear Force the format of a single number as a year.
+ * @return array Array of two dates.
+ */
+function neatlinetime_convert_two_dates($date, $dateEnd, $renderYear = null)
+{
     if (empty($renderYear)) {
         $renderYear = neatlinetime_get_option('render_year');
     }
@@ -281,9 +301,16 @@ function neatlinetime_convert_any_date($date, $renderYear = null)
         return neatlinetime_convert_range_dates($dateArray, $renderYear);
     }
 
+    $dateEndArray = explode('/', $dateEnd);
+    $dateEnd = trim(reset($dateEndArray));
+
     // A single date, or a range when the two dates are years and when the
     // render is "full_year".
-    return neatlinetime_convert_single_date($dateArray[0], $renderYear);
+    if (empty($dateEnd)) {
+        return neatlinetime_convert_single_date($dateArray[0], $renderYear);
+    }
+
+    return neatlinetime_convert_range_dates(array($dateArray[0], $dateEnd), $renderYear);
 }
 
 /**

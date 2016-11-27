@@ -93,6 +93,7 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
             case 'item_title':
             case 'item_description':
             case 'item_date':
+            case 'item_date_end':
             case 'render_year':
             case 'center_date':
                 return $this->getParameter($property);

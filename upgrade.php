@@ -117,3 +117,16 @@ if (version_compare($oldVersion, '2.1.9', '<')) {
     delete_option('neatline_time_render_year');
     delete_option('neatlinetime');
 }
+
+if (version_compare($oldVersion, '2.1.10', '<')) {
+    $options = json_decode(get_option('neatline_time_defaults'), true);
+    $options['item_date_end'] = $this->_options['neatline_time_defaults']['item_date_end'];
+    set_option('neatline_time_defaults', json_encode($options));
+
+    // Update all timelines with the default "item_date_end" (empty).
+    $timelines = get_records('NeatlineTime_Timeline', array(), 0);
+    foreach ($timelines as $timeline) {
+        $timeline->setParameter('item_date_end', $this->_options['neatline_time_defaults']['item_date_end']);
+        $timeline->save();
+    }
+}
