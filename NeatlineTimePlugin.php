@@ -12,8 +12,10 @@ if (!defined('NEATLINE_TIME_FORMS_DIR')) {
     define('NEATLINE_TIME_FORMS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/forms');
 }
 
-require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
+require_once NEATLINE_TIME_PLUGIN_DIR  . '/NeatlineTimePlugin.php';
 require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
+require_once NEATLINE_TIME_PLUGIN_DIR  . '/models/NeatlineTimeTimeline.php';
+require_once NEATLINE_TIME_PLUGIN_DIR  . '/models/NeatlineTimeTimelineTable.php';
 
 /**
  * NeatlineTime plugin class
@@ -56,7 +58,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
             `center_date` date NULL,
-            `added` timestamp NOT NULL default CURRENT_TIMESTAMP,
+            `added` timestamp NOT NULL default '2000-01-01 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
             ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
@@ -130,6 +132,15 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
                 ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
                 MODIFY COLUMN `center_date` date NULL,
                 MODIFY COLUMN `added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+            ";
+
+            $this->_db->query($sql);
+        }
+
+        if (version_compare($oldversion, '2.1.2', '<')) {
+            $sql = "
+                ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
+                MODIFY COLUMN `added` timestamp NOT NULL default '2000-01-01 00:00:00'
             ";
 
             $this->_db->query($sql);

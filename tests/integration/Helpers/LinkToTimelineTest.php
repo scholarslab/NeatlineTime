@@ -9,7 +9,7 @@ class LinkToTimelineTest extends NeatlineTime_Test_AppTestCase
     /**
      * Tests whether link_to_timeline() returns the correct link for a timeline.
      *
-     * @uses link_to_timeline()
+     * @uses ::link_to_timeline
      */
     public function testLinkToTimeline()
     {
@@ -18,13 +18,8 @@ class LinkToTimelineTest extends NeatlineTime_Test_AppTestCase
 
         $this->dispatch('neatline-time/timelines/show/1');
 
-        $matcher = array(
-            'tag' => 'a',
-            'content' => $timeline->title,
-            'attributes' => array(
-                'href' => record_url($timeline)
-            )
-        );
+        $content = $timeline->title;
+        $url     = record_url($timeline);
 
         $linkDefault = link_to_timeline();
         $url = record_url($timeline);

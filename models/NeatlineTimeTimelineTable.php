@@ -5,11 +5,11 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     /**
      * Filter public/not public timelines.
      *
-     * @param Zend_Db_Select
+     * @param Omeka_Db_Select
      * @param boolean Whether to retrieve only public timelines.
      * @return void
      */
-    public function filterByPublic($select, $isPublic)
+    public function filterByPublic(Omeka_Db_Select $select, $isPublic)
     {
         $isPublic = (bool) $isPublic;
 
@@ -23,10 +23,10 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     /**
      * Filter featured/not featured timelines.
      *
-     * @param Zend_Db_Select
+     * @param Omeka_Db_Select
      * @param boolean Whether to retrieve only featured timelines.
      */
-    public function filterByFeatured($select, $isFeatured)
+    public function filterByFeatured(Omeka_Db_Select $select, $isFeatured)
     {
         $isFeatured = (bool) $isFeatured;
 
@@ -40,15 +40,15 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     /**
      * Filter for timelines created by a specific user.
      *
-     * @param Zend_Db_Select
+     * @param Omeka_Db_Select
      * @param boolean Whether to retrieve only featured timelines.
      */
-    public function filterByUser($select, $userId)
+    public function filterByUser(Omeka_Db_Select $select, $userId, $userField='creator_id')
     {
         $userId = (int) $userId;
 
         if ($userId) {
-            $select->where('neatline_time_timelines.creator_id = ?', $userId);
+            $select->where("neatline_time_timelines.$userField = ?", $userId);
         }
     }
 
