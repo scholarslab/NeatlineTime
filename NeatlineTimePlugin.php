@@ -29,10 +29,9 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'config_form',
         'define_acl',
         'define_routes',
-        'items_browse_sql',
         'public_head',
         'admin_head',
-        'exhibit_builder_page_head'
+        'exhibit_builder_page_head',
     );
 
     protected $_filters = array(
@@ -40,7 +39,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'public_navigation_main',
         'response_contexts',
         'action_contexts',
-        'exhibit_layouts'
+        'exhibit_layouts',
+        'items_browse_params',
     );
 
     /**
@@ -265,32 +265,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
-     * Hook used to alter the query for items.
-     *
-     * @param array $args
-     */
-    public function hookItemsBrowseSql($args)
-    {
-        // Filter the items_browse_sql to return only items that have a non-empty
-        // value for the DC:Date field, when using the neatlinetime-json context.
-        // Uses the ItemSearch model (models/ItemSearch.php) to add the check for
-        // a non-empty DC:Date.
-
-        $db = $this->_db;
-        $select = $args['select'];
-        $params = $args['params'];
-
-        $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
-        if ($context == 'neatlinetime-json') {
-            $search = new ItemSearch($select);
-            $newParams[0]['element_id'] = neatlinetime_get_option('item_date');
-            $newParams[0]['type'] = 'is not empty';
-            $search->advanced($newParams);
-        }
-
-    }
-
-    /**
      * Shows plugin configuration page.
      *
      * @return void
@@ -485,6 +459,31 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'description' => __('Embed a NeatlineTime timeline.')
         );
         return $layouts;
+    }
+
+    /**
+     * Filter items browse params.
+     *
+     * @param array $params
+     * @return array
+     */
+    public function filterItemsBrowseParams($params)
+    {
+        // Filter the items to return only items that have a non-empty value for
+        // the DC:Date or the specified field when using the neatlinetime-json
+        // context.
+        $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
+        if ($context != 'neatlinetime-json') {
+            return $params;
+        }
+
+        $elementId = neatlinetime_get_option('item_date');
+        $params['advanced'][] = array(
+            'joiner' => 'and',
+            'element_id' => $elementId,
+            'type' =>'is not empty',
+        );
+        return $params;
     }
 
     protected function _setDefaultOptions()
