@@ -1,6 +1,6 @@
 <?php
 /**
- * The shared neatlinetime-json browse view for Items
+ * The shared neatlinetime-json browse view for Items.
  */
 
 $neatlineTimeEvents = array();
@@ -9,7 +9,7 @@ foreach ($items as $item) {
     $itemLink = record_url($item);
     $itemDescription =  neatlinetime_get_item_text('item_description', array('snippet' => '200'), $item);
 
-    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true), $item);
+    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true, 'no_filter' => true), $item);
 
     $fileUrl = null;
     if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
@@ -52,4 +52,3 @@ $neatlineTimeArray['events'] = $neatlineTimeEvents;
 $neatlinetimeJson = json_encode($neatlineTimeArray);
 
 echo $neatlinetimeJson;
-
