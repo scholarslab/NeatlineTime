@@ -55,7 +55,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
             'description' => $timeline->description,
             'public' => $timeline->public,
             'featured' => $timeline->featured,
-            'center_date' => $timeline->center_date,
+            'center_date' => $timeline->getParameter('center_date'),
         ));
         $this->view->form = $form;
         parent::editAction();

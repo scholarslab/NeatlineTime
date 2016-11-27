@@ -67,7 +67,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             `owner_id` INT(10) UNSIGNED NOT NULL,
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
-            `center_date` date NULL,
             `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL,
             `added` timestamp NOT NULL default '2000-01-01 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,

@@ -10,7 +10,6 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     public $owner_id = 0;
     public $public = 0;
     public $featured = 0;
-    public $center_date;
     public $parameters;
     public $added;
     public $modified;
@@ -89,6 +88,8 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
                 return $user
                     ? $user->username
                     : __('Anonymous');
+            case 'center_date':
+                return $this->getParameter('center_date');
             case 'parameters':
                 return $this->getParameters();
             default:
@@ -158,7 +159,8 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
         }
 
         // This filter move all parameters inside 'parameters' of the record.
-        $parameters = array_intersect_keys($post, array(
+        $parameters = array_intersect_key($post, array(
+            'center_date' => null,
         ));
         $this->setParameters($parameters);
 
@@ -221,11 +223,19 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
      */
     protected function _validate()
     {
-        $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
-        if ($this->center_date == '') {
-            $this->center_date = null;
-        } elseif (isset($this->center_date) && !$validator->isValid($this->center_date)) {
-            $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
+        $centerDate = $this->getParameter('center_date');
+        if (empty($centerDate)) {
+            $this->setParameter('center_date', null);
+        }
+        // Validate the date.
+        else {
+            $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
+            if (!$validator->isValid($centerDate)) {
+                $this->addError('center_date', __('The center date must be in the format YYYY-MM-DD.'));
+            }
+            else {
+                $this->setParameter('center_date', $centerDate);
+            }
         }
     }
 }

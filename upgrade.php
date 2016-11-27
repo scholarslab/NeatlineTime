@@ -76,3 +76,17 @@ if (version_compare($oldVersion, '2.1.6', '<')) {
     ";
     $db->query($sql);
 }
+
+if (version_compare($oldVersion, '2.1.7', '<')) {
+    // Copy all the "center_date" values inside the parameters.
+    $sql = "UPDATE `{$db->NeatlineTime_Timeline}`
+    SET `parameters` = CONCAT('{\"center_date\":\"', `center_date`, '\"}')
+    WHERE `center_date` IS NOT NULL AND `center_date` != '0000-00-00';";
+    $db->query($sql);
+
+    $sql = "
+    ALTER TABLE `{$db->NeatlineTime_Timeline}`
+    DROP `center_date`
+    ";
+    $db->query($sql);
+}
