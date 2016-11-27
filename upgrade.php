@@ -169,3 +169,23 @@ if (version_compare($oldVersion, '2.2.1', '<')) {
         }
     }
 }
+
+if (version_compare($oldVersion, '2.2.2', '<')) {
+    // Replace null from title and description by an empty string.
+    $sql = "UPDATE `{$db->NeatlineTime_Timeline}`
+    SET `title` = ''
+    WHERE `title` IS NULL;";
+    $db->query($sql);
+    $sql = "UPDATE `{$db->NeatlineTime_Timeline}`
+    SET `description` = ''
+    WHERE `description` IS NULL;";
+    $db->query($sql);
+
+    $sql = "
+    ALTER TABLE `{$db->NeatlineTime_Timeline}`
+    CHANGE `title` `title` TINYTEXT COLLATE utf8_unicode_ci NOT NULL,
+    CHANGE `description` `description` TEXT COLLATE utf8_unicode_ci NOT NULL,
+    CHANGE `owner_id` `owner_id` INT(10) UNSIGNED NOT NULL DEFAULT '0'
+    ";
+    $db->query($sql);
+}

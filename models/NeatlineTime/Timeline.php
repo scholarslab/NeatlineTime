@@ -265,6 +265,12 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
      */
     protected function beforeSave($args)
     {
+        if (is_null($this->title)) {
+            $this->title = '';
+        }
+        if (is_null($this->description)) {
+            $this->description = '';
+        }
         if (is_null($this->owner_id)) {
             $this->owner_id = 0;
         }

@@ -68,9 +68,9 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     {
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
             `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `owner_id` INT(10) UNSIGNED NOT NULL,
+            `title` TINYTEXT COLLATE utf8_unicode_ci NOT NULL,
+            `description` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            `owner_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
             `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL,
