@@ -15,11 +15,8 @@
  */
 function timeline($fieldname, $options = array(), $timeline = null)
 {
-
     $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
-
     return metadata($timeline, $fieldname, $options);
-
 }
 
 /**
@@ -32,16 +29,12 @@ function timeline($fieldname, $options = array(), $timeline = null)
  * @param NeatlineTime_Timeline|null
  * @return string HTML
  * @deprecated
- **/
+ */
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
-
     $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
-
     $text = $text ? $text : $timeline->title;
-
     return link_to($timeline, $action, $text, $props);
-
 }
 
 /**
@@ -68,11 +61,11 @@ function queue_timeline_assets()
     // Check useInternalJavascripts in config.ini.
     $config = Zend_Registry::get('bootstrap')->getResource('Config');
     $useInternalJs = isset($config->theme->useInternalJavascripts)
-        ? (bool) $config->theme->useInternalJavascripts
-        : false;
+    ? (bool) $config->theme->useInternalJavascripts
+    : false;
     $useInternalJs = isset($config->theme->useInternalAssets)
-        ? (bool) $config->theme->useInternalAssets
-        : $useInternalJs;
+    ? (bool) $config->theme->useInternalAssets
+    : $useInternalJs;
 
     if ($useInternalJs) {
         $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
@@ -118,20 +111,21 @@ function neatlinetime_timeline_id($timeline = null)
  * @param int Maximum number of random featured timelines to display.
  * @return string HTML
  */
-function neatlinetime_display_random_featured_timelines($num = 1) {
-  $html = '';
+function neatlinetime_display_random_featured_timelines($num = 1)
+{
+    $html = '';
 
-  $timelines = get_db()->getTable('NeatlineTime_Timeline')->findBy(array('sort_field' => 'random', 'featured' => 1), $num);
+    $timelines = get_db()->getTable('NeatlineTime_Timeline')->findBy(array('sort_field' => 'random', 'featured' => 1), $num);
 
-  if ($timelines) {
-    foreach ($timelines as $timeline) {
-      $html .= '<h3>' . link_to_timeline(null, array(), 'show', $timeline) . '</h3>'
-        . '<div class="description timeline-description">'
-        . timeline('description', array('snippet' => 150), $timeline)
-        . '</div>';
+    if ($timelines) {
+        foreach ($timelines as $timeline) {
+            $html .= '<h3>' . link_to_timeline(null, array(), 'show', $timeline) . '</h3>'
+                . '<div class="description timeline-description">'
+                    . timeline('description', array('snippet' => 150), $timeline)
+                    . '</div>';
+        }
+        return $html;
     }
-    return $html;
-  }
 }
 
 /**
@@ -143,7 +137,8 @@ function neatlinetime_display_random_featured_timelines($num = 1) {
  *
  * @return string
  */
-function neatlinetime_item_class($item = null) {
+function neatlinetime_item_class($item = null)
+{
     $classArray = array('item');
 
     if ($itemTypeName = metadata($item, 'item_type_name')) {
@@ -167,31 +162,31 @@ function neatlinetime_item_class($item = null) {
  * @see Zend_Date
  * @return string ISO-8601 date
  */
-function neatlinetime_convert_date($date) {
-  if (preg_match('/^\d{4}$/', $date) > 0) {
-      return false;
-  }
+function neatlinetime_convert_date($date)
+{
+    if (preg_match('/^\d{4}$/', $date) > 0) {
+        return false;
+    }
 
-  $newDate = null;
-  try {
-    $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
-  } catch (Exception $e) {
-      try {
-          $newDate = new Zend_Date($date);
-      } catch (Exception $e) {
-      }
-  }
+    $newDate = null;
+    try {
+        $newDate = new Zend_Date($date, Zend_Date::ISO_8601);
+    } catch (Exception $e) {
+        try {
+            $newDate = new Zend_Date($date);
+        } catch (Exception $e) {
+        }
+    }
 
-  if (is_null($newDate)) {
-      $date_out = false;
-  } else {
-      $date_out = $newDate->get('c');
-      $date_out = preg_replace('/^(-?)(\d{3}-)/', '${1}0\2',   $date_out);
-      $date_out = preg_replace('/^(-?)(\d{2}-)/', '${1}00\2',  $date_out);
-      $date_out = preg_replace('/^(-?)(\d{1}-)/', '${1}000\2', $date_out);
-  }
-  return $date_out;
-
+    if (is_null($newDate)) {
+        $date_out = false;
+    } else {
+        $date_out = $newDate->get('c');
+        $date_out = preg_replace('/^(-?)(\d{3}-)/', '${1}0\2',   $date_out);
+        $date_out = preg_replace('/^(-?)(\d{2}-)/', '${1}00\2',  $date_out);
+        $date_out = preg_replace('/^(-?)(\d{1}-)/', '${1}000\2', $date_out);
+    }
+    return $date_out;
 }
 
 /**
@@ -200,16 +195,14 @@ function neatlinetime_convert_date($date) {
  * @param string The NeatlineTime option name.
  * @return string
  */
-function neatlinetime_get_option($name = null) {
-
-  if ($name) {
-    $options = get_option('neatlinetime');
-    $options = unserialize($options);
-    return $options[$name];
-  }
-
-  return false;
-
+function neatlinetime_get_option($name = null)
+{
+    if ($name) {
+        $options = get_option('neatlinetime');
+        $options = unserialize($options);
+        return $options[$name];
+    }
+    return false;
 }
 
 /**
@@ -220,10 +213,8 @@ function neatlinetime_get_option($name = null) {
  * @param Item
  * @return string|array|null
  */
-function neatlinetime_get_item_text($optionName, $options = array(), $item = null) {
-
+function neatlinetime_get_item_text($optionName, $options = array(), $item = null)
+{
     $element = get_db()->getTable('Element')->find(neatlinetime_get_option($optionName));
-
     return metadata($item, array($element->getElementSet()->name, $element->name), $options);
-
 }

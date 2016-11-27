@@ -1,14 +1,11 @@
 <?php
 
-if (!defined('NEATLINE_TIME_PLUGIN_DIR')) {
-    define('NEATLINE_TIME_PLUGIN_DIR', dirname(__FILE__));
-}
-
 if (!defined('NEATLINE_TIME_HELPERS_DIR')) {
-    define('NEATLINE_TIME_HELPERS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/helpers');
+    define('NEATLINE_TIME_HELPERS_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR
+        . 'libraries' . DIRECTORY_SEPARATOR
+        . 'NeatlineTime');
 }
-
-require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
+require_once NEATLINE_TIME_HELPERS_DIR . DIRECTORY_SEPARATOR . 'Functions.php';
 
 /**
  * NeatlineTime plugin class
