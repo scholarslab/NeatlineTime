@@ -5,7 +5,6 @@
 
 class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
-
     private $_dbHelper;
 
     /**
@@ -15,7 +14,6 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
      */
     public function setUp()
     {
-
         parent::setUp();
 
         $this->user = $this->db->getTable('User')->find(1);
@@ -26,7 +24,6 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $plugin_helper->setUp('NeatlineTime');
 
         Omeka_Test_Resource_Db::$runInstaller = true;
-
     }
 
     /**
@@ -42,6 +39,9 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
             $data['public'] = '1';
             $data['featured'] = '1';
             $data['query'] = array('range' => '1');
+            $data['parameters'] = array(
+                'render_year' => 'skip',
+            );
         }
 
         $data['owner_id'] = $user ? $user->id : $this->user->id;
@@ -55,5 +55,4 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $timeline->save();
         return $timeline;
     }
-
 }

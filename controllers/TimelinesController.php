@@ -52,13 +52,15 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
 
         $form = new NeatlineTime_Form_TimelineAdd;
-        $form->setDefaults(array(
+        // Set the existings values.
+        $parameters = $timeline->getParameters();
+        $existing = array(
             'title' => $timeline->title,
             'description' => $timeline->description,
             'public' => $timeline->public,
             'featured' => $timeline->featured,
-            'center_date' => $timeline->getParameter('center_date'),
-        ));
+        );
+        $form->setDefaults(array_merge($parameters, $existing));
         $this->view->form = $form;
         parent::editAction();
     }

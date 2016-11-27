@@ -88,13 +88,29 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
                 return $user
                     ? $user->username
                     : __('Anonymous');
-            case 'center_date':
-                return $this->getParameter('center_date');
             case 'parameters':
                 return $this->getParameters();
+            case 'item_title':
+            case 'item_description':
+            case 'item_date':
+            case 'render_year':
+            case 'center_date':
+                return $this->getParameter($property);
             default:
                 return parent::getProperty($property);
         }
+    }
+
+    /**
+     * Get the default options.
+     *
+     * @return array
+     */
+    public function getDefaultOptions()
+    {
+        // For testing, the defaults should be checked if they are an array.
+        $defaults = get_option('neatline_time_defaults');
+        return is_array($defaults) ? $defaults : json_decode($defaults, true);
     }
 
     /**
@@ -159,9 +175,8 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
         }
 
         // This filter move all parameters inside 'parameters' of the record.
-        $parameters = array_intersect_key($post, array(
-            'center_date' => null,
-        ));
+        $defaults = $this->getDefaultOptions();
+        $parameters = array_intersect_key($post, $defaults);
         $this->setParameters($parameters);
 
         return $post;
@@ -204,7 +219,10 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
             $this->query = serialize($query);
         }
 
+        // Be sure to set defaults parameters to simplify queries.
         $parameters = $this->getParameters();
+        $defaults = $this->getDefaultOptions();
+        $parameters = array_merge($defaults, $parameters);
         $this->parameters = version_compare(phpversion(), '5.4.0', '<')
             ? json_encode($parameters)
             : json_encode($parameters, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

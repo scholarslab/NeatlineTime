@@ -18,7 +18,7 @@ echo head($head);
     $libraryPartial = $library == 'simile' ? '_timeline' : '_timeline_' . $library;
     echo $this->partial('timelines/' . $libraryPartial . '.php',
         array(
-            'center_date' => metadata($neatline_time_timeline, 'center_date'),
+            'timeline' => $neatline_time_timeline,
     )); ?>
 
 <?php
@@ -52,4 +52,4 @@ echo item_search_filters($query);
     }
   });
 </script>
-<?php echo foot(); ?>
+<?php echo foot();

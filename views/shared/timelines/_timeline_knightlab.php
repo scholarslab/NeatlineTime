@@ -4,16 +4,16 @@
  */
 
  // Get the timeline
- $timeline = get_current_record('neatline_time_timeline');
+if (empty($timeline)) $timeline = get_current_record('neatline_time_timeline');
 ?>
 
 <div id="timeline-<?php echo $timeline->id; ?>" style="width: 100%; height: 600px"></div>
 
 <script>
   jQuery(document).ready(function($) {
-        var centerDate = <?php echo json_encode($center_date); ?>;
+        var centerDate = <?php echo json_encode($timeline->getProperty('center_date')); ?>;
         // get the location for the json data
-        var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
+        var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline($timeline); ?>';
 
         $.getJSON(jsonTimelineUri, function(data) {
           // console.log('data ', data);

@@ -5,13 +5,17 @@
  * @todo Manage the case of a range where the start is unknown.
  */
 
+$timeline = $neatline_time_timeline;
+if (empty($timeline)) {
+    return;
+}
+
 $neatlineTimeEvents = array();
 foreach ($items as $item) {
-    $itemTitle = strip_formatting(neatlinetime_get_item_text('item_title', array(), $item));
+    $itemTitle = strip_formatting(neatlinetime_metadata($item, 'item_title', array(), $timeline));
     $itemLink = record_url($item);
-    $itemDescription =  neatlinetime_get_item_text('item_description', array('snippet' => '200'), $item);
-
-    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true, 'no_filter' => true), $item);
+    $itemDescription =  neatlinetime_metadata($item, 'item_description', array('snippet' => '200'), $timeline);
+    $itemDates = neatlinetime_metadata($item, 'item_date', array('all' => true, 'no_filter' => true), $timeline);
 
     $fileUrl = null;
     if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
@@ -21,7 +25,7 @@ foreach ($items as $item) {
     if (!empty($itemDates)) {
         foreach ($itemDates as $itemDate) {
             $neatlineTimeEvent = array();
-            list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate);
+            list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate, $timeline->getProperty('render_year'));
             if ($dateStart) {
                 $neatlineTimeEvent['start'] = $dateStart;
 
@@ -48,6 +52,8 @@ $neatlineTimeArray = array();
 $neatlineTimeArray['dateTimeFormat'] = "iso8601";
 $neatlineTimeArray['events'] = $neatlineTimeEvents;
 
-$neatlinetimeJson = json_encode($neatlineTimeArray);
+$neatlinetimeJson = version_compare(phpversion(), '5.4.0', '<')
+    ? json_encode($neatlineTimeArray)
+    : json_encode($neatlineTimeArray, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
 echo $neatlinetimeJson;

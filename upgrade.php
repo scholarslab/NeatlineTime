@@ -2,7 +2,9 @@
 // Earlier than version 1.1.
 if (version_compare($oldVersion, '1.1', '<')) {
     if (!get_option('neatlinetime')) {
-        $this->_setDefaultOptions();
+        $options = array('item_title' => 50, 'item_description' => 41, 'item_date' => 40);
+        $this->_options['neatlinetime'] = $options;
+        set_option('neatlinetime', serialize($options));
     }
 }
 
@@ -63,7 +65,7 @@ if (version_compare($oldVersion, '2.1.4', '<')) {
 }
 
 if (version_compare($oldVersion, '2.1.5', '<')) {
-    set_option('neatline_time_render_year', $this->_options['neatline_time_render_year']);
+    set_option('neatline_time_render_year', $this->_options['neatline_time_defaults']['render_year']);
 }
 
 if (version_compare($oldVersion, '2.1.6', '<')) {
@@ -93,4 +95,25 @@ if (version_compare($oldVersion, '2.1.7', '<')) {
 
 if (version_compare($oldVersion, '2.1.8', '<')) {
     set_option('neatline_time_defaults', json_encode($this->_options['neatline_time_defaults']));
+}
+
+if (version_compare($oldVersion, '2.1.9', '<')) {
+    // Set default options inside timelines.
+    $options = unserialize(get_option('neatlinetime'));
+    $options['render_year'] = get_option('neatline_time_render_year') ?: $this->_options['neatline_time_defaults']['render_year'];
+    $options['center_date'] = $this->_options['neatline_time_defaults']['center_date'];
+    set_option('neatline_time_defaults', json_encode($options));
+
+    // Update all timelines.
+    $timelines = get_records('NeatlineTime_Timeline', array(), 0);
+    foreach ($timelines as $timeline) {
+        $parameters = $options;
+        // Keep the center date that may exist.
+        $parameters['center_date'] = $timeline->getParameter('center_date');
+        $timeline->setParameters($parameters);
+        $timeline->save();
+    }
+
+    delete_option('neatline_time_render_year');
+    delete_option('neatlinetime');
 }

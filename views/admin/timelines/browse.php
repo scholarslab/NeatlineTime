@@ -3,7 +3,7 @@
  * The browse view for the Timelines administrative panel.
  */
 
-$head = array('bodyclass' => 'timelines primary', 
+$head = array('bodyclass' => 'timelines primary',
               'title' => html_escape(__('Neatline Time | Browse Timelines')));
 echo head($head);
 ?>
@@ -58,4 +58,4 @@ echo head($head);
 <?php else : ?>
     <p><?php echo __('There are no timelines.'); ?> <?php if (is_allowed('NeatlineTime_Timelines', 'add')): ?><a href="<?php echo html_escape(url('neatline-time/timelines/add')); ?>"><?php echo __('Add a Timeline'); ?>.</a><?php endif; ?></p>
 <?php endif; ?>
-<?php echo foot(); ?>
+<?php echo foot();

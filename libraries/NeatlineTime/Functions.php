@@ -15,7 +15,7 @@
  */
 function timeline($fieldname, $options = array(), $timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
+    $timeline = $timeline ?: get_current_record('neatline_time_timeline');
     return metadata($timeline, $fieldname, $options);
 }
 
@@ -32,8 +32,8 @@ function timeline($fieldname, $options = array(), $timeline = null)
  */
 function link_to_timeline($text = null, $props = array(), $action = 'show', $timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
-    $text = $text ? $text : $timeline->title;
+    $timeline = $timeline ?: get_current_record('neatline_time_timeline');
+    $text = $text ?: $timeline->title;
     return link_to($timeline, $action, $text, $props);
 }
 
@@ -80,6 +80,44 @@ function queue_timeline_assets()
 }
 
 /**
+ * Returns the value of an element set in the NeatlineTime config options.
+ *
+ * @param Record $record
+ * @param string The NeatlineTime option name.
+ * @param array An array of options.
+ * @return string|array|null
+ */
+/**
+ * Get metadata for a record according to the parameters of a timeline.
+ *
+ * @uses Omeka_View_Helper_Metadata::metadata()
+ * @param Omeka_Record_AbstractRecord|string $record The record to get metadata
+ * for. If an Omeka_Record_AbstractRecord, that record is used. If a string,
+ * that string is used to look up a record in the current view.
+ * @param mixed $metadata The metadata to get. If an array is given, this is
+ * Element metadata, identified by array('Element Set', 'Element'). If a string,
+ * the metadata is a record-specific "property."
+ * @param array $options Options for getting the metadata.
+ * @param NeatlineTime_Timeline|null $timeline The timeline where the parameters
+ * are set. If null, use the current timeline.
+ * @return mixed
+ */
+function neatlinetime_metadata($record, $metadata, $options = array(), $timeline = null)
+{
+    $timeline = $timeline ?: get_current_record('neatline_time_timeline');
+    if (is_string($metadata)) {
+        $elementId = $timeline->getProperty($metadata);
+        if (!empty($elementId)) {
+            $element = $record->getElementById($elementId);
+            if (!empty($element)) {
+                $metadata = array($element->getElementSet()->name, $element->name);
+            }
+        }
+    }
+    return metadata($record, $metadata, $options);
+}
+
+/**
  * Returns the URI for a timeline's json output.
  *
  * @since 1.0
@@ -88,7 +126,7 @@ function queue_timeline_assets()
  */
 function neatlinetime_json_uri_for_timeline($timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
+    $timeline = $timeline ?: get_current_record('neatline_time_timeline');
     return record_url($timeline, 'items') . '?output=neatlinetime-json';
 }
 
@@ -101,7 +139,7 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
  */
 function neatlinetime_timeline_id($timeline = null)
 {
-    $timeline = $timeline ? $timeline : get_current_record('neatline_time_timeline');
+    $timeline = $timeline ?: get_current_record('neatline_time_timeline');
     return text_to_id(html_escape($timeline->title) . ' ' . $timeline->id, 'neatlinetime');
 }
 
@@ -161,14 +199,13 @@ function neatlinetime_item_class($item = null)
  *
  * @see Zend_Date
  * @param string $date
- * @param string renderYear Used only when a range is set to force the format of
- * a single number.
+ * @param string renderYear Force the format of a single number as a year.
  * @return string ISO-8601 date
  */
 function neatlinetime_convert_date($date, $renderYear = null)
 {
-    if (is_null($renderYear)) {
-        $renderYear = get_option('neatline_time_render_year');
+    if (empty($renderYear)) {
+        $renderYear = neatlinetime_get_option('render_year');
     }
 
     // Check if the date is a single number.
@@ -228,33 +265,41 @@ function neatlinetime_convert_date($date, $renderYear = null)
  *
  * @see Zend_Date
  * @param string $date
- * @return array $dateArray
+ * @param string renderYear Force the format of a single number as a year.
+ * @return array Array of two dates.
  */
-function neatlinetime_convert_any_date($date)
+function neatlinetime_convert_any_date($date, $renderYear = null)
 {
+    if (empty($renderYear)) {
+        $renderYear = neatlinetime_get_option('render_year');
+    }
+
     $dateArray = array_map('trim', explode('/', $date));
 
     // A range of dates.
     if (count($dateArray) == 2) {
-        return neatlinetime_convert_range_date($dateArray);
+        return neatlinetime_convert_range_dates($dateArray, $renderYear);
     }
 
     // A single date, or a range when the two dates are years and when the
     // render is "full_year".
-    return neatlinetime_convert_single_date($dateArray[0]);
+    return neatlinetime_convert_single_date($dateArray[0], $renderYear);
 }
 
 /**
  * Generates an ISO-8601 date from a date string, with an exception for
- * "full_year" render.
+ * "full_year" render, that returns two dates.
  *
  * @see Zend_Date
- * @param array $dateArray
- * @return array $dateArray
+ * @param string $date
+ * @param string renderYear Force the format of a single number as a year.
+ * @return array Array of two dates.
  */
-function neatlinetime_convert_single_date($date)
+function neatlinetime_convert_single_date($date, $renderYear = null)
 {
-    $renderYear = get_option('neatline_time_render_year');
+    if (empty($renderYear)) {
+        $renderYear = neatlinetime_get_option('render_year');
+    }
 
     // Manage a special case for render "full_year" with a single number.
     if ($renderYear == 'full_year' && preg_match('/^-?\d{1,4}$/', $date)) {
@@ -274,18 +319,22 @@ function neatlinetime_convert_single_date($date)
  * By construction, no "full_year" is returned.
  *
  * @see Zend_Date
- * @param array $dateArray
- * @return array $dateArray
+ * @param array $dates
+ * @param string renderYear Force the format of a single number as a year.
+ * @return array $dates
  */
-function neatlinetime_convert_range_date($dateArray)
+function neatlinetime_convert_range_dates($dates, $renderYear = null)
 {
-    if (!is_array($dateArray)) {
+    if (!is_array($dates)) {
         return array(null, null);
     }
 
-    $renderYear = get_option('neatline_time_render_year');
-    $dateStart = $dateArray[0];
-    $dateEnd = $dateArray[1];
+    if (empty($renderYear)) {
+        $renderYear = neatlinetime_get_option('render_year');
+    }
+
+    $dateStart = $dates[0];
+    $dateEnd = $dates[1];
 
     // Check if the date are two numbers (years).
     if ($renderYear == 'skip') {
@@ -310,8 +359,8 @@ function neatlinetime_convert_range_date($dateArray)
     }
     // The start is a year.
     elseif (!preg_match('/^-?\d{1,4}$/', $dateEnd)) {
-        $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
         // Force the format of the start.
+        $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
         if ($renderYear == 'full_year') $renderYear = 'january_1';
         $dateStartValue = neatlinetime_convert_date($dateStart, $renderYear);
         return array($dateStartValue, $dateEndValue);
@@ -354,15 +403,17 @@ function neatlinetime_convert_range_date($dateArray)
 /**
  * Gets the value for an option set in the neatlinetime option array.
  *
+ * Useless now because each timeline has parameters available via getProperty().
+ *
  * @param string The NeatlineTime option name.
  * @return string
  */
 function neatlinetime_get_option($name = null)
 {
     if ($name) {
-        $options = get_option('neatlinetime');
-        $options = unserialize($options);
-        return $options[$name];
+        $options = get_option('neatline_time_defaults');
+        $options = json_decode($options, true);
+        return isset($options[$name]) ? $options[$name] : null;
     }
     return false;
 }
@@ -370,6 +421,8 @@ function neatlinetime_get_option($name = null)
 /**
  * Returns the value of an element set in the NeatlineTime config options.
  *
+ * @deprecated since 2.1.9
+ * @see neatlinetime_metadata()
  * @param string The NeatlineTime option name.
  * @param array An array of options.
  * @param Item

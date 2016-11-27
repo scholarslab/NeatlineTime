@@ -40,13 +40,16 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      * @var array Options and their default values.
      */
     protected $_options = array(
-        'neatlinetime' => null,
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
         'neatline_time_defaults' => array(
+            // Numbers are the id of elements of a standard install of Omeka.
+            'item_title' => 50,
+            'item_description' => 41,
+            'item_date' => 40,
+            'render_year' => 'skip',
             'center_date' => '',
         ),
-        'neatline_time_render_year' => 'skip',
     );
 
     /**
@@ -82,7 +85,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         $this->_db->query($sqlNeatlineTimeline);
 
         $this->_options['neatline_time_defaults'] = json_encode($this->_options['neatline_time_defaults']);
-        $this->_setDefaultOptions();
         $this->_installOptions();
     }
 
@@ -109,6 +111,10 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         `{$this->_db->prefix}neatline_time_timelines`";
 
         $this->_db->query($sql);
+
+        // Remove old options.
+        delete_option('neatlinetime');
+        delete_option('neatline_time_render_year');
 
         $this->_uninstallOptions();
     }
@@ -204,10 +210,15 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookConfigForm($args)
     {
+        $defaults = get_option('neatline_time_defaults');
+        $defaults = json_decode($defaults, true) ?: $this->_options['neatline_time_defaults'];
+
         $view = $args['view'];
         echo $view->partial(
             'plugins/neatline-time-config-form.php',
-            array());
+            array(
+                'defaults' => $defaults,
+            ));
     }
 
     /**
@@ -218,14 +229,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     public function hookConfig($args)
     {
         $post = $args['post'];
-
-        // Set the specified values, else the standard values of Omeka.
-        $options = array();
-        $options['item_title'] = isset($post['item_title']) ? (integer) $post['item_title'] : 50;
-        $options['item_description'] = isset($post['item_description']) ? (integer) $post['item_description'] : 41;
-        $options['item_date'] = isset($post['item_date']) ? (integer) $post['item_date'] : 40;
-        $post['neatlinetime'] = serialize($options);
-
         foreach ($this->_options as $optionKey => $optionValue) {
             if (isset($post[$optionKey])) {
                 if (is_array($optionValue)) {
@@ -402,29 +405,19 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         if ($context != 'neatlinetime-json') {
             return $params;
         }
-
-        $elementId = neatlinetime_get_option('item_date');
+        $id = (integer) Zend_Controller_Front::getInstance()->getRequest()->getParam('id');
+        if (empty($id)) {
+            return $params;
+        }
+        $timeline = $this->_db->getTable('NeatlineTime_Timeline')->find($id);
+        if (empty($timeline)) {
+            return $params;
+        }
         $params['advanced'][] = array(
             'joiner' => 'and',
-            'element_id' => $elementId,
+            'element_id' => $timeline->getProperty('item_date'),
             'type' =>'is not empty',
         );
         return $params;
-    }
-
-    protected function _setDefaultOptions()
-    {
-        $options = array();
-        $fields = array('Title', 'Description', 'Date');
-
-        foreach ($fields as $field) {
-            $key = 'item_'.strtolower($field);
-            $element = $this->_db->getTable('Element')->findByElementSetNameAndElementName("Dublin Core", "$field");
-            $options[$key] = $element->id;
-        }
-
-        $options = serialize($options);
-        $this->_options['neatlinetime'] = $options;
-        set_option('neatlinetime', $options);
     }
 }

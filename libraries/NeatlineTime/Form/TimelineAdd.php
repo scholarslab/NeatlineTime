@@ -13,35 +13,65 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
 
         // Title
         $this->addElement('text', 'title', array(
-            'label'       => __('Title'),
+            'label' => __('Title'),
             'description' => __('A title for your timeline.')
         ));
 
         // Description
         $this->addElement('textarea', 'description', array(
-            'label'       => __('Description'),
+            'label' => __('Description'),
             'description' => __('A description for your timeline.'),
-            'attribs'     => array('class' => 'html-editor', 'rows' => '15')
+            'attribs' => array('class' => 'html-editor', 'rows' => '15')
         ));
 
         // Public/Not Public
-        $this->addElement('select', 'public', array(
-            'label'        => __('Status'),
-            'description'  => __('Whether the timeline is public or not.'),
-            'multiOptions' => array('0' => 'Not Public', '1' => 'Public')
+        $this->addElement('checkbox', 'public', array(
+            'label' => __('Status'),
+            'description' => __('Whether the timeline is public or not.'),
+            'value' => false,
         ));
 
         // Featured/Not Featured
-        $this->addElement('select', 'featured', array(
-            'label'        => __('Featured'),
-            'description'  => __('Whether the timeline is featured or not.'),
-            'multiOptions' => array('0' => 'Not Featured', '1' => 'Featured')
+        $this->addElement('checkbox', 'featured', array(
+            'label' => __('Featured'),
+            'description' => __('Whether the timeline is featured or not.'),
+            'value' => false,
         ));
 
+        $values = get_table_options('Element', null, array(
+            'record_types' => array('Item', 'All'),
+            'sort' => 'alphaBySet',
+        ));
+        unset($values['']);
+        foreach (array(
+                'item_title' => array(__('Item Title')),
+                'item_description' => array(__('Item Description')),
+                'item_date' => array(__('Item Date')),
+            ) as $parameterName => $parameterOptions) {
+            $this->addElement('select', $parameterName, array(
+                'label' => $parameterOptions[0],
+                'multiOptions' => $values,
+                'value' => false,
+            ));
+        }
 
-        // Set the center date for the timeline
+        // Set fhe mode to render a year.
+        $values = array(
+            'skip' => __('Skip the record'),
+            'january_1' => __('Pick first January'),
+            'july_1' => __('Pick first July'),
+            'full_year' => __('Mark entire year'),
+        );
+        $this->addElement('radio', 'render_year', array(
+            'label' => __('Render Year'),
+            'description' => __('When a date is a single year, like "1066", the value should be interpreted to be displayed on the timeline.'),
+            'multiOptions' => $values,
+            'value' => false,
+        ));
+
+        // Set the center date for the timeline.
         $this->addElement('text', 'center_date', array(
-            'label'       => __('Center Date'),
+            'label' => __('Center Date'),
             'description' => __('Set the center date of your timeline. Please use format YYYY-MM-DD.'),
             'validator' => array('date')
         ));
@@ -66,6 +96,10 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
         ));
         $this->addDisplayGroup(
             array(
+                'item_title',
+                'item_description',
+                'item_date',
+                'render_year',
                 'center_date',
             ),
             'timeline_parameters',

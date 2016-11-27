@@ -2,7 +2,7 @@
 /**
  * The public browse view for Timelines.
  */
- 
+
 $head = array('bodyclass' => 'timelines primary',
               'title' => html_escape(__('Browse Timelines')));
 echo head($head);
@@ -24,4 +24,4 @@ echo head($head);
     <p><?php echo __('You have no timelines.'); ?></p>
     <?php endif; ?>
 </div>
-<?php echo foot(); ?>
+<?php echo foot();

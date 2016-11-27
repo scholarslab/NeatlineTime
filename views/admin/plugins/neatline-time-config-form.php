@@ -26,15 +26,19 @@ unset($elements['']);
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-neatline-time-elements"><legend><?php echo __('Elements'); ?></legend>
+<fieldset id="fieldset-neatline-time-default"><legend><?php echo __('Default Parameters'); ?></legend>
+    <p class="explanation">
+        <?php echo __('These parameters are used as defaults for all timelines.'); ?>
+        <?php echo __('They can be overridden in the form of each timeline.'); ?>
+    </p>
     <div class="field">
         <div class="two columns alpha">
-            <?php echo $this->formLabel('item_title', __('Item Title')); ?>
+            <?php echo $this->formLabel('neatline_time_defaults[item_title]', __('Item Title')); ?>
         </div>
         <div class='inputs five columns omega'>
             <?php
-                echo $this->formSelect('item_title',
-                    neatlinetime_get_option('item_title') ?: 50,
+                echo $this->formSelect('neatline_time_defaults[item_title]',
+                    $defaults['item_title'],
                     array(),
                     $elements);
             ?>
@@ -45,12 +49,12 @@ unset($elements['']);
     </div>
     <div class="field">
         <div class="two columns alpha">
-            <?php echo $this->formLabel('item_description', __('Item Description')); ?>
+            <?php echo $this->formLabel('neatline_time_defaults[item_description]', __('Item Description')); ?>
         </div>
         <div class='inputs five columns omega'>
             <?php
-                echo $this->formSelect('item_description',
-                    neatlinetime_get_option('item_description') ?: 41,
+                echo $this->formSelect('neatline_time_defaults[item_description]',
+                    $defaults['item_description'],
                     array(),
                     $elements);
             ?>
@@ -61,12 +65,12 @@ unset($elements['']);
     </div>
     <div class="field">
         <div class="two columns alpha">
-            <?php echo $this->formLabel('item_date', __('Item Date')); ?>
+            <?php echo $this->formLabel('neatline_time_defaults[item_date]', __('Item Date')); ?>
         </div>
         <div class='inputs five columns omega'>
             <?php
-                echo $this->formSelect('item_date',
-                    neatlinetime_get_option('item_date') ?: 40,
+                echo $this->formSelect('neatline_time_defaults[item_date]',
+                    $defaults['item_date'],
                     array(),
                     $elements);
             ?>
@@ -77,7 +81,7 @@ unset($elements['']);
     </div>
     <div class="field">
         <div class="two columns alpha">
-            <?php echo $this->formLabel('neatline_time_render_year', __('Render Year')); ?>
+            <?php echo $this->formLabel('neatline_time_defaults[render_year]', __('Render Year')); ?>
         </div>
         <div class='inputs five columns omega'>
             <?php
@@ -87,26 +91,25 @@ unset($elements['']);
                 'july_1' => __('Pick first July'),
                 'full_year' => __('Mark entire year'),
             );
-            echo $this->formRadio('neatline_time_render_year', get_option('neatline_time_render_year') ?: 'skip', NULL, $values); ?>
+            echo $this->formRadio('neatline_time_defaults[render_year]',
+                $defaults['render_year'],
+                null,
+                $values);
+            ?>
             <p class="explanation">
                 <?php echo __('When a date is a single year, like "1066", the value should be interpreted to be displayed on the timeline.'); ?>
             </p>
         </div>
     </div>
-</fieldset>
-<fieldset id="fieldset-neatline-time-default"><legend><?php echo __('Default Parameters'); ?></legend>
-    <p class="explanation">
-        <?php echo __('These parameters are used as defaults for all timelines.'); ?>
-        <?php echo __('They can be overridden in the form of each timeline.'); ?>
-    </p>
-    <?php $parameters = json_decode(get_option('neatline_time_defaults'), true) ?: array(); ?>
     <div class="field">
         <div class="two columns alpha">
             <?php echo $this->formLabel('neatline_time_defaults[center_date]', __('Center Date')); ?>
         </div>
         <div class='inputs five columns omega'>
             <?php
-            echo $this->formText('neatline_time_defaults[center_date]', empty($parameters['center_date']) ? '' : $parameters['center_date'], null);
+            echo $this->formText('neatline_time_defaults[center_date]',
+                $defaults['center_date'],
+                null);
             ?>
             <p class="explanation">
                 <?php echo __('Set the default center date for the timeline.'); ?>
