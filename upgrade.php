@@ -61,3 +61,7 @@ if (version_compare($oldVersion, '2.1.4', '<')) {
     ";
     $db->query($sql);
 }
+
+if (version_compare($oldVersion, '2.1.5', '<')) {
+    set_option('neatline_time_render_year', $this->_options['neatline_time_render_year']);
+}

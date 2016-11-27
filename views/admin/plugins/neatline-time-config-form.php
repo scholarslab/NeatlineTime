@@ -75,4 +75,22 @@ unset($elements['']);
             </p>
         </div>
     </div>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_render_year', __('Render Year')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+            $values = array(
+                'skip' => __('Skip the record'),
+                'january_1' => __('Pick first January'),
+                'july_1' => __('Pick first July'),
+                'full_year' => __('Mark entire year'),
+            );
+            echo $this->formRadio('neatline_time_render_year', get_option('neatline_time_render_year') ?: 'skip', NULL, $values); ?>
+            <p class="explanation">
+                <?php echo __('When a date is a single year, like "1066", the value should be interpreted to be displayed on the timeline.'); ?>
+            </p>
+        </div>
+    </div>
 </fieldset>

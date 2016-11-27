@@ -160,12 +160,44 @@ function neatlinetime_item_class($item = null)
  * Generates an ISO-8601 date from a date string
  *
  * @see Zend_Date
+ * @param string $date
+ * @param string renderYear Used only when a range is set to force the format of
+ * a single number.
  * @return string ISO-8601 date
  */
-function neatlinetime_convert_date($date)
+function neatlinetime_convert_date($date, $renderYear = null)
 {
-    if (preg_match('/^\d{4}$/', $date) > 0) {
-        return false;
+    if (is_null($renderYear)) {
+        $renderYear = get_option('neatline_time_render_year');
+    }
+
+    // Check if the date is a single number.
+    if (preg_match('/^-?\d{1,4}$/', $date)) {
+        // Normalize the year.
+        $date = $date < 0
+            ? '-' . str_pad(substring($date, 1), 4, "0", STR_PAD_LEFT)
+            : str_pad($date, 4, "0", STR_PAD_LEFT);
+        switch ($renderYear) {
+            case 'january_1':
+                $date_out = $date . '-01-01' . 'T00:00:00+00:00';
+                break;
+            case 'july_1':
+                $date_out = $date . '-07-01' . 'T00:00:00+00:00';
+                break;
+            case 'december_31':
+                $date_out = $date . '-12-31' . 'T00:00:00+00:00';
+                break;
+            case 'june_30':
+                $date_out = $date . '-06-30' . 'T00:00:00+00:00';
+                break;
+            case 'full_year':
+                // Render a year as a range: use neatlinetime_convert_single_date().
+            case 'skip':
+            default:
+                $date_out = false;
+                break;
+        }
+        return $date_out;
     }
 
     $newDate = null;
@@ -182,11 +214,141 @@ function neatlinetime_convert_date($date)
         $date_out = false;
     } else {
         $date_out = $newDate->get('c');
-        $date_out = preg_replace('/^(-?)(\d{3}-)/', '${1}0\2',   $date_out);
-        $date_out = preg_replace('/^(-?)(\d{2}-)/', '${1}00\2',  $date_out);
+        $date_out = preg_replace('/^(-?)(\d{3}-)/', '${1}0\2', $date_out);
+        $date_out = preg_replace('/^(-?)(\d{2}-)/', '${1}00\2', $date_out);
         $date_out = preg_replace('/^(-?)(\d{1}-)/', '${1}000\2', $date_out);
     }
     return $date_out;
+}
+
+/**
+ * Generates an array of one or two ISO-8601 dates from a string.
+ *
+ * @todo manage the case where the start is empty and the end is set.
+ *
+ * @see Zend_Date
+ * @param string $date
+ * @return array $dateArray
+ */
+function neatlinetime_convert_any_date($date)
+{
+    $dateArray = array_map('trim', explode('/', $date));
+
+    // A range of dates.
+    if (count($dateArray) == 2) {
+        return neatlinetime_convert_range_date($dateArray);
+    }
+
+    // A single date, or a range when the two dates are years and when the
+    // render is "full_year".
+    return neatlinetime_convert_single_date($dateArray[0]);
+}
+
+/**
+ * Generates an ISO-8601 date from a date string, with an exception for
+ * "full_year" render.
+ *
+ * @see Zend_Date
+ * @param array $dateArray
+ * @return array $dateArray
+ */
+function neatlinetime_convert_single_date($date)
+{
+    $renderYear = get_option('neatline_time_render_year');
+
+    // Manage a special case for render "full_year" with a single number.
+    if ($renderYear == 'full_year' && preg_match('/^-?\d{1,4}$/', $date)) {
+        $dateStartValue = neatlinetime_convert_date($date, 'january_1');
+        $dateEndValue = neatlinetime_convert_date($date, 'december_31');
+        return array($dateStartValue, $dateEndValue);
+    }
+
+    // Only one date.
+    $dateStartValue = neatlinetime_convert_date($date, $renderYear);
+    return array($dateStartValue, null);
+}
+
+/**
+ * Generates two ISO-8601 dates from an array of two strings.
+ *
+ * By construction, no "full_year" is returned.
+ *
+ * @see Zend_Date
+ * @param array $dateArray
+ * @return array $dateArray
+ */
+function neatlinetime_convert_range_date($dateArray)
+{
+    if (!is_array($dateArray)) {
+        return array(null, null);
+    }
+
+    $renderYear = get_option('neatline_time_render_year');
+    $dateStart = $dateArray[0];
+    $dateEnd = $dateArray[1];
+
+    // Check if the date are two numbers (years).
+    if ($renderYear == 'skip') {
+        $dateStartValue = neatlinetime_convert_date($dateStart, $renderYear);
+        $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
+        return array($dateStartValue, $dateEndValue);
+    }
+
+    // Check if there is one number and one date.
+    if (!preg_match('/^-?\d{1,4}$/', $dateStart)) {
+        if (!preg_match('/^-?\d{1,4}$/', $dateEnd)) {
+            // TODO Check order to force the start or the end.
+            $dateStartValue = neatlinetime_convert_date($dateStart, $renderYear);
+            $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
+            return array($dateStartValue, $dateEndValue);
+        }
+        // Force the format for the end.
+        $dateStartValue = neatlinetime_convert_date($dateStart, $renderYear);
+        if ($renderYear == 'full_year') $renderYear = 'december_31';
+        $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
+        return array($dateStartValue, $dateEndValue);
+    }
+    // The start is a year.
+    elseif (!preg_match('/^-?\d{1,4}$/', $dateEnd)) {
+        $dateEndValue = neatlinetime_convert_date($dateEnd, $renderYear);
+        // Force the format of the start.
+        if ($renderYear == 'full_year') $renderYear = 'january_1';
+        $dateStartValue = neatlinetime_convert_date($dateStart, $renderYear);
+        return array($dateStartValue, $dateEndValue);
+    }
+
+    $dateStart = (integer) $dateStart;
+    $dateEnd = (integer) $dateEnd;
+
+    // Same years.
+    if ($dateStart == $dateEnd) {
+        $dateStartValue = neatlinetime_convert_date($dateStart, 'january_1');
+        $dateEndValue = neatlinetime_convert_date($dateEnd, 'december_31');
+        return array($dateStartValue, $dateEndValue);
+    }
+
+    // The start and the end are years, so reorder them (may be useless).
+    if ($dateStart > $dateEnd) {
+        $kdate = $dateEnd;
+        $dateEnd = $dateStart;
+        $dateStart = $kdate;
+    }
+
+    switch ($renderYear) {
+        case 'july_1':
+            $dateStartValue = neatlinetime_convert_date($dateStart, 'july_1');
+            $dateEndValue = neatlinetime_convert_date($dateEnd, 'june_30');
+            return array($dateStartValue, $dateEndValue);
+        case 'january_1':
+            $dateStartValue = neatlinetime_convert_date($dateStart, 'january_1');
+            $dateEndValue = neatlinetime_convert_date($dateEnd, 'january_1');
+            return array($dateStartValue, $dateEndValue);
+        case 'full_year':
+        default:
+            $dateStartValue = neatlinetime_convert_date($dateStart, 'january_1');
+            $dateEndValue = neatlinetime_convert_date($dateEnd, 'december_31');
+            return array($dateStartValue, $dateEndValue);
+    }
 }
 
 /**

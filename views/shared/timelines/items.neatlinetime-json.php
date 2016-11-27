@@ -1,6 +1,8 @@
 <?php
 /**
  * The shared neatlinetime-json browse view for Items.
+ *
+ * @todo Manage the case of a range where the start is unknown.
  */
 
 $neatlineTimeEvents = array();
@@ -17,17 +19,14 @@ foreach ($items as $item) {
     }
 
     if (!empty($itemDates)) {
-      foreach ($itemDates as $itemDate) {
-            $itemDate = $itemDate;
-
+        foreach ($itemDates as $itemDate) {
             $neatlineTimeEvent = array();
-            $dateArray = explode('/', $itemDate);
-
-            if ($dateStart = neatlinetime_convert_date(trim($dateArray[0]))) {
+            list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate);
+            if ($dateStart) {
                 $neatlineTimeEvent['start'] = $dateStart;
 
-                if (count($dateArray) == 2) {
-                    $neatlineTimeEvent['end'] = neatlinetime_convert_date(trim($dateArray[1]));
+                if (!is_null($dateEnd)) {
+                    $neatlineTimeEvent['end'] = $dateEnd;
                 }
 
                 $neatlineTimeEvent['title'] = $itemTitle;

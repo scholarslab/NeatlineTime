@@ -43,6 +43,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'neatlinetime' => null,
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
+        'neatline_time_render_year' => 'skip',
     );
 
     /**

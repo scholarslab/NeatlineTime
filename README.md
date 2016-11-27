@@ -80,12 +80,6 @@ To denote spans of time, separate the start and end date with a '/':
 
   * January 1, 2012/February 1, 2012
 
-NeatlineTime doesn't accept just years (*1066*, for example) because it's not
-clear what that means. Should that translate to the range *January 1, 1066/December 31, 1066*?
-Should it be *January 1, 1066*? *June 31, 1066*? Instead of us picking an
-arbitrary point in the year or marking the entire year, we simply ask that you
-be more specific.
-
 NeatlineTime handles dates with years shorter than 4 digits. For these you'll
 need to pad the years with enough zeros to make them have four digits. For
 example, `476` should be written `0476`.
@@ -100,6 +94,19 @@ So here are some more examples of dates.
   * 0002-01-01
   * -0002-01-01
   * -2013-01-01
+
+When a date is a single number, like "1066", a parameter in the config page
+allows to choose its rendering:
+
+  * skip the record (default)
+  * 1st January
+  * 1st July
+  * full year (range period)
+
+This parameter applies with a range of dates too, for example "1939/1945".
+
+In all cases, it's recommended to follow the standard [ISO 8601] as much as
+possible and to be as specific as possible.
 
 ### Browsing timelines
 
@@ -194,4 +201,5 @@ Credits
 [license]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [issues]: http://github.com/scholarslab/NeatlineTime/issues/ "Issues for Neatline Time"
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
+[ISO 8601]: http://www.iso.org/iso/home/standards/iso8601.htm
 [themeing-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
