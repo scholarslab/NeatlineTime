@@ -68,10 +68,14 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
             `center_date` date NULL,
+            `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL,
             `added` timestamp NOT NULL default '2000-01-01 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-            PRIMARY KEY (`id`)
-            ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+            PRIMARY KEY (`id`),
+            KEY `public` (`public`),
+            KEY `featured` (`featured`),
+            KEY `owner_id` (`owner_id`)
+        ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 
         $this->_db->query($sqlNeatlineTimeline);
 

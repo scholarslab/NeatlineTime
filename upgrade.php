@@ -65,3 +65,14 @@ if (version_compare($oldVersion, '2.1.4', '<')) {
 if (version_compare($oldVersion, '2.1.5', '<')) {
     set_option('neatline_time_render_year', $this->_options['neatline_time_render_year']);
 }
+
+if (version_compare($oldVersion, '2.1.6', '<')) {
+    $sql = "
+    ALTER TABLE `{$db->NeatlineTime_Timeline}`
+    ADD `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL AFTER `center_date`,
+    ADD KEY `public` (`public`),
+    ADD KEY `featured` (`featured`),
+    ADD KEY `owner_id` (`owner_id`)
+    ";
+    $db->query($sql);
+}
