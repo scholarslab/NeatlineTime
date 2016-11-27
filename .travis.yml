@@ -2,12 +2,12 @@
 language: php
 
 php:
-  #- 5.2
-  #- 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
+  #- '5.2'
+  #- '5.3'
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
 
 env:
   #- OMEKA_BRANCH=stable-1.5
@@ -18,10 +18,9 @@ env:
   - OMEKA_BRANCH=stable-2.4
 
 before_script: 
-  - ./travis_setup.sh
-  #- export OMEKA_DIR=/home/travis/builds/scholarslab/NeatlineTime/omeka
+  - ./tests/travis_setup.sh
 
-script: ./travis_tests.sh
+script: ./tests/travis_tests.sh
 
 
 notifications:

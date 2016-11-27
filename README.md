@@ -1,7 +1,6 @@
 # NeatlineTime plugin for Omeka
 
-[![Build
-Status](https://secure.travis-ci.org/scholarslab/NeatlineTime.png?branch=develop,master)](http://travis-ci.org/scholarslab/NeatlineTime)
+[![Build Status](https://travis-ci.org/scholarslab/NeatlineTime.svg?branch=develop,master)](https://travis-ci.org/scholarslab/NeatlineTime)
 
 The NeatlineTime plugin, by the [Scholars' Lab][scholarslab] at the University of Virginia Library, allows you to create timelines for the [Omeka][omeka] publishing platform. It uses the [SIMILE Timeline plugin][simile-timeline].
 
