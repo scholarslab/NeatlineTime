@@ -296,6 +296,7 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
             : json_encode($parameters, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         $query = $this->getQuery();
+        unset($query['csrf_token']);
         $this->query = version_compare(phpversion(), '5.4.0', '<')
             ? json_encode($query)
             : json_encode($query, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

@@ -108,7 +108,7 @@ var NeatlineTime = {
             ];
         }
 
-        // Process all bands except first.
+        // All bands are synchronized with the first.
         for (i = 1; i < bandInfos.length; ++i) {
             bandInfos[i].syncWith = 0;
             bandInfos[i].highlight = true;
