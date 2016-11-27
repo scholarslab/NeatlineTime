@@ -1,3 +1,11 @@
+<?php
+$elements = get_table_options('Element', null, array(
+    'record_types' => array('Item', 'All'),
+    'sort' => 'alphaBySet',
+));
+// Remove the "Select Below" label.
+unset($elements['']);
+?>
 <fieldset id="fieldset-neatline-time-library"><legend><?php echo __('Javascript Library'); ?></legend>
     <div class="field">
         <div class="two columns alpha">
@@ -18,39 +26,53 @@
         </div>
     </div>
 </fieldset>
-<div class="field">
-    <label for="item_date"><?php echo __('Item Date'); ?></label>
-    <div class="inputs">
-    <?php echo neatlinetime_option_select('item_date'); ?>
-
-    <p class="explanation">
-    <?php
-        echo __('The date field to use to retrieve and display items on a timeline. Default is DC:Date.'); ?>
-    </p>
+<fieldset id="fieldset-neatline-time-elements"><legend><?php echo __('Elements'); ?></legend>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('item_title', __('Item Title')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+                echo $this->formSelect('item_title',
+                    neatlinetime_get_option('item_title') ?: 50,
+                    array(),
+                    $elements);
+            ?>
+            <p class="explanation">
+                <?php echo __('The title field to use when displaying an item on a timeline. Default is DC:Title'); ?>
+            </p>
+        </div>
     </div>
-</div>
-
-<div class="field">
-    <label for="item_title"><?php echo __('Item Title'); ?></label>
-    <div class="inputs">
-
-
-    <?php echo neatlinetime_option_select('item_title'); ?>
-    <p class="explanation">
-    <?php
-        echo __('The title field to use when displaying an item on a timeline. Default is DC:Title'); ?>
-    </p>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('item_description', __('Item Description')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+                echo $this->formSelect('item_description',
+                    neatlinetime_get_option('item_description') ?: 41,
+                    array(),
+                    $elements);
+            ?>
+            <p class="explanation">
+                <?php echo __('The description field to use when displaying an item on a timeline. Default is DC:Description'); ?>
+            </p>
+        </div>
     </div>
-</div>
-
-<div class="field">
-    <label for="item_description"><?php echo __('Item Description'); ?></label>
-    <div class="inputs">
-
-    <?php echo neatlinetime_option_select('item_description'); ?>
-    <p class="explanation">
-    <?php
-        echo __('The description field to use when displaying an item on a timeline. Default is DC:Description'); ?>
-    </p>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('item_date', __('Item Date')); ?>
+        </div>
+        <div class='inputs five columns omega'>
+            <?php
+                echo $this->formSelect('item_date',
+                    neatlinetime_get_option('item_date') ?: 40,
+                    array(),
+                    $elements);
+            ?>
+            <p class="explanation">
+                <?php echo __('The date field to use to retrieve and display items on a timeline. Default is DC:Date.'); ?>
+            </p>
+        </div>
     </div>
-</div>
+</fieldset>
