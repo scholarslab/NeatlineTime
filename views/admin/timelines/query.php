@@ -10,12 +10,12 @@ echo head($head);
 ?>
 <script type="text/javascript" charset="utf-8">
     jQuery(window).load(function(){
-       Omeka.Search.activateSearchButtons; 
+       Omeka.Search.activateSearchButtons;
     });
 </script>
     <?php
-$query = unserialize($neatline_time_timeline->query);
-if ($query && is_array($query)) {
+$query = $neatline_time_timeline->getQuery();
+if ($query) {
 ?>
     <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', $timelineTitle) ?></strong></p>
 <?php

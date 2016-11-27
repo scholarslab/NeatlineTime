@@ -38,7 +38,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $this->timeline->public = '1';
         $this->timeline->featured = '1';
         $this->timeline->owner_id = $this->user->id;
-        $this->timeline->query = serialize(array('range' => '1'));
+        $this->timeline->query = setQuery(array('range' => '1'));
         $parameters = array(
             'item_title' => 50,
             'item_description' => 42,
@@ -54,7 +54,7 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $this->timeline->public);
         $this->assertEquals('1', $this->timeline->featured);
         $this->assertEquals($this->user->id, $this->timeline->owner_id);
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
         $this->assertEquals($parameters, json_decode($this->timeline->parameters, true));
     }
 
@@ -91,32 +91,33 @@ class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
             "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
-    public function testQuerySerialization() {
+    public function testQueryJsonization()
+    {
         $this->dbAdapter->appendLastInsertIdToStack('1');
         $this->timeline->title = 'Timeline Title';
         $this->timeline->query = array('range' => '1');
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
+        $this->assertEquals(array('range' => '1'), $this->timeline->getQuery());
     }
 
-    public function testDontReserializeQuery()
+    public function testDontRejsonizeQuery()
     {
         $this->dbAdapter->appendLastInsertIdToStack('1');
         $this->timeline->title = 'Timeline Title';
-        $this->timeline->query = serialize(array('range' => '1'));
+        $this->timeline->query = array('range' => '1');
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
 
         $this->timeline->public = 1;
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
+        $this->assertEquals(array('range' => '1'), $this->timeline->getQuery());
     }
 }

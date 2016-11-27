@@ -70,11 +70,11 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `query` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `owner_id` INT(10) UNSIGNED NOT NULL,
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
             `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            `query` TEXT COLLATE utf8_unicode_ci NOT NULL,
             `added` timestamp NOT NULL default '2000-01-01 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
@@ -140,11 +140,14 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         $acl->addResource('NeatlineTime_Timelines');
 
         // All everyone access to browse, show, and items.
-        $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse', 'items'));
-
-        $acl->allow('researcher', 'NeatlineTime_Timelines', 'showNotPublic');
-        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
-        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'items', 'delete'), new Omeka_Acl_Assert_Ownership);
+        $acl->allow(null, 'NeatlineTime_Timelines',
+            array('show', 'browse', 'items'));
+        $acl->allow('researcher', 'NeatlineTime_Timelines',
+            'showNotPublic');
+        $acl->allow('contributor', 'NeatlineTime_Timelines',
+            array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
+        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines',
+            array('edit', 'query', 'items', 'delete'), new Omeka_Acl_Assert_Ownership);
     }
 
     /**

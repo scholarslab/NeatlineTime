@@ -6,16 +6,17 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
 {
     public $title;
     public $description;
-    public $query;
     public $owner_id = 0;
     public $public = 0;
     public $featured = 0;
     public $parameters;
+    public $query;
     public $added;
     public $modified;
 
-    // Temporary unjsoned parameters.
+    // Temporary unjsoned parameters and query.
     private $_parameters;
+    private $_query;
 
     /**
      * Initialize the mixins for a record.
@@ -72,6 +73,26 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     {
         $parameters = $this->getParameters();
         return isset($parameters[$name]) ? $parameters[$name] : null;
+    }
+
+    /**
+     * Get the query.
+     */
+    public function getQuery()
+    {
+        if (is_null($this->_query)) {
+            // Check if the query has been set directly.
+            $query = empty($this->query) ? array() : $this->query;
+            if (!is_array($query)) {
+                $query = json_decode($query, true);
+                if (!is_array($query)) {
+                    throw new UnexpectedValueException(__('Query must be an array. '
+                        . 'Instead, the following was given: %s.', var_export($parameters, true)));
+                }
+            }
+            $this->_query = $query;
+        }
+        return $this->_query;
     }
 
     /**
@@ -148,6 +169,25 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     }
 
     /**
+     * Set the query.
+     *
+     * @param array $query
+     */
+    public function setQuery($query)
+    {
+        // Check null.
+        if (empty($query)) {
+            $query = array();
+        }
+        elseif (!is_array($query)) {
+            throw new InvalidArgumentException(__('Query must be an array.'));
+        }
+        // This is required to manage all the cases and tests.
+        $this->query = json_encode($query);
+        $this->_query = $query;
+    }
+
+    /**
      * Filter post data from form submissions.
      *
      * @param array Dirty post data
@@ -211,13 +251,22 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     }
 
     /**
+     * Get the list of items according to the query.
+     */
+    public function getItems()
+    {
+        $query = $this->getQuery();
+        $items = $this->_db->getTable('Item')->findBy($query, null);
+        return $items;
+    }
+
+    /**
      * Executes before the record is saved.
      */
     protected function beforeSave($args)
     {
-        $query = $this->query;
-        if (is_array($query)) {
-            $this->query = serialize($query);
+        if (is_null($this->owner_id)) {
+            $this->owner_id = 0;
         }
 
         // Be sure to set defaults parameters to simplify queries.
@@ -228,9 +277,10 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
             ? json_encode($parameters)
             : json_encode($parameters, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        if (is_null($this->owner_id)) {
-            $this->owner_id = 0;
-        }
+        $query = $this->getQuery();
+        $this->query = version_compare(phpversion(), '5.4.0', '<')
+            ? json_encode($query)
+            : json_encode($query, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**

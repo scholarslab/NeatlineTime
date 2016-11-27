@@ -4,9 +4,10 @@
  */
 
 $timelineTitle = metadata($neatline_time_timeline, 'title');
-$head = array('bodyclass' => 'timelines primary',
-              'title' => __('Neatline Time | %s', strip_formatting($timelineTitle))
-              );
+$head = array(
+    'bodyclass' => 'timelines primary',
+    'title' => __('Neatline Time | %s', strip_formatting($timelineTitle)),
+);
 echo head($head);
 ?>
 
@@ -22,34 +23,33 @@ echo head($head);
     )); ?>
 
 <?php
-$query = unserialize($neatline_time_timeline->query);
-if ($query && is_array($query)) {
+$query = $neatline_time_timeline->getQuery();
+if ($query) {
 ?>
-        <h2><?php echo __('Items Query'); ?></h2>
-        <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', $timelineTitle); ?></strong></p>
-        <?php
+    <h2><?php echo __('Items Query'); ?></h2>
+    <p><strong><?php echo __('The &#8220;%s&#8221; timeline displays items that match the following query:', $timelineTitle); ?></strong></p>
+    <?php
 echo item_search_filters($query);
 } ?>
 
 </div>
 
 <div class="three columns omega">
-<div id="edit" class="panel">
-<?php if (is_allowed($neatline_time_timeline, 'edit')): ?>
-    <?php echo link_to($neatline_time_timeline, 'edit', __('Edit Metadata'), array('class' => 'big green button')); ?>
-    <?php echo link_to($neatline_time_timeline, 'query', __('Edit Items Query'), array('class' => 'big green button')); ?>
-<?php endif; ?>
-<a href="<?php echo html_escape(public_url('neatline-time/timelines/show/'.timeline('id'))); ?>" class="big blue button"><?php echo __('View Public Page'); ?></a>
-<?php echo link_to($neatline_time_timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm big red button')); ?>
-</div>
+    <div id="edit" class="panel">
+    <?php if (is_allowed($neatline_time_timeline, 'edit')): ?>
+        <?php echo link_to($neatline_time_timeline, 'edit', __('Edit Metadata'), array('class' => 'big green button')); ?>
+        <?php echo link_to($neatline_time_timeline, 'query', __('Edit Items Query'), array('class' => 'big green button')); ?>
+    <?php endif; ?>
+    <a href="<?php echo html_escape(public_url('neatline-time/timelines/show/'.timeline('id'))); ?>" class="big blue button"><?php echo __('View Public Page'); ?></a>
+    <?php echo link_to($neatline_time_timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm big red button')); ?>
+    </div>
 </div>
 <script>
-  var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
-
-  $.getJSON(jsonTimelineUri, function(data) {
+var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
+$.getJSON(jsonTimelineUri, function(data) {
     if (data.events.length > 100) {
-      alert("Adding more than 100 items to the timeline will create slow render times.");
+        alert(<?php echo json_endode(__('Adding more than 100 items to the timeline will create slow render times.')); ?>);
     }
-  });
+});
 </script>
 <?php echo foot();

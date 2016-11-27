@@ -16,7 +16,7 @@ if (version_compare($oldVersion, '2.0.2', '<') && version_compare($oldVersion, '
             while (!is_array($query)) {
                 $query = unserialize($query);
             }
-            $timeline->query = serialize($query);
+            $timeline->setQuery($query);
             $timeline->save();
         }
     }
@@ -128,5 +128,44 @@ if (version_compare($oldVersion, '2.1.10', '<')) {
     foreach ($timelines as $timeline) {
         $timeline->setParameter('item_date_end', $this->_options['neatline_time_defaults']['item_date_end']);
         $timeline->save();
+    }
+}
+
+if (version_compare($oldVersion, '2.2.1', '<')) {
+    // Because null is forbidden now, all null values should be replaced before.
+    $empty = serialize(array());
+    $sql = "UPDATE `{$db->NeatlineTime_Timeline}`
+    SET `query` = '$empty'
+    WHERE `query` IS NULL;";
+    $db->query($sql);
+
+    $sql = "
+    ALTER TABLE `{$db->NeatlineTime_Timeline}`
+    CHANGE `query` `query` TEXT COLLATE utf8_unicode_ci NOT NULL AFTER `parameters`
+    ";
+    $db->query($sql);
+
+    // Convert serialized queries into json.
+    $timelines = get_records('NeatlineTime_Timeline', array(), 0);
+
+    // If the old version is very old, the queries have been converted before
+    // during theupgrade process.
+    if (version_compare($oldVersion, '2.1', '<')) {
+        // Done.
+    }
+    // Upgrade from 2.2.
+    // Other cases (2.9/2.10, where timelines where saved with another method)
+    // are not managed because the code wasn't published.
+    elseif (version_compare($oldVersion, '2.2', '>=')) {
+        foreach ($timelines as $timeline) {
+            // Queries may have been converted before during the upgrade process
+            // or in case of a bug.
+            $query = @unserialize($timeline->query);
+            if ($query === false) {
+                $query = json_decode($timeline->query, true) ?: array();
+            }
+            $timeline->setQuery($query);
+            $timeline->save();
+        }
     }
 }
