@@ -3,7 +3,6 @@
  * The show view for the Timelines administrative panel.
  */
 
-queue_timeline_assets();
 $timelineTitle = metadata($neatline_time_timeline, 'title');
 $head = array('bodyclass' => 'timelines primary',
               'title' => __('Neatline Time | %s', strip_formatting($timelineTitle))

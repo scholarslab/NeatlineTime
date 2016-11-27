@@ -47,37 +47,35 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 /**
  * Queues JavaScript and CSS for NeatlineTime in the page header.
  *
+ * @see NeatlineTimePlugin::_head()
  * @since 1.0
  * @return void.
  */
 function queue_timeline_assets()
 {
-    $headScript = get_view()->headScript();
-    $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
+    queue_css_file('neatlinetime-timeline');
+
+    queue_js_file('neatline-time-scripts');
 
     // Check useInternalJavascripts in config.ini.
     $config = Zend_Registry::get('bootstrap')->getResource('Config');
     $useInternalJs = isset($config->theme->useInternalJavascripts)
-            ? (bool) $config->theme->useInternalJavascripts
-            : false;
+        ? (bool) $config->theme->useInternalJavascripts
+        : false;
     $useInternalJs = isset($config->theme->useInternalAssets)
-            ? (bool) $config->theme->useInternalAssets
-            : $useInternalJs;
+        ? (bool) $config->theme->useInternalAssets
+        : $useInternalJs;
 
     if ($useInternalJs) {
-        $timelineVariables = 'Timeline_ajax_url="'.src('simile-ajax-api.js', 'javascripts/simile/ajax-api').'"; '
-                           . 'Timeline_urlPrefix="'.dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')).'/"; '
-                           . 'Timeline_parameters="bundle=true";';
-
-        $headScript->appendScript($timelineVariables);
-        $headScript->appendFile(src('timeline-api.js', 'javascripts/simile/timeline-api'));
+        $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
+            Timeline_urlPrefix="' . dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')) . '/";
+            Timeline_parameters="bundle=true";';
+        queue_js_string($timelineVariables);
+        queue_js_file('timeline-api', 'javascripts/simile/timeline-api');
     } else {
-        $headScript->appendFile('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+        queue_js_url('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
     }
-
-    $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
-
-    queue_css_file('neatlinetime-timeline');
+    queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
 }
 
 /**
@@ -190,8 +188,8 @@ function neatlinetime_convert_date($date) {
 
 /**
  * Generates a form select populated by all elements and element sets.
- * 
- * @param string The NeatlineTime option name. 
+ *
+ * @param string The NeatlineTime option name.
  * @return string HTML.
  */
 function neatlinetime_option_select($name = null) {
@@ -216,7 +214,7 @@ function neatlinetime_option_select($name = null) {
 /**
  * Gets the value for an option set in the neatlinetime option array.
  *
- * @param string The NeatlineTime option name. 
+ * @param string The NeatlineTime option name.
  * @return string
  */
 function neatlinetime_get_option($name = null) {

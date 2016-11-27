@@ -33,6 +33,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         'item_browse_sql',
         'config',
         'config_form',
+        'public_head',
+        'admin_head',
         'exhibit_builder_page_head'
     );
 
@@ -283,15 +285,74 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         include 'config_form.php';
     }
 
+    public function hookAdminHead($args)
+    {
+        $requestParams = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+        $module = isset($requestParams['module']) ? $requestParams['module'] : 'default';
+        $controller = isset($requestParams['controller']) ? $requestParams['controller'] : 'index';
+        $action = isset($requestParams['action']) ? $requestParams['action'] : 'index';
+        if ($module != 'neatline-time' || $controller != 'timelines' || $action != 'show') {
+            return;
+        }
+        $this->_head($args);
+    }
+
+    public function hookPublicHead($args)
+    {
+        $requestParams = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+        $module = isset($requestParams['module']) ? $requestParams['module'] : 'default';
+        $controller = isset($requestParams['controller']) ? $requestParams['controller'] : 'index';
+        $action = isset($requestParams['action']) ? $requestParams['action'] : 'index';
+        if ($module != 'neatline-time' || $controller != 'timelines' || $action != 'show') {
+            return;
+        }
+        $this->_head($args);
+    }
+
     /**
      * Add timeline assets for exhibit pages using the timeline layout.
      */
     public function hookExhibitBuilderPageHead($args)
     {
         if (array_key_exists('neatline-time', $args['layouts'])) {
-            queue_timeline_assets();
+            $this->_head($args);
         }
     }
+
+    /**
+     * Load all assets.
+     *
+     * Replace queue_timeline_assets()
+     *
+     * @return void
+     */
+    private function _head($args)
+    {
+        queue_css_file('neatlinetime-timeline');
+
+        queue_js_file('neatline-time-scripts');
+
+        // Check useInternalJavascripts in config.ini.
+        $config = Zend_Registry::get('bootstrap')->getResource('Config');
+        $useInternalJs = isset($config->theme->useInternalJavascripts)
+            ? (bool) $config->theme->useInternalJavascripts
+            : false;
+        $useInternalJs = isset($config->theme->useInternalAssets)
+            ? (bool) $config->theme->useInternalAssets
+            : $useInternalJs;
+
+        if ($useInternalJs) {
+            $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
+                Timeline_urlPrefix="' . dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')) . '/";
+                Timeline_parameters="bundle=true";';
+            queue_js_string($timelineVariables);
+            queue_js_file('timeline-api', 'javascripts/simile/timeline-api');
+        } else {
+            queue_js_url('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+        }
+        queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
+    }
+
     /**
      * Timeline admin_navigation_main filter.
      *

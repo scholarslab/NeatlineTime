@@ -3,7 +3,6 @@
  * The public show view for Timelines.
  */
 
-queue_timeline_assets();
 $head = array('bodyclass' => 'timelines primary',
               'title' => metadata($neatline_time_timeline, 'title')
               );
