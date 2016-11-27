@@ -16,7 +16,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     public $modified;
 
     /**
-     * Mixin initializer.
+     * Initialize the mixins for a record.
      */
     protected function _initializeMixins()
     {
@@ -39,6 +39,9 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
         return 'NeatlineTime_Timelines';
     }
 
+    /**
+     * Executes before the record is saved.
+     */
     protected function beforeSave($args)
     {
         $query = $this->query;
@@ -49,6 +52,9 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
 
     /**
      * Get the routing parameters or the URL string to this record.
+     *
+     * @param string $action
+     * @return string|array A URL string or a routing array.
      */
     public function getRecordUrl($action = 'show')
     {
@@ -58,8 +64,12 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     }
 
     /**
-    *
-    **/
+     * Template method for defining record validation rules.
+     *
+     * Should be overridden by subclasses.
+     *
+     * @return void
+     */
     protected function _validate()
     {
       $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));

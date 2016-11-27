@@ -1,12 +1,14 @@
 <?php
 
-class NeatlineTimeTimelineTable extends Omeka_Db_Table {
+class NeatlineTimeTimelineTable extends Omeka_Db_Table
+{
 
     /**
      * Filter public/not public timelines.
      *
-     * @param Omeka_Db_Select
-     * @param boolean Whether to retrieve only public timelines.
+     * @see self::applySearchFilters()
+     * @param Omeka_Db_Select $select
+     * @param bool $isPublic Whether to retrieve only public timelines.
      * @return void
      */
     public function filterByPublic(Omeka_Db_Select $select, $isPublic)
@@ -21,10 +23,11 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     }
 
     /**
-     * Filter featured/not featured timelines.
+     * Apply a featured/not featured filter to the select object.
      *
-     * @param Omeka_Db_Select
-     * @param boolean Whether to retrieve only featured timelines.
+     * @see self::applySearchFilters()
+     * @param Omeka_Db_Select $select
+     * @param bool $isFeatured
      */
     public function filterByFeatured(Omeka_Db_Select $select, $isFeatured)
     {
@@ -38,16 +41,21 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
     }
 
     /**
-     * Filter for timelines created by a specific user.
+     * Apply a user filter to the select object.
      *
-     * @param Omeka_Db_Select
-     * @param boolean Whether to retrieve only featured timelines.
+     * @see self::applySearchFilters()
+     * @param Omeka_Db_Select $select
+     * @param int $userId
      */
-    public function filterByUser(Omeka_Db_Select $select, $userId, $userField='creator_id')
+    public function filterByUser(Omeka_Db_Select $select, $userId, $userField)
     {
         $userId = (int) $userId;
 
         if ($userId) {
+            if (empty($userField)) {
+                $userField = 'creator_id';
+            }
+
             $select->where("neatline_time_timelines.$userField = ?", $userId);
         }
     }
