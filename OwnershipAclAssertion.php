@@ -1,9 +1,9 @@
 <?php
 /**
- * Assertion for any "*All" and "*Self" permissions for NeatlineTimeTimelines.
+ * Assertion for any "*All" and "*Self" permissions for NeatlineTime_Timelines.
  *
  * Lovingly stolen from Omeka's Item_OwnershipAclAssertion class, licensed
- * under the GPL3. 
+ * under the GPL3.
  */
 class NeatlineTime_OwnershipAclAssertion implements Zend_Acl_Assert_Interface
 {
@@ -19,7 +19,7 @@ class NeatlineTime_OwnershipAclAssertion implements Zend_Acl_Assert_Interface
         $selfPriv = $privilege . 'Self';
         if (!($role instanceof User)) {
             $allowed = false;
-        } else if ($resource instanceof NeatlineTimeTimeline) {
+        } elseif ($resource instanceof NeatlineTime_Timeline) {
             $allowed = $acl->isAllowed($role, $resource, $allPriv)
                    || ($acl->isAllowed($role, $resource, $selfPriv)
                        && $this->_userOwnsTimeline($role, $resource));

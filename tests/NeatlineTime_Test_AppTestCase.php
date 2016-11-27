@@ -32,7 +32,7 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
     /**
      * Create a timeline for testing.
      *
-     * @return NeatlineTimeTimeline
+     * @return NeatlineTime_Timeline
      */
     public function _createTimeline($data = array(), $user = null)
     {
@@ -46,7 +46,7 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $data['owner_id'] = $user ? $user->id : $this->user->id;
 
-        $timeline = new NeatlineTimeTimeline;
+        $timeline = new NeatlineTime_Timeline;
 
         foreach ($data as $k => $v) {
             $timeline->$k = $v;

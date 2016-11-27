@@ -8,6 +8,6 @@ $options = $block->getOptions();
         __('Select a timeline'));
     echo $this->formSelect($formStem . '[options][timeline-id]',
         @$options['timeline-id'], array(),
-        get_table_options('NeatlineTimeTimeline'));
+        get_table_options('NeatlineTime_Timeline'));
     ?>
 </div>

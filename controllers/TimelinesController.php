@@ -21,7 +21,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
      */
     public function init()
     {
-        $this->_helper->db->setDefaultModelName('NeatlineTimeTimeline');
+        $this->_helper->db->setDefaultModelName('NeatlineTime_Timeline');
     }
 
     /**

@@ -1,10 +1,9 @@
 <?php
 /**
- * NeatlineTimeTimeline record.
- */
-class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_Acl_Resource_Interface
+ * NeatlineTime_Timeline record.
+*/
+class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_Acl_Resource_Interface
 {
-
     public $title;
     public $description;
     public $query;
@@ -46,7 +45,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     {
         $query = $this->query;
         if (is_array($query)) {
-          $this->query = serialize($query);
+            $this->query = serialize($query);
         }
     }
 
@@ -72,11 +71,11 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
      */
     protected function _validate()
     {
-      $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
-      if ($this->center_date == '') {
-        $this->center_date = null;
-      } elseif (isset($this->center_date) && !$validator->isValid($this->center_date)) {
-        $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
-      }
+        $validator = new Zend_Validate_Date(array('format' => 'yyyy-MM-dd'));
+        if ($this->center_date == '') {
+            $this->center_date = null;
+        } elseif (isset($this->center_date) && !$validator->isValid($this->center_date)) {
+            $this->addError(null, __('The center date must be in the format YYYY-MM-DD.'));
+        }
     }
 }

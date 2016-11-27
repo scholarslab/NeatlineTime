@@ -99,7 +99,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         }
 
         if (version_compare($oldVersion, '2.0.2', '<') && version_compare($oldVersion, '2.0', '>') ) {
-            if ($timelines = get_records('NeatlineTimeTimeline')) {
+            if ($timelines = get_records('NeatlineTime_Timeline')) {
                 foreach ($timelines as $timeline) {
                     $query = unserialize($timeline->query);
                     while (!is_array($query)) {

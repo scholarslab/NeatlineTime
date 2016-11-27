@@ -1,6 +1,6 @@
 <?php
 
-class NeatlineTimeTimelineTable extends Omeka_Db_Table
+class Table_NeatlineTime_Timeline extends Omeka_Db_Table
 {
     /**
      * @param Omeka_Db_Select

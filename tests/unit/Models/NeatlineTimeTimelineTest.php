@@ -1,17 +1,15 @@
 <?php
 
-//require_once NEATLINE_TIME_TIMELINE_PLUGIN_DIR . '/models/NeatlineTimeTimeline.php';
-
 /**
- * Test the NeatlineTimeTimeline model.
+ * Test the NeatlineTime_Timeline model.
  */
-class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
+class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->dbAdapter = new Zend_Test_DbAdapter;
         $this->db = new Omeka_Db($this->dbAdapter);
-        $this->timeline = new NeatlineTimeTimeline($this->db);
+        $this->timeline = new NeatlineTime_Timeline($this->db);
         $this->user = new User($this->db);
         $bootstrap = new Omeka_Test_Bootstrap;
         $bootstrap->getContainer()->db = $this->db;

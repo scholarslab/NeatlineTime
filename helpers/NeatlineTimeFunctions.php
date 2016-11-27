@@ -9,7 +9,7 @@
  * @since 1.0
  * @param string
  * @param array $options
- * @param NeatlineTimeTimeline|null
+ * @param NeatlineTime_Timeline|null
  * @return string
  * @deprecated
  */
@@ -29,7 +29,7 @@ function timeline($fieldname, $options = array(), $timeline = null)
  * @param string HTML for the text of the link.
  * @param array Attributes for the <a> tag. (optional)
  * @param string The action for the link. Default is 'show'.
- * @param NeatlineTimeTimeline|null
+ * @param NeatlineTime_Timeline|null
  * @return string HTML
  * @deprecated
  **/
@@ -90,7 +90,7 @@ function queue_timeline_assets()
  * Returns the URI for a timeline's json output.
  *
  * @since 1.0
- * @param NeatlineTimeTimeline|null
+ * @param NeatlineTime_Timeline|null
  * @return string URL the items output uri for the neatlinetime-json output.
  */
 function neatlinetime_json_uri_for_timeline($timeline = null)
@@ -103,7 +103,7 @@ function neatlinetime_json_uri_for_timeline($timeline = null)
  * Construct id for container div.
  *
  * @since 1.0
- * @param NeatlineTimeTimeline|null
+ * @param NeatlineTime_Timeline|null
  * @return string HTML
  */
 function neatlinetime_timeline_id($timeline = null)
@@ -121,7 +121,7 @@ function neatlinetime_timeline_id($timeline = null)
 function neatlinetime_display_random_featured_timelines($num = 1) {
   $html = '';
 
-  $timelines = get_db()->getTable('NeatlineTimeTimeline')->findBy(array('sort_field' => 'random', 'featured' => 1), $num);
+  $timelines = get_db()->getTable('NeatlineTime_Timeline')->findBy(array('sort_field' => 'random', 'featured' => 1), $num);
 
   if ($timelines) {
     foreach ($timelines as $timeline) {
@@ -191,31 +191,6 @@ function neatlinetime_convert_date($date) {
       $date_out = preg_replace('/^(-?)(\d{1}-)/', '${1}000\2', $date_out);
   }
   return $date_out;
-
-}
-
-/**
- * Generates a form select populated by all elements and element sets.
- *
- * @param string The NeatlineTime option name.
- * @return string HTML.
- */
-function neatlinetime_option_select($name = null) {
-
-  if ($name) {
-    return get_view()->formSelect(
-                    $name,
-                    neatlinetime_get_option($name),
-                    array(),
-                    get_table_options('Element', null, array(
-                        'record_types' => array('Item', 'All'),
-                        'sort' => 'alphaBySet')
-                    )
-                );
-
-  }
-
-    return false;
 
 }
 
