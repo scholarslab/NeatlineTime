@@ -5,7 +5,8 @@ NeatlineTime (plugin for Omeka)
 
 The NeatlineTime plugin, by the [Scholars' Lab][scholarslab] at the University
 of Virginia Library, allows you to create timelines for the [Omeka][omeka]
-publishing platform. It uses the [SIMILE Timeline plugin][simile-timeline].
+publishing platform. It uses the [SIMILE Timeline plugin][simile-timeline] or
+the [Knightlab timeline].
 
 
 Installation
@@ -17,7 +18,7 @@ Installation
 2. Activate the plugin from the Admin → Settings → Plugins page.
 
 3. Configure the plugin to choose which fields you want the plugin to use on
-   the timeline.
+   the timeline by default.
 
     * Item Title: The field you would like displayed for the item's title in
       its information bubble. The default is DC:Title
@@ -25,6 +26,13 @@ Installation
       description in its information bubble. The default is DC:Description.
     * Item Date: The field you would like to use for item dates on the
       timeline. The default is DC:Date.
+    * Render Year: Date entered as a single number, like "1066", can be skipped,
+      plotted as a single event or marked as a full year.
+    * Center Date: The date that is displayed by the viewer when loaded. It can
+      be any date with the format (YYYY-MM-DD). An empty string means now, a
+      "0000-00-00" the earliest date and "9999-99-99" the latest date.
+
+All these parameters can be customized for each timeline.
 
 
 Usage
@@ -187,15 +195,21 @@ Credits
 * Oguljan Reyimbaeva (Russian)
 * Katina Rogers (French)
 
+### Contact
+
+* Scholar's Lab (see [ScholarLab] on GitHub)
+* Daniel Berthereau (see [Daniel-KM] on GitHub)
+
 ### Copyright
 
 * Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia.
 * Copyright Daniel Berthereau, 2016
 
 
-[scholarslab]: http://scholarslab.org/
+[scholarslab]: http://scholarslab.org
 [omeka]: http://omeka.org
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
+[Knightlab timeline]: https://timeline.knightlab.com
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
 [Apache licence v2]: https://www.apache.org/licenses/LICENSE-2.0.html
 [license]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
@@ -203,3 +217,5 @@ Credits
 [phpunit]: http://www.phpunit.de/manual/current/en/ "PHP Unit"
 [ISO 8601]: http://www.iso.org/iso/home/standards/iso8601.htm
 [themeing-plugin-pages]: http://omeka.org/codex/Theming_Plugin_Pages "Theming Plugin Pages"
+[ScholarLab]: https://github.com/scholarslab "Scholar's Lab"
+[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"

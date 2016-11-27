@@ -135,6 +135,7 @@ unset($elements['']);
             <p class="explanation">
                 <?php echo __('Set the default center date for the timeline.'); ?>
                 <?php echo __('The format should be "YYYY-MM-DD".'); ?>
+                <?php echo __('An empty value means "now", "0000-00-00" the earliest date and, "9999-99-99" the latest date.'); ?>
             </p>
         </div>
     </div>

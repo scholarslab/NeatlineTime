@@ -14,13 +14,13 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
         // Title
         $this->addElement('text', 'title', array(
             'label' => __('Title'),
-            'description' => __('A title for your timeline.')
+            'description' => __('A title for this timeline.')
         ));
 
         // Description
         $this->addElement('textarea', 'description', array(
             'label' => __('Description'),
-            'description' => __('A description for your timeline.'),
+            'description' => __('A description for this timeline.'),
             'attribs' => array('class' => 'html-editor', 'rows' => '15')
         ));
 
@@ -80,7 +80,9 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
         // Set the center date for the timeline.
         $this->addElement('text', 'center_date', array(
             'label' => __('Center Date'),
-            'description' => __('Set the center date of your timeline. Please use format YYYY-MM-DD.'),
+            'description' => __('Set the center date of the timeline.')
+                . ' ' . __('The format should be "YYYY-MM-DD".')
+                . ' ' . __('An empty value means "now", "0000-00-00" the earliest date, and "9999-99-99" the latest date.'),
             'validator' => array('date')
         ));
 

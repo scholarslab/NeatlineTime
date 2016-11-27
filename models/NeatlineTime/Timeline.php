@@ -299,7 +299,7 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
     protected function _validate()
     {
         $centerDate = $this->getParameter('center_date');
-        if (empty($centerDate)) {
+        if (empty($centerDate) || $centerDate == '0000-00-00' || $centerDate == '9999-99-99') {
             $this->setParameter('center_date', null);
         }
         // Validate the date.

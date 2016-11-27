@@ -9,6 +9,7 @@ $head = array(
     'title' => __('Neatline Time | %s', strip_formatting($timelineTitle)),
 );
 echo head($head);
+echo flash();
 ?>
 
 <div id="primary" class="seven columns alpha">
