@@ -66,11 +66,11 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     public function hookInstall()
     {
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
-            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
             `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
             `query` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `creator_id` INT UNSIGNED NOT NULL,
+            `owner_id` INT(10) UNSIGNED NOT NULL,
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
             `center_date` date NULL,
@@ -149,6 +149,16 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         if (version_compare($oldversion, '2.1.3', '<')) {
             set_option('neatline_time_library', $this->_options['neatline_time_library']);
+        }
+
+        if (version_compare($oldversion, '2.1.4', '<')) {
+            $sql = "
+            ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
+            CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            CHANGE COLUMN `creator_id` `owner_id` INT(10) UNSIGNED NOT NULL
+            ";
+
+            $this->_db->query($sql);
         }
     }
 

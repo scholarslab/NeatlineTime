@@ -8,7 +8,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
     public $title;
     public $description;
     public $query;
-    public $creator_id = 0;
+    public $owner_id = 0;
     public $public = 0;
     public $featured = 0;
     public $center_date;
@@ -20,7 +20,7 @@ class NeatlineTimeTimeline extends Omeka_Record_AbstractRecord implements Zend_A
      */
     protected function _initializeMixins()
     {
-        $this->_mixins[] = new Mixin_Owner($this, 'creator_id');
+        $this->_mixins[] = new Mixin_Owner($this, 'owner_id');
         $this->_mixins[] = new Mixin_PublicFeatured($this);
         $this->_mixins[] = new Mixin_Timestamp($this);
     }

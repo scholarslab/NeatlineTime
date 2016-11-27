@@ -44,7 +44,7 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
             $data['query'] = array('range' => '1');
         }
 
-        $data['creator_id'] = $user ? $user->id : $this->user->id;
+        $data['owner_id'] = $user ? $user->id : $this->user->id;
 
         $timeline = new NeatlineTimeTimeline;
 
