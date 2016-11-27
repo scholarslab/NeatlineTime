@@ -81,7 +81,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         $this->_db->query($sqlNeatlineTimeline);
 
-        $this->setDefaultOptions();
+        $this->_setDefaultOptions();
         $this->_installOptions();
     }
 
@@ -98,7 +98,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         // Earlier than version 1.1.
         if (version_compare($oldVersion, '1.1', '<')) {
             if (!get_option('neatlinetime')) {
-                $this->setDefaultOptions();
+                $this->_setDefaultOptions();
             }
         }
 
@@ -487,7 +487,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         return $layouts;
     }
 
-    protected function setDefaultOptions()
+    protected function _setDefaultOptions()
     {
         $options = array();
         $fields = array('Title', 'Description', 'Date');
