@@ -38,4 +38,4 @@ echo item_search_filters($query);
 <?php echo link_to($neatline_time_timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm big red button')); ?>
 </div>
 </div>
-<?php foot(); ?>
+<?php echo foot(); ?>
