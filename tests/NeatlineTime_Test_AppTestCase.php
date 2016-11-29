@@ -2,7 +2,6 @@
 /**
  * Testing helper class.
  */
-require_once '../NeatlineTimePlugin.php';
 
 class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
