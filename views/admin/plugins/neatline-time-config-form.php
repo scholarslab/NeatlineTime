@@ -1,3 +1,23 @@
+<fieldset id="fieldset-neatline-time-library"><legend><?php echo __('Javascript Library'); ?></legend>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_library',
+                __('Timeline library')); ?>
+        </div>
+        <div class="inputs five columns omega">
+            <?php
+            $options = array('simile' => 'Simile', 'knightlab' => 'Knightlab');
+            echo $this->formSelect('neatline_time_library',
+                get_option('neatline_time_library') ?: 'simile',
+                array(),
+                $options);
+            ?>
+            <p class="explanation">
+                <?php echo __('Two libraries are available: the standard open source Simile Timeline, or the Knightlab Timeline.'); ?>
+            </p>
+        </div>
+    </div>
+</fieldset>
 <div class="field">
     <label for="item_date"><?php echo __('Item Date'); ?></label>
     <div class="inputs">

@@ -16,4 +16,11 @@
         highLowerBound="70" />
     </logging>
 
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">.</directory>
+            <exclude />
+        </whitelist>
+    </filter>
+
 </phpunit>

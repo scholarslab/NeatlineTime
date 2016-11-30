@@ -3,7 +3,6 @@
  * The show view for the Timelines administrative panel.
  */
 
-queue_timeline_assets();
 $timelineTitle = metadata($neatline_time_timeline, 'title');
 $head = array('bodyclass' => 'timelines primary',
               'title' => __('Neatline Time | %s', strip_formatting($timelineTitle))
@@ -14,7 +13,13 @@ echo head($head);
 <div id="primary" class="seven columns alpha">
 
     <!-- Construct the timeline. -->
-    <?php echo $this->partial('timelines/_timeline.php', array('center_date' => metadata($neatline_time_timeline, 'center_date'))); ?>
+    <?php
+    $library = get_option('neatline_time_library') ?: 'simile';
+    $libraryPartial = $library == 'simile' ? '_timeline' : '_timeline_' . $library;
+    echo $this->partial('timelines/' . $libraryPartial . '.php',
+        array(
+            'center_date' => metadata($neatline_time_timeline, 'center_date'),
+    )); ?>
 
 <?php
 $query = unserialize($neatline_time_timeline->query);
@@ -38,4 +43,13 @@ echo item_search_filters($query);
 <?php echo link_to($neatline_time_timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm big red button')); ?>
 </div>
 </div>
-<?php foot(); ?>
+<script>
+  var jsonTimelineUri = '<?php echo neatlinetime_json_uri_for_timeline(); ?>';
+
+  $.getJSON(jsonTimelineUri, function(data) {
+    if (data.events.length > 100) {
+      alert("Adding more than 100 items to the timeline will create slow render times.");
+    }
+  });
+</script>
+<?php echo foot(); ?>

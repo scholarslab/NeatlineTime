@@ -9,7 +9,7 @@
 </div>
 <script>
   jQuery(document).ready(function($) {
-        var centerDate = '<?php echo $this->center_date; ?>';
+        var centerDate = <?php echo json_encode($center_date); ?>;
 
         NeatlineTime.loadTimeline(
             '<?php echo neatlinetime_timeline_id(); ?>',
