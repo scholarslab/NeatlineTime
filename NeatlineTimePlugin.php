@@ -30,6 +30,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     protected $_filters = array(
         'admin_navigation_main',
         'public_navigation_main',
+        'public_navigation_items',
         'response_contexts',
         'action_contexts',
         'exhibit_layouts',
@@ -42,6 +43,9 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     protected $_options = array(
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
+        // Can be "browse", "main" or empty.
+        'neatline_time_link_to_nav' => 'browse',
+        'neatline_time_link_to_nav_main' => '',
         'neatline_time_defaults' => array(
             // Numbers are the id of elements of a standard install of Omeka.
             'item_title' => 50,
@@ -359,6 +363,30 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'uri' => url('neatline-time')
         );
         return $nav;
+    }
+
+    public function filterPublicNavigationItems($navArray)
+    {
+        $linkToNav = get_option('neatline_time_link_to_nav');
+        switch ($linkToNav) {
+            case 'browse':
+                $navArray['Browse Timeline'] = array(
+                    'label' => __('Browse Timelines'),
+                    'uri' => url('neatline-time'),
+                );
+                break;
+            case 'main':
+                $linkToNavMain = get_option('neatline_time_link_to_nav_main');
+                if ($linkToNavMain) {
+                    $navArray['Browse Timeline'] = array(
+                        'label' => __('Browse Timeline'),
+                        'uri' => url('neatline-time/timelines/show/' . $linkToNavMain),
+                    );
+                }
+                break;
+            default:
+        }
+        return $navArray;
     }
 
     /**

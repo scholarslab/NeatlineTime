@@ -26,6 +26,48 @@ unset($elements['']);
         </div>
     </div>
 </fieldset>
+<fieldset id="fieldset-neatline-time-nav"><legend><?php echo __('Navigation'); ?></legend>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_link_to_nav',
+                __('Add secondary link')); ?>
+        </div>
+        <div class="inputs five columns omega">
+            <?php
+            $options = array(
+                '' => __('None'),
+                'browse' => __('Browse timelines'),
+                'main' => __('Display main timeline'),
+            );
+            echo $this->formSelect('neatline_time_link_to_nav',
+                get_option('neatline_time_link_to_nav') ?: 'browse',
+                array(),
+                $options);
+            ?>
+            <p class="explanation">
+                <?php echo __('The secondary link is displayed in the menu used in items/browse.'); ?>
+            </p>
+        </div>
+    </div>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_link_to_nav_main',
+                __('Main timeline')); ?>
+        </div>
+        <div class="inputs five columns omega">
+            <?php
+            $options = get_table_options('NeatlineTime_Timeline');
+            echo $this->formSelect('neatline_time_link_to_nav_main',
+                get_option('neatline_time_link_to_nav_main') ?: '',
+                array(),
+                $options);
+            ?>
+            <p class="explanation">
+                <?php echo __('This parameter is used only when the previous one is "Display main timeline".'); ?>
+            </p>
+        </div>
+    </div>
+</fieldset>
 <fieldset id="fieldset-neatline-time-default"><legend><?php echo __('Default Parameters'); ?></legend>
     <p class="explanation">
         <?php echo __('These parameters are used as defaults for all timelines.'); ?>

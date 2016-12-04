@@ -118,3 +118,8 @@ if (version_compare($oldVersion, '2.2.2', '<')) {
     ";
     $db->query($sql);
 }
+
+if (version_compare($oldVersion, '2.2.5', '<')) {
+    set_option('neatline_time_link_to_nav', $this->_options['neatline_time_link_to_nav']);
+    set_option('neatline_time_link_to_nav_main', $this->_options['neatline_time_link_to_nav_main']);
+}
