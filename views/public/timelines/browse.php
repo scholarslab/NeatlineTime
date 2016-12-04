@@ -8,16 +8,15 @@ $head = array('bodyclass' => 'timelines primary',
 echo head($head);
 ?>
 
-<?php
-$linkToNav = get_option('neatline_time_link_to_nav');
-if ($linkToNav == 'browse' || $linkToNav == 'main'): ?>
-<nav class="items-nav navigation secondary-nav">
-    <?php echo public_nav_items(); ?>
-</nav>
-<?php endif; ?>
-
 <div class="timelines">
-<h1><?php echo __('Browse Timelines'); ?></h1>
+    <h1><?php echo __('Browse Timelines'); ?></h1>
+    <?php
+    $linkToNav = get_option('neatline_time_link_to_nav');
+    if ($linkToNav == 'browse' || $linkToNav == 'main'): ?>
+    <nav class="items-nav navigation secondary-nav">
+        <?php echo public_nav_items(); ?>
+    </nav>
+    <?php endif; ?>
     <?php if ($total_results) : ?>
     <?php foreach (loop('Neatline_Time_Timelines') as $timeline): ?>
     <div class="timeline">

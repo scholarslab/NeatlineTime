@@ -46,6 +46,7 @@ unset($elements['']);
             ?>
             <p class="explanation">
                 <?php echo __('The secondary link is displayed in the menu used in items/browse.'); ?>
+                <?php echo __('The option "Main" allows to display a main timeline, like the Geolocation map.'); ?>
             </p>
         </div>
     </div>
