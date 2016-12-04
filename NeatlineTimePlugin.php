@@ -415,7 +415,12 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         if ($context != 'neatlinetime-json') {
             return $params;
         }
-        $id = (integer) Zend_Controller_Front::getInstance()->getRequest()->getParam('id');
+        // Check if this is a request (don't filter if this a background process).
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+        if (empty($request)) {
+            return $params;
+        }
+        $id = (integer) $request->getParam('id');
         if (empty($id)) {
             return $params;
         }
