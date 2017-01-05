@@ -323,10 +323,11 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
                 Timeline_parameters="bundle=true";';
             queue_js_string($timelineVariables);
             queue_js_file('timeline-api', 'javascripts/simile/timeline-api');
+            queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
         } else {
             queue_js_url('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+            queue_js_string('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery;');
         }
-        queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
     }
 
     /**
