@@ -14,11 +14,25 @@ class ConvertDateTest extends NeatlineTime_Test_AppTestCase
     }
 
     /**
-     * By default, a single number is not accepted.
+     * By default, a single number is now accepted.
      *
      * https://github.com/scholarslab/NeatlineTime/issues/39
      */
     public function testYearOnlyDate() {
+        $this->assertEquals('2012-01-01T00:00:00+00:00',
+            neatlinetime_convert_date('2012')
+        );
+    }
+
+    /**
+     * A single number may be not accepted.
+     *
+     * https://github.com/scholarslab/NeatlineTime/issues/39
+     */
+    public function testYearOnlyDateSkip() {
+        $defaults = json_decode(get_option('neatline_time_defaults'), true);
+        $defaults['render_year'] = 'skip';
+        set_option('neatline_time_defaults', json_encode($defaults));
         $this->assertFalse(
             neatlinetime_convert_date('2012')
         );
