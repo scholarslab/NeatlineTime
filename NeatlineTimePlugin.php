@@ -52,8 +52,8 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'item_description' => 41,
             'item_date' => 40,
             'item_date_end' => '',
-            'render_year' => 'skip',
-            'center_date' => '',
+            'render_year' => 'january_1',
+            'center_date' => '9999-99-99',
             'viewer' => '{}',
         ),
     );
