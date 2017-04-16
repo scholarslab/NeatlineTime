@@ -8,6 +8,9 @@ of Virginia Library, allows you to create timelines for the [Omeka][omeka]
 publishing platform. It uses the [SIMILE Timeline plugin][simile-timeline] or
 the [Knightlab timeline].
 
+This plugin is upgradable to [Omeka S] via the plugin [Upgrade to Omeka S], that
+installs the module [Timeline for Omeka S].
+
 
 Installation
 ------------
@@ -216,8 +219,8 @@ Warning
 
 Use it at your own risk.
 
-It's always recommended to backup your files and database regularly so you can
-roll back if needed.
+It’s always recommended to backup your files and your databases and to check
+your archives regularly so you can roll back if needed.
 
 
 Troubleshooting
@@ -251,13 +254,16 @@ Credits
 ### Copyright
 
 * Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia.
-* Copyright Daniel Berthereau, 2016
+* Copyright Daniel Berthereau, 2016-2017
 
 
 [scholarslab]: http://scholarslab.org
 [omeka]: http://omeka.org
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
 [Knightlab timeline]: https://timeline.knightlab.com
+[Omeka S]: https://omeka.org/s
+[Upgrade to Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
+[Timeline for Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-Timeline
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
 [example of use]: https://docs.neatline.org/working-with-the-simile-timeline-widget.html
 [examples]: http://www.simile-widgets.org/timeline/examples/index.html

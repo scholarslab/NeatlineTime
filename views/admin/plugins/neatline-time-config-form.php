@@ -150,10 +150,10 @@ unset($elements['']);
         <div class='inputs five columns omega'>
             <?php
             $values = array(
-                'skip' => __('Skip the record'),
                 'january_1' => __('Pick first January'),
                 'july_1' => __('Pick first July'),
                 'full_year' => __('Mark entire year'),
+                'skip' => __('Skip the record'),
             );
             echo $this->formRadio('neatline_time_defaults[render_year]',
                 $defaults['render_year'],

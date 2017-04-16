@@ -40,6 +40,7 @@ function link_to_timeline($text = null, $props = array(), $action = 'show', $tim
 /**
  * Queues JavaScript and CSS for NeatlineTime in the page header.
  *
+ * @deprecated Uses hooks for header instead.
  * @see NeatlineTimePlugin::_head()
  * @since 1.0
  * @return void.
@@ -53,7 +54,7 @@ function queue_timeline_assets()
         return;
     }
 
-    // Default neatline library.
+    // Default simile library.
     queue_css_file('neatlinetime-timeline');
 
     queue_js_file('neatline-time-scripts');
@@ -61,11 +62,11 @@ function queue_timeline_assets()
     // Check useInternalJavascripts in config.ini.
     $config = Zend_Registry::get('bootstrap')->getResource('Config');
     $useInternalJs = isset($config->theme->useInternalJavascripts)
-    ? (bool) $config->theme->useInternalJavascripts
-    : false;
+        ? (bool) $config->theme->useInternalJavascripts
+        : false;
     $useInternalJs = isset($config->theme->useInternalAssets)
-    ? (bool) $config->theme->useInternalAssets
-    : $useInternalJs;
+        ? (bool) $config->theme->useInternalAssets
+        : $useInternalJs;
 
     if ($useInternalJs) {
         $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
@@ -73,20 +74,13 @@ function queue_timeline_assets()
             Timeline_parameters="bundle=true";';
         queue_js_string($timelineVariables);
         queue_js_file('timeline-api', 'javascripts/simile/timeline-api');
+        queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
     } else {
         queue_js_url('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+        queue_js_string('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery;');
     }
-    queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
 }
 
-/**
- * Returns the value of an element set in the NeatlineTime config options.
- *
- * @param Record $record
- * @param string The NeatlineTime option name.
- * @param array An array of options.
- * @return string|array|null
- */
 /**
  * Get metadata for a record according to the parameters of a timeline.
  *
@@ -181,19 +175,21 @@ function neatlinetime_display_random_featured_timelines($num = 1)
  */
 function neatlinetime_item_class($item = null)
 {
-    $classArray = array('item');
+    $classes = array('item');
 
-    if ($itemTypeName = metadata($item, 'item_type_name')) {
-        $classArray[] = text_to_id($itemTypeName);
+    $type = metadata($item, 'item_type_name');
+    if ($type) {
+        $classes[] = text_to_id($type);
     }
 
-    if ($dcTypes = metadata($item, array('Dublin Core', 'Type'), array('all' => true))) {
+    $dcTypes = metadata($item, array('Dublin Core', 'Type'), array('all' => true));
+    if ($dcTypes) {
         foreach ($dcTypes as $type) {
-            $classArray[] = text_to_id($type);
+            $classes[] = text_to_id($type);
         }
     }
 
-    $classAttribute = implode(' ', $classArray);
+    $classAttribute = implode(' ', $classes);
     $classAttribute = apply_filters('neatlinetime_item_class', $classAttribute);
     return $classAttribute;
 }
@@ -216,8 +212,8 @@ function neatlinetime_convert_date($date, $renderYear = null)
     if (preg_match('/^-?\d{1,4}$/', $date)) {
         // Normalize the year.
         $date = $date < 0
-            ? '-' . str_pad(substring($date, 1), 4, "0", STR_PAD_LEFT)
-            : str_pad($date, 4, "0", STR_PAD_LEFT);
+            ? '-' . str_pad(substring($date, 1), 4, '0', STR_PAD_LEFT)
+            : str_pad($date, 4, '0', STR_PAD_LEFT);
         switch ($renderYear) {
             case 'january_1':
                 $date_out = $date . '-01-01' . 'T00:00:00+00:00';
@@ -267,7 +263,6 @@ function neatlinetime_convert_date($date, $renderYear = null)
  *
  * @todo manage the case where the start is empty and the end is set.
  *
- * @see Zend_Date
  * @param string $date
  * @param string renderYear Force the format of a single number as a year.
  * @return array Array of two dates.
@@ -282,7 +277,6 @@ function neatlinetime_convert_any_date($date, $renderYear = null)
  *
  * @todo manage the case where the start is empty and the end is set.
  *
- * @see Zend_Date
  * @param string $date
  * @param string $dateEnd
  * @param string renderYear Force the format of a single number as a year.
@@ -317,7 +311,6 @@ function neatlinetime_convert_two_dates($date, $dateEnd, $renderYear = null)
  * Generates an ISO-8601 date from a date string, with an exception for
  * "full_year" render, that returns two dates.
  *
- * @see Zend_Date
  * @param string $date
  * @param string renderYear Force the format of a single number as a year.
  * @return array Array of two dates.
@@ -345,7 +338,6 @@ function neatlinetime_convert_single_date($date, $renderYear = null)
  *
  * By construction, no "full_year" is returned.
  *
- * @see Zend_Date
  * @param array $dates
  * @param string renderYear Force the format of a single number as a year.
  * @return array $dates
