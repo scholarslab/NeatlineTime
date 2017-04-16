@@ -21,7 +21,7 @@ unset($elements['']);
                 $options);
             ?>
             <p class="explanation">
-                <?php echo __('Two libraries are available: the standard open source Simile Timeline, or the Knightlab Timeline.'); ?>
+                <?php echo __('Two libraries are available: the standard open source Simile Timeline, or the online Knightlab Timeline.'); ?>
             </p>
         </div>
     </div>
@@ -71,7 +71,7 @@ unset($elements['']);
 </fieldset>
 <fieldset id="fieldset-neatline-time-default"><legend><?php echo __('Default Parameters'); ?></legend>
     <p class="explanation">
-        <?php echo __('These parameters are used as defaults for all timelines.'); ?>
+        <?php echo __('These parameters are used as default for all timelines.'); ?>
         <?php echo __('They can be overridden in the form of each timeline.'); ?>
     </p>
     <div class="field">

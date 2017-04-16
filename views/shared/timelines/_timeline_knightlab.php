@@ -54,9 +54,9 @@ if (empty($timeline)) $timeline = get_current_record('neatline_time_timeline');
 
             // If the record has a file attachment, include that.
             // Limits based on returned JSON:
-              // If multiple images are attached to the record, it only shows the first.
-              // If a pdf is attached, it does not show it or indicate it.
-              // If an mp3 is attached in Files, it does not appear.
+            // If multiple images are attached to the record, it only shows the first.
+            // If a pdf is attached, it does not show it or indicate it.
+            // If an mp3 is attached in Files, it does not appear.
             if (data.events[i].image) {
               timelineEntry["media"] = { "url": data.events[i].image };
             }
@@ -69,8 +69,8 @@ if (empty($timeline)) $timeline = get_current_record('neatline_time_timeline');
           var slides = {
             "title": {
               "text": {
-                "headline": '<?php echo $timeline->title; ?>',
-                "text": '<?php echo $timeline->description; ?>'
+                "headline": <?php echo json_encode($timeline->title); ?>,
+                "text": <?php echo json_encode($timeline->description); ?>
               }
             },
             "events": timelineEvents

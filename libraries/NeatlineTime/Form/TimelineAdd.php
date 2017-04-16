@@ -83,7 +83,7 @@ class NeatlineTime_Form_TimelineAdd extends Omeka_Form
             'description' => __('Set the center date of the timeline.')
                 . ' ' . __('The format should be "YYYY-MM-DD".')
                 . ' ' . __('An empty value means "now", "0000-00-00" the earliest date, and "9999-99-99" the latest date.'),
-            'validator' => array('date'),
+            'validators' => array('date'),
         ));
 
         // Set the params of the viewer.
