@@ -397,7 +397,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     {
         $contexts['neatlinetime-json'] = array(
             'suffix'  => 'neatlinetime-json',
-            'headers' => array('Content-Type' => 'text/javascript')
+            'headers' => array('Content-Type' => 'application/json')
         );
         return $contexts;
     }

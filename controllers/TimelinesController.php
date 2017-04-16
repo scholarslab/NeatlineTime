@@ -91,6 +91,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
         $items = $timeline->getItems();
 
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
         $this->view->neatline_time_timeline = $timeline;
         $this->view->items = $items;
     }
