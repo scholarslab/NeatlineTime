@@ -59,14 +59,19 @@ function queue_timeline_assets()
 
     queue_js_file('neatline-time-scripts');
 
-    // Check useInternalJavascripts in config.ini.
-    $config = Zend_Registry::get('bootstrap')->getResource('Config');
-    $useInternalJs = isset($config->theme->useInternalJavascripts)
-        ? (bool) $config->theme->useInternalJavascripts
-        : false;
-    $useInternalJs = isset($config->theme->useInternalAssets)
-        ? (bool) $config->theme->useInternalAssets
-        : $useInternalJs;
+    $internalAssets = get_option('neatline_time_internal_assets');
+    if ($internalAssets) {
+        $useInternalJs = true;
+    } else {
+        // Check useInternalJavascripts in config.ini.
+        $config = Zend_Registry::get('bootstrap')->getResource('Config');
+        $useInternalJs = isset($config->theme->useInternalJavascripts)
+            ? (bool) $config->theme->useInternalJavascripts
+            : false;
+        $useInternalJs = isset($config->theme->useInternalAssets)
+            ? (bool) $config->theme->useInternalAssets
+            : $useInternalJs;
+    }
 
     if ($useInternalJs) {
         $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";

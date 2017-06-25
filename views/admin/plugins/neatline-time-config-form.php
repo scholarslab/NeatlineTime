@@ -25,6 +25,19 @@ unset($elements['']);
             </p>
         </div>
     </div>
+    <div class="field">
+        <div class="two columns alpha">
+            <?php echo $this->formLabel('neatline_time_internal_assets',
+                __('Use Internal library for Simile')); ?>
+        </div>
+        <div class="inputs five columns omega">
+            <?php echo $this->formCheckbox('neatline_time_internal_assets', true,
+                array('checked' => (boolean) get_option('neatline_time_internal_assets'))); ?>
+            <p class="explanation">
+                <?php echo __('The external Simile api cannot be used on a https site, so check this box if needed.'); ?>
+            </p>
+        </div>
+    </div>
 </fieldset>
 <fieldset id="fieldset-neatline-time-nav"><legend><?php echo __('Navigation'); ?></legend>
     <div class="field">

@@ -37,10 +37,10 @@ Installation
 
 All these parameters can be customized for each timeline.
 
-Note: If Omeka is https and if external assets are used, Simile will not load on
-recent browsers, because the online library contains an url with unsecure http.
-In that case, you need to use the internal assets in the Omeka config.
-
+Note: If Omeka is https, if external assets are used, and if the Simile library
+is used, the library will not load on recent browsers, because the online
+library contains an url with unsecure http. In that case, you need to set the
+option "Use Internal library for Simile".
 
 Usage
 -----

@@ -43,6 +43,7 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     protected $_options = array(
         // Can be 'simile' or 'knightlab'.
         'neatline_time_library' => 'simile',
+        'neatline_time_internal_assets' => false,
         // Can be "browse", "main" or empty.
         'neatline_time_link_to_nav' => 'browse',
         'neatline_time_link_to_nav_main' => '',
@@ -308,14 +309,19 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 
         queue_js_file('neatline-time-scripts');
 
-        // Check useInternalJavascripts in config.ini.
-        $config = Zend_Registry::get('bootstrap')->getResource('Config');
-        $useInternalJs = isset($config->theme->useInternalJavascripts)
-            ? (bool) $config->theme->useInternalJavascripts
-            : false;
-        $useInternalJs = isset($config->theme->useInternalAssets)
-            ? (bool) $config->theme->useInternalAssets
-            : $useInternalJs;
+        $internalAssets = get_option('neatline_time_internal_assets');
+        if ($internalAssets) {
+            $useInternalJs = true;
+        } else {
+            // Check useInternalJavascripts in config.ini.
+            $config = Zend_Registry::get('bootstrap')->getResource('Config');
+            $useInternalJs = isset($config->theme->useInternalJavascripts)
+                ? (bool) $config->theme->useInternalJavascripts
+                : false;
+            $useInternalJs = isset($config->theme->useInternalAssets)
+                ? (bool) $config->theme->useInternalAssets
+                : $useInternalJs;
+        }
 
         if ($useInternalJs) {
             $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
