@@ -1,19 +1,11 @@
 <?php
 
-if (!defined('NEATLINE_TIME_PLUGIN_DIR')) {
-    define('NEATLINE_TIME_PLUGIN_DIR', dirname(__FILE__));
-}
-
 if (!defined('NEATLINE_TIME_HELPERS_DIR')) {
-    define('NEATLINE_TIME_HELPERS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/helpers');
+    define('NEATLINE_TIME_HELPERS_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR
+        . 'libraries' . DIRECTORY_SEPARATOR
+        . 'NeatlineTime');
 }
-
-if (!defined('NEATLINE_TIME_FORMS_DIR')) {
-    define('NEATLINE_TIME_FORMS_DIR', NEATLINE_TIME_PLUGIN_DIR . '/forms');
-}
-
-require_once NEATLINE_TIME_PLUGIN_DIR . '/NeatlineTimePlugin.php';
-require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
+require_once NEATLINE_TIME_HELPERS_DIR . DIRECTORY_SEPARATOR . 'Functions.php';
 
 /**
  * NeatlineTime plugin class
@@ -21,26 +13,59 @@ require_once NEATLINE_TIME_HELPERS_DIR . '/NeatlineTimeFunctions.php';
 class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array(
-        'install',
-        'uninstall',
-        'upgrade',
         'initialize',
-        'define_acl',
-        'define_routes',
-        'admin_append_to_plugin_uninstall_message',
-        'item_browse_sql',
+        'install',
+        'upgrade',
+        'uninstall',
+        'uninstall_message',
         'config',
         'config_form',
-        'exhibit_builder_page_head'
+        'define_acl',
+        'define_routes',
+        'public_head',
+        'admin_head',
+        'exhibit_builder_page_head',
     );
 
     protected $_filters = array(
         'admin_navigation_main',
         'public_navigation_main',
+        'public_navigation_items',
         'response_contexts',
         'action_contexts',
-        'exhibit_layouts'
+        'exhibit_layouts',
+        'items_browse_params',
     );
+
+    /**
+     * @var array Options and their default values.
+     */
+    protected $_options = array(
+        // Can be 'simile' or 'knightlab'.
+        'neatline_time_library' => 'simile',
+        'neatline_time_internal_assets' => false,
+        // Can be "browse", "main" or empty.
+        'neatline_time_link_to_nav' => 'browse',
+        'neatline_time_link_to_nav_main' => '',
+        'neatline_time_defaults' => array(
+            // Numbers are the id of elements of a standard install of Omeka.
+            'item_title' => 50,
+            'item_description' => 41,
+            'item_date' => 40,
+            'item_date_end' => '',
+            'render_year' => 'january_1',
+            'center_date' => '9999-99-99',
+            'viewer' => '{}',
+        ),
+    );
+
+    /**
+     * Timeline initialize hook
+     */
+    public function hookInitialize()
+    {
+        add_translation_source(dirname(__FILE__) . '/languages');
+    }
 
     /**
      * Timeline install hook
@@ -48,38 +73,26 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     public function hookInstall()
     {
         $sqlNeatlineTimeline = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_time_timelines` (
-            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            `title` TINYTEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `description` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `query` TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-            `creator_id` INT UNSIGNED NOT NULL,
+            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `title` TINYTEXT COLLATE utf8_unicode_ci NOT NULL,
+            `description` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            `owner_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
             `public` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `featured` TINYINT(1) NOT NULL DEFAULT '0',
-            `center_date` date NOT NULL default '0000-00-00',
-            `added` timestamp NOT NULL default '0000-00-00 00:00:00',
+            `parameters` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            `query` TEXT COLLATE utf8_unicode_ci NOT NULL,
+            `added` timestamp NOT NULL default '2000-01-01 00:00:00',
             `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-            PRIMARY KEY (`id`)
-            ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+            PRIMARY KEY (`id`),
+            KEY `public` (`public`),
+            KEY `featured` (`featured`),
+            KEY `owner_id` (`owner_id`)
+        ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 
         $this->_db->query($sqlNeatlineTimeline);
 
-        $this->setDefaultOptions();
-
-    }
-
-    /**
-     * Timeline uninstall hook
-     */
-    public function hookUninstall()
-    {
-
-        $sql = "DROP TABLE IF EXISTS
-            `{$this->_db->prefix}neatline_time_timelines`";
-
-        $this->_db->query($sql);
-
-        delete_option('neatlinetime');
-
+        $this->_options['neatline_time_defaults'] = json_encode($this->_options['neatline_time_defaults']);
+        $this->_installOptions();
     }
 
     /**
@@ -91,47 +104,36 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     {
         $oldVersion = $args['old_version'];
         $newVersion = $args['new_version'];
+        $db = $this->_db;
 
-        // Earlier than version 1.1.
-        if (version_compare($oldVersion, '1.1', '<')) {
-            if (!get_option('neatlinetime')) {
-                $this->setDefaultOptions();
-            }
-        }
-
-        if (version_compare($oldVersion, '2.0.2', '<') && version_compare($oldVersion, '2.0', '>') ) {
-            if ($timelines = get_records('NeatlineTimeTimeline')) {
-                foreach ($timelines as $timeline) {
-                    $query = unserialize($timeline->query);
-                    while (!is_array($query)) {
-                        $query = unserialize($query);
-                    }
-                    $timeline->query = serialize($query);
-                    $timeline->save();
-                }
-            }
-        }
-
-        if (version_compare($oldversion, '2.1', '<')) {
-          $rows = $this->_db->query(
-            "show columns from {$this->_db->prefix}neatline_time_timelines where field='center_date';"
-          );
-
-          if ($rows->rowCount() === 0) {
-            $sqlNeatlineTimeline = "ALTER TABLE  `{$this->_db->prefix}neatline_time_timelines`
-            ADD COLUMN `center_date` date NOT NULL default '0000-00-00'";
-
-            $this->_db->query($sqlNeatlineTimeline);
-          }
-        }
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'upgrade.php';
     }
 
     /**
-     * Timeline initialize hook
+     * Timeline uninstall hook
      */
-    public function hookInitialize()
+    public function hookUninstall()
     {
-        add_translation_source(dirname(__FILE__) . '/languages');
+        $sql = "DROP TABLE IF EXISTS
+        `{$this->_db->prefix}neatline_time_timelines`";
+
+        $this->_db->query($sql);
+
+        // Remove old options.
+        delete_option('neatlinetime');
+        delete_option('neatline_time_render_year');
+
+        $this->_uninstallOptions();
+    }
+
+    /**
+     * Display the uninstall message.
+     */
+    public function hookUninstallMessage()
+    {
+        $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
+          will remove all custom Timeline records.');
+        echo '<p>' . $string . '</p>';
     }
 
     /**
@@ -144,12 +146,14 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         $acl->addResource('NeatlineTime_Timelines');
 
         // All everyone access to browse, show, and items.
-        $acl->allow(null, 'NeatlineTime_Timelines', array('show', 'browse', 'items'));
-
-        $acl->allow('researcher', 'NeatlineTime_Timelines', 'showNotPublic');
-        $acl->allow('contributor', 'NeatlineTime_Timelines', array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
-        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines', array('edit', 'query', 'items', 'delete'), new Omeka_Acl_Assert_Ownership);
-
+        $acl->allow(null, 'NeatlineTime_Timelines',
+            array('show', 'browse', 'items'));
+        $acl->allow('researcher', 'NeatlineTime_Timelines',
+            'showNotPublic');
+        $acl->allow('contributor', 'NeatlineTime_Timelines',
+            array('add', 'editSelf', 'querySelf', 'itemsSelf', 'deleteSelf', 'showNotPublic'));
+        $acl->allow(array('super', 'admin', 'contributor', 'researcher'), 'NeatlineTime_Timelines',
+            array('edit', 'query', 'items', 'delete'), new Omeka_Acl_Assert_Ownership);
     }
 
     /**
@@ -164,102 +168,114 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:action/:id',
                 array(
-                    'module'        => 'neatline-time',
-                    'controller'    => 'timelines'
-                    ),
-                array('id'          => '\d+')
-                )
-            );
+                    'module' => 'neatline-time',
+                    'controller' => 'timelines'
+                ),
+                array('id' => '\d+')
+            )
+        );
 
         $router->addRoute(
             'timelineDefaultRoute',
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:action',
                 array(
-                    'module'        => 'neatline-time',
-                    'controller'    => 'timelines'
-                    )
+                    'module' => 'neatline-time',
+                    'controller' => 'timelines'
                 )
-            );
+            )
+        );
 
         $router->addRoute(
             'timelineRedirectRoute',
             new Zend_Controller_Router_Route(
                 'neatline-time',
                 array(
-                    'module'        => 'neatline-time',
-                    'controller'    => 'timelines',
-                    'action'        => 'browse'
-                    )
+                    'module' => 'neatline-time',
+                    'controller' => 'timelines',
+                    'action' => 'browse'
                 )
-            );
+            )
+        );
 
         $router->addRoute(
             'timelinePaginationRoute',
             new Zend_Controller_Router_Route(
                 'neatline-time/timelines/:page',
                 array(
-                    'module'        => 'neatline-time',
-                    'controller'    => 'timelines',
-                    'action'        => 'browse',
-                    'page'          => '1'
-                    ),
-                array('page'        => '\d+')
-                )
-            );
-
+                    'module' => 'neatline-time',
+                    'controller' => 'timelines',
+                    'action' => 'browse',
+                    'page' => '1'
+                ),
+                array('page' => '\d+')
+            )
+        );
     }
 
     /**
-     * Timeline admin_append_to_plugin_uninstall_message hook
-     */
-    public function hookAdminAppendToPluginUninstallMessage()
-    {
-        $string = __('<strong>Warning</strong>: Uninstalling the Neatline Time plugin
-          will remove all custom Timeline records.');
-
-        echo '<p>'.$string.'</p>';
-
-    }
-
-    /**
-     * Filter the items_browse_sql to return only items that have a non-empty
-     * value for the DC:Date field, when using the neatlinetime-json context.
-     * Uses the ItemSearch model (models/ItemSearch.php) to add the check for
-     * a non-empty DC:Date.
+     * Shows plugin configuration page.
      *
-     * @param Omeka_Db_Select $select
+     * @return void
      */
-    public function hookItemBrowseSql()
+    public function hookConfigForm($args)
     {
+        $defaults = get_option('neatline_time_defaults');
+        $defaults = json_decode($defaults, true);
+        $defaults = empty($defaults)
+            // Set default parameters.
+            ? $this->_options['neatline_time_defaults']
+            // Add possible new default parameters to avoid a notice.
+            : array_merge($this->_options['neatline_time_defaults'], $defaults);
 
-        $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
-        if ($context == 'neatlinetime-json') {
-            $search = new ItemSearch($select);
-            $newParams[0]['element_id'] = neatlinetime_get_option('item_date');
-            $newParams[0]['type'] = 'is not empty';
-            $search->advanced($newParams);
+        $view = $args['view'];
+        echo $view->partial(
+            'plugins/neatline-time-config-form.php',
+            array(
+                'defaults' => $defaults,
+            ));
+    }
+
+    /**
+     * Processes the configuration form.
+     *
+     * @return void
+     */
+    public function hookConfig($args)
+    {
+        $post = $args['post'];
+        foreach ($this->_options as $optionKey => $optionValue) {
+            if (isset($post[$optionKey])) {
+                if (is_array($optionValue)) {
+                    $post[$optionKey] = json_encode($post[$optionKey]);
+                }
+                set_option($optionKey, $post[$optionKey]);
+            }
         }
-
     }
 
-    /**
-     * Plugin configuration.
-     */
-    public function hookConfig()
+    public function hookAdminHead($args)
     {
-      $options = $_POST;
-      unset($options['install_plugin']);
-      $options = serialize($options);
-      set_option('neatlinetime', $options);
+        $requestParams = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+        $module = isset($requestParams['module']) ? $requestParams['module'] : 'default';
+        $controller = isset($requestParams['controller']) ? $requestParams['controller'] : 'index';
+        $action = isset($requestParams['action']) ? $requestParams['action'] : 'index';
+        if ($module != 'neatline-time' || $controller != 'timelines' || $action != 'show') {
+            return;
+        }
+        $this->_head($args);
     }
 
-    /**
-     * Plugin configuration form.
-     */
-    public function hookConfigForm()
+    public function hookPublicHead($args)
     {
-        include 'config_form.php';
+        $requestParams = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+        $module = isset($requestParams['module']) ? $requestParams['module'] : 'default';
+        $controller = isset($requestParams['controller']) ? $requestParams['controller'] : 'index';
+        $action = isset($requestParams['action']) ? $requestParams['action'] : 'index';
+        if ($module != 'neatline-time' || $controller != 'timelines' || $action != 'show') {
+            return;
+        }
+        $this->_head($args);
     }
 
     /**
@@ -268,9 +284,58 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
     public function hookExhibitBuilderPageHead($args)
     {
         if (array_key_exists('neatline-time', $args['layouts'])) {
-            queue_timeline_assets();
+            $this->_head($args);
         }
     }
+
+    /**
+     * Load all assets.
+     *
+     * Replace queue_timeline_assets()
+     *
+     * @return void
+     */
+    private function _head($args)
+    {
+        $library = get_option('neatline_time_library');
+        if ($library == 'knightlab') {
+            queue_css_url('//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css');
+            queue_js_url('//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js');
+            return;
+        }
+
+        // Default simile library.
+        queue_css_file('neatlinetime-timeline');
+
+        queue_js_file('neatline-time-scripts');
+
+        $internalAssets = get_option('neatline_time_internal_assets');
+        if ($internalAssets) {
+            $useInternalJs = true;
+        } else {
+            // Check useInternalJavascripts in config.ini.
+            $config = Zend_Registry::get('bootstrap')->getResource('Config');
+            $useInternalJs = isset($config->theme->useInternalJavascripts)
+                ? (bool) $config->theme->useInternalJavascripts
+                : false;
+            $useInternalJs = isset($config->theme->useInternalAssets)
+                ? (bool) $config->theme->useInternalAssets
+                : $useInternalJs;
+        }
+
+        if ($useInternalJs) {
+            $timelineVariables = 'Timeline_ajax_url="' . src('simile-ajax-api.js', 'javascripts/simile/ajax-api') . '";
+                Timeline_urlPrefix="' . dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')) . '/";
+                Timeline_parameters="bundle=true";';
+            queue_js_string($timelineVariables);
+            queue_js_file('timeline-api', 'javascripts/simile/timeline-api');
+            queue_js_string('SimileAjax.History.enabled = false; // window.jQuery = SimileAjax.jQuery;');
+        } else {
+            queue_js_url('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
+            queue_js_string('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery;');
+        }
+    }
+
     /**
      * Timeline admin_navigation_main filter.
      *
@@ -281,7 +346,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function filterAdminNavigationMain($nav)
     {
-
         $nav[] = array(
             'label' => __('Neatline Time'),
             'uri' => url('neatline-time'),
@@ -289,7 +353,6 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
             'privilege' => 'browse'
         );
         return $nav;
-
     }
 
     /**
@@ -302,13 +365,35 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function filterPublicNavigationMain($nav)
     {
-
         $nav[] = array(
             'label' => __('Neatline Time'),
             'uri' => url('neatline-time')
         );
         return $nav;
+    }
 
+    public function filterPublicNavigationItems($navArray)
+    {
+        $linkToNav = get_option('neatline_time_link_to_nav');
+        switch ($linkToNav) {
+            case 'browse':
+                $navArray['Browse Timeline'] = array(
+                    'label' => __('Browse Timelines'),
+                    'uri' => url('neatline-time'),
+                );
+                break;
+            case 'main':
+                $linkToNavMain = get_option('neatline_time_link_to_nav_main');
+                if ($linkToNavMain) {
+                    $navArray['Browse Timeline'] = array(
+                        'label' => __('Browse Timeline'),
+                        'uri' => url('neatline-time/timelines/show/' . $linkToNavMain),
+                    );
+                }
+                break;
+            default:
+        }
+        return $navArray;
     }
 
     /**
@@ -316,14 +401,11 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function filterResponseContexts($contexts)
     {
-
         $contexts['neatlinetime-json'] = array(
             'suffix'  => 'neatlinetime-json',
-            'headers' => array('Content-Type' => 'text/javascript')
+            'headers' => array('Content-Type' => 'application/json')
         );
-
         return $contexts;
-
     }
 
     /**
@@ -332,13 +414,10 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function filterActionContexts($contexts, $args)
     {
-
         if ($args['controller'] instanceof NeatlineTime_TimelinesController) {
             $contexts['items'][''] = 'neatlinetime-json';
         }
-
         return $contexts;
-
     }
 
     /**
@@ -356,18 +435,39 @@ class NeatlineTimePlugin extends Omeka_Plugin_AbstractPlugin
         return $layouts;
     }
 
-    protected function setDefaultOptions()
+    /**
+     * Filter items browse params.
+     *
+     * @param array $params
+     * @return array
+     */
+    public function filterItemsBrowseParams($params)
     {
-        $options = array();
-        $fields = array('Title', 'Description', 'Date');
-
-        foreach ($fields as $field) {
-            $key = 'item_'.strtolower($field);
-            $element = $this->_db->getTable('Element')->findByElementSetNameAndElementName("Dublin Core", "$field");
-            $options[$key] = $element->id;
+        // Filter the items to return only items that have a non-empty value for
+        // the DC:Date or the specified field when using the neatlinetime-json
+        // context.
+        $context = Zend_Controller_Action_HelperBroker::getStaticHelper('ContextSwitch')->getCurrentContext();
+        if ($context != 'neatlinetime-json') {
+            return $params;
         }
-
-        $options = serialize($options);
-        set_option('neatlinetime', $options);
+        // Check if this is a request (don't filter if this a background process).
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+        if (empty($request)) {
+            return $params;
+        }
+        $id = (integer) $request->getParam('id');
+        if (empty($id)) {
+            return $params;
+        }
+        $timeline = $this->_db->getTable('NeatlineTime_Timeline')->find($id);
+        if (empty($timeline)) {
+            return $params;
+        }
+        $params['advanced'][] = array(
+            'joiner' => 'and',
+            'element_id' => $timeline->getProperty('item_date'),
+            'type' =>'is not empty',
+        );
+        return $params;
     }
 }

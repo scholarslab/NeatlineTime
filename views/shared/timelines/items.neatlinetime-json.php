@@ -1,55 +1,58 @@
 <?php
 /**
- * The shared neatlinetime-json browse view for Items
+ * The shared neatlinetime-json browse view for Items.
+ *
+ * @todo Manage the case of a range where the start is unknown.
  */
 
-$neatlineTimeEvents = array();
+$timeline = $neatline_time_timeline;
+if (empty($timeline)) {
+    return;
+}
+
+$events = array();
 foreach ($items as $item) {
-    $itemTitle = strip_formatting(neatlinetime_get_item_text('item_title', array(), $item));
-    $itemLink = record_url($item);
-    $itemDescription =  neatlinetime_get_item_text('item_description', array('snippet' => '200'), $item);
-
-    $itemDates = neatlinetime_get_item_text('item_date', array('all' => true), $item);
-
-    $fileUrl = null;
-    if ($file = get_db()->getTable('File')->findWithImages(metadata($item, 'id'), 0)) {
-        $fileUrl = metadata($file, 'square_thumbnail_uri');
+    $itemDates = neatlinetime_metadata($item, 'item_date', array('all' => true, 'no_filter' => true), $timeline);
+    if (empty($itemDates)) {
+        continue;
     }
-
-    if (!empty($itemDates)) {
-      foreach ($itemDates as $itemDate) {
-            $itemDate = $itemDate;
-
-            $neatlineTimeEvent = array();
-            $dateArray = explode('/', $itemDate);
-
-            if ($dateStart = neatlinetime_convert_date(trim($dateArray[0]))) {
-                $neatlineTimeEvent['start'] = $dateStart;
-
-                if (count($dateArray) == 2) {
-                    $neatlineTimeEvent['end'] = neatlinetime_convert_date(trim($dateArray[1]));
-                }
-
-                $neatlineTimeEvent['title'] = $itemTitle;
-                $neatlineTimeEvent['link'] = $itemLink;
-                $neatlineTimeEvent['classname'] = neatlinetime_item_class($item);
-
-                if ($fileUrl) {
-                    $neatlineTimeEvent['image'] = $fileUrl;
-                }
-
-                $neatlineTimeEvent['description'] = $itemDescription;
-                $neatlineTimeEvents[] = $neatlineTimeEvent;
-            }
+    $itemTitle = strip_formatting(neatlinetime_metadata($item, 'item_title', array(), $timeline));
+    $itemDescription =  neatlinetime_metadata($item, 'item_description', array('snippet' => '200'), $timeline);
+    $itemDatesEnd = neatlinetime_metadata($item, 'item_date_end', array('all' => true, 'no_filter' => true), $timeline) ?: [];
+    $itemLink = record_url($item);
+    $file = get_db()->getTable('File')->findWithImages($item->id, 0);
+    $fileUrl = $file ? metadata($file, 'square_thumbnail_uri') : null;
+    foreach ($itemDates as $key => $itemDate) {
+        $event = array();
+        if (empty($itemDatesEnd[$key])) {
+            list($dateStart, $dateEnd) = neatlinetime_convert_any_date($itemDate, $timeline->getProperty('render_year'));
+        } else {
+            list($dateStart, $dateEnd) = neatlinetime_convert_two_dates($itemDate, $itemDatesEnd[$key], $timeline->getProperty('render_year'));
         }
+        if (!$dateStart) {
+            continue;
+        }
+        $event['start'] = $dateStart;
+        if (!is_null($dateEnd)) {
+            $event['end'] = $dateEnd;
+        }
+        $event['title'] = $itemTitle;
+        $event['link'] = $itemLink;
+        $event['classname'] = neatlinetime_item_class($item);
+        if ($fileUrl) {
+            $event['image'] = $fileUrl;
+        }
+        $event['description'] = $itemDescription;
+        $events[] = $event;
     }
 }
 
-$neatlineTimeArray = array();
-$neatlineTimeArray['dateTimeFormat'] = "iso8601";
-$neatlineTimeArray['events'] = $neatlineTimeEvents;
+$data = array();
+$data['dateTimeFormat'] = 'iso8601';
+$data['events'] = $events;
 
-$neatlinetimeJson = json_encode($neatlineTimeArray);
+$dataJson = version_compare(phpversion(), '5.4.0', '<')
+    ? json_encode($data)
+    : json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-echo $neatlinetimeJson;
-
+echo $dataJson;

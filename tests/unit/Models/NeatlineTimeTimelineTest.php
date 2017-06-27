@@ -1,21 +1,22 @@
 <?php
 
-//require_once NEATLINE_TIME_TIMELINE_PLUGIN_DIR . '/models/NeatlineTimeTimeline.php';
-
 /**
- * Test the NeatlineTimeTimeline model.
+ * Test the NeatlineTime_Timeline model.
  */
-class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
+class NeatlineTime_TimelineTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->dbAdapter = new Zend_Test_DbAdapter;
         $this->db = new Omeka_Db($this->dbAdapter);
-        $this->timeline = new NeatlineTimeTimeline($this->db);
+        $this->timeline = new NeatlineTime_Timeline($this->db);
         $this->user = new User($this->db);
         $bootstrap = new Omeka_Test_Bootstrap;
         $bootstrap->getContainer()->db = $this->db;
         Zend_Registry::set('bootstrap', $bootstrap);
+
+        //The process don't use the default install process, so force options.
+        set_option('neatline_time_defaults', json_encode(NeatlineTime_Test_AppTestCase::$options));
     }
 
     public function tearDown()
@@ -29,16 +30,26 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
         $this->timeline->description = 'Timeline Description';
         $this->timeline->public = '1';
         $this->timeline->featured = '1';
-        $this->timeline->creator_id = $this->user->id;
-        $this->timeline->query = serialize(array('range' => '1'));
+        $this->timeline->owner_id = $this->user->id;
+        $this->timeline->setQuery(array('range' => '1'));
+        $parameters = array(
+            'item_title' => 50,
+            'item_description' => 42,
+            'item_date' => 43,
+            'item_date_end' => '',
+            'render_year' => 'january_1',
+            'center_date' => '',
+            'viewer' => '{}',
+        );
+        $this->timeline->setParameters($parameters);
 
         $this->assertEquals('Timeline Title', $this->timeline->title);
         $this->assertEquals('Timeline Description', $this->timeline->description);
         $this->assertEquals('1', $this->timeline->public);
         $this->assertEquals('1', $this->timeline->featured);
-        $this->assertEquals($this->user->id, $this->timeline->creator_id);
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertEquals($this->user->id, $this->timeline->owner_id);
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
+        $this->assertEquals($parameters, json_decode($this->timeline->parameters, true));
     }
 
     public function testInsertSetsAddedDate()
@@ -60,7 +71,7 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotNull($this->timeline->modified);
         $this->assertThat(new Zend_Date($this->timeline->modified), $this->isInstanceOf('Zend_Date'),
-            "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");        
+            "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
     public function testUpdateSetsModifiedDate()
@@ -74,32 +85,33 @@ class NeatlineTimeTimelineTest extends PHPUnit_Framework_TestCase
             "'modified' column should contain a valid date (signified by validity as constructor for Zend_Date)");
     }
 
-    public function testQuerySerialization() {
+    public function testQueryJsonization()
+    {
         $this->dbAdapter->appendLastInsertIdToStack('1');
         $this->timeline->title = 'Timeline Title';
         $this->timeline->query = array('range' => '1');
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
+        $this->assertEquals(array('range' => '1'), $this->timeline->getQuery());
     }
 
-    public function testDontReserializeQuery()
+    public function testDontRejsonizeQuery()
     {
         $this->dbAdapter->appendLastInsertIdToStack('1');
         $this->timeline->title = 'Timeline Title';
-        $this->timeline->query = serialize(array('range' => '1'));
+        $this->timeline->query = array('range' => '1');
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
 
         $this->timeline->public = 1;
         $this->timeline->save();
 
-        $this->assertTrue(is_array(unserialize($this->timeline->query)));
-        $this->assertEquals(array('range' => '1'), unserialize($this->timeline->query));
-
+        $this->assertTrue(is_array(json_decode($this->timeline->query, true)));
+        $this->assertEquals(array('range' => '1'), json_decode($this->timeline->query, true));
+        $this->assertEquals(array('range' => '1'), $this->timeline->getQuery());
     }
 }

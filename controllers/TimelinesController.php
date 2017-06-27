@@ -5,6 +5,15 @@
 class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionController
 {
     /**
+     * The number of records to browse per page.
+     *
+     * @var string
+     */
+    protected $_browseRecordsPerPage = 100;
+
+    protected $_autoCsrfProtection = true;
+
+    /**
      * Initialization.
      *
      * @todo Add our own setting for recordsPerPage instead of using setting
@@ -12,16 +21,28 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
      */
     public function init()
     {
-        $this->_helper->db->setDefaultModelName('NeatlineTimeTimeline');
+        $this->_helper->db->setDefaultModelName('NeatlineTime_Timeline');
+    }
 
-        $this->_browseRecordsPerPage = get_option('per_page_admin');
+    /**
+     * The browse action.
+     *
+     */
+    public function browseAction()
+    {
+        if (!$this->getParam('sort_field')) {
+            $this->setParam('sort_field', 'added');
+            $this->setParam('sort_dir', 'd');
+        }
 
+        parent::browseAction();
     }
 
     public function addAction()
     {
-        require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
-        $form = new NeatlineTime_Form_Timeline;
+        $form = new NeatlineTime_Form_TimelineAdd;
+        $defaults = json_decode(get_option('neatline_time_defaults'), true) ?: array();
+        $form->setDefaults($defaults);
         $this->view->form = $form;
         parent::addAction();
     }
@@ -30,13 +51,18 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     {
         $timeline = $this->_helper->db->findById();
 
-        require_once NEATLINE_TIME_FORMS_DIR . '/timeline.php';
-        $form = new NeatlineTime_Form_Timeline;
-        $form->setDefaults(array('title' => $timeline->title, 'description' => $timeline->description, 'public' => $timeline->public, 'featured' => $timeline->featured, 'center_date' => $timeline->center_date));
-
+        $form = new NeatlineTime_Form_TimelineAdd;
+        // Set the existings values.
+        $parameters = $timeline->getParameters();
+        $existing = array(
+            'title' => $timeline->title,
+            'description' => $timeline->description,
+            'public' => $timeline->public,
+            'featured' => $timeline->featured,
+        );
+        $form->setDefaults(array_merge($parameters, $existing));
         $this->view->form = $form;
         parent::editAction();
-
     }
 
     public function queryAction()
@@ -44,17 +70,17 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $timeline = $this->_helper->db->findById();
 
         if(isset($_GET['search'])) {
-            $timeline->query = $_GET;
+            $timeline->setQuery($_GET);
             $timeline->save();
             $this->_helper->flashMessenger($this->_getEditSuccessMessage($timeline), 'success');
             $this->_helper->redirector->gotoRoute(array('action' => 'show'));
         }
         else {
-            $queryArray = unserialize($timeline->query);
+            $query = $timeline->getQuery();
             // Some parts of the advanced search check $_GET, others check
             // $_REQUEST, so we set both to be able to edit a previous query.
-            $_GET = $queryArray;
-            $_REQUEST = $queryArray;
+            $_GET = $query;
+            $_REQUEST = $query;
         }
 
         $this->view->neatline_time_timeline = $timeline;
@@ -63,10 +89,9 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     public function itemsAction()
     {
         $timeline = $this->_helper->db->findById();
+        $items = $timeline->getItems();
 
-        $query = $timeline->query ? unserialize($timeline->query) : array();
-        $items = get_db()->getTable('Item')->findBy($query, null);
-
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
         $this->view->neatline_time_timeline = $timeline;
         $this->view->items = $items;
     }
@@ -102,5 +127,4 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     {
         return __('This will delete the timeline "%s" and its associated metadata. This will not delete any items associated with this timeline.', $timeline->title);
     }
-
 }

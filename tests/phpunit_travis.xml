@@ -1,16 +1,14 @@
-<phpunit bootstrap="bootstrap.php"
-  convertErrorsToExceptions="true"
-  convertWarningsToExceptions="true"
-  colors="true">
-
-  <!--<php>-->
-    <!--<includePath>..</includePath>-->
-    <!--<includePath>../../..</includePath>-->
-  <!--</php>-->
-
-  <testsuite name="Neatline Time Tests">
-    <directory>integration</directory>
-    <directory>unit</directory>
-  </testsuite>
-
+<phpunit 
+    bootstrap="bootstrap.php"
+    convertErrorsToExceptions="true"
+    convertWarningsToExceptions="true"
+    colors="true"
+    verbose="true">
+    <testsuite name="Neatline Time Tests">
+        <directory>integration</directory>
+        <directory>unit</directory>
+    </testsuite>
+    <php>
+        <ini name="display_errors" value="1"/>
+    </php>
 </phpunit>

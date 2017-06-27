@@ -2,12 +2,20 @@
 /**
  * Testing helper class.
  */
-require_once '../NeatlineTimePlugin.php';
 
 class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
-
     private $_dbHelper;
+
+    public static $options = array(
+        'item_title' => 50,
+        'item_description' => 41,
+        'item_date' => 40,
+        'item_date_end' => '',
+        'render_year' => 'skip',
+        'center_date' => '',
+        'viewer' => '{}',
+    );
 
     /**
      * Spin up the plugins and prepare the database.
@@ -16,7 +24,6 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
      */
     public function setUp()
     {
-
         parent::setUp();
 
         $this->user = $this->db->getTable('User')->find(1);
@@ -27,13 +34,12 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $plugin_helper->setUp('NeatlineTime');
 
         Omeka_Test_Resource_Db::$runInstaller = true;
-
     }
 
     /**
      * Create a timeline for testing.
      *
-     * @return NeatlineTimeTimeline
+     * @return NeatlineTime_Timeline
      */
     public function _createTimeline($data = array(), $user = null)
     {
@@ -43,11 +49,14 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
             $data['public'] = '1';
             $data['featured'] = '1';
             $data['query'] = array('range' => '1');
+            $data['parameters'] = array(
+                'render_year' => 'skip',
+            );
         }
 
-        $data['creator_id'] = $user ? $user->id : $this->user->id;
+        $data['owner_id'] = $user ? $user->id : $this->user->id;
 
-        $timeline = new NeatlineTimeTimeline;
+        $timeline = new NeatlineTime_Timeline;
 
         foreach ($data as $k => $v) {
             $timeline->$k = $v;
@@ -56,5 +65,4 @@ class NeatlineTime_Test_AppTestCase extends Omeka_Test_AppTestCase
         $timeline->save();
         return $timeline;
     }
-
 }

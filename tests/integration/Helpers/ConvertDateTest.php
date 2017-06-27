@@ -3,7 +3,7 @@
  * Tests the get_current_timeline() helper.
  */
 class ConvertDateTest extends NeatlineTime_Test_AppTestCase
-{   
+{
     protected $_isAdminTest = true;
 
     // https://github.com/scholarslab/NeatlineTime/issues/38
@@ -13,8 +13,26 @@ class ConvertDateTest extends NeatlineTime_Test_AppTestCase
         );
     }
 
-    // https://github.com/scholarslab/NeatlineTime/issues/39
+    /**
+     * By default, a single number is now accepted.
+     *
+     * https://github.com/scholarslab/NeatlineTime/issues/39
+     */
     public function testYearOnlyDate() {
+        $this->assertEquals('2012-01-01T00:00:00+00:00',
+            neatlinetime_convert_date('2012')
+        );
+    }
+
+    /**
+     * A single number may be not accepted.
+     *
+     * https://github.com/scholarslab/NeatlineTime/issues/39
+     */
+    public function testYearOnlyDateSkip() {
+        $defaults = json_decode(get_option('neatline_time_defaults'), true);
+        $defaults['render_year'] = 'skip';
+        set_option('neatline_time_defaults', json_encode($defaults));
         $this->assertFalse(
             neatlinetime_convert_date('2012')
         );
@@ -46,5 +64,90 @@ class ConvertDateTest extends NeatlineTime_Test_AppTestCase
         $this->assertContains(
             '-2013-01-01', neatlinetime_convert_date('-2013-01-01')
         );
+    }
+
+    /**
+     * A single number may be allowed with the specified parameter.
+     */
+    public function testYearOnlyDateWithParamJanuary1()
+    {
+        $this->assertContains(
+            '1066-01-01', neatlinetime_convert_date('1066', 'january_1')
+        );
+        $this->assertFalse(
+            neatlinetime_convert_date('1066', 'skip')
+        );
+    }
+
+    /**
+     * A single number may be allowed with the specified parameter.
+     */
+    public function testYearOnlyDateWithParamJuly1()
+    {
+        $this->assertContains(
+            '1066-07-01', neatlinetime_convert_date('1066', 'july_1')
+        );
+    }
+
+    /**
+     * A single number may be allowed with the specified parameter.
+     */
+    public function testYearOnlyDateWithParamFullYear()
+    {
+        $this->assertFalse(neatlinetime_convert_date('1066', 'full_year'));
+        $result = neatlinetime_convert_single_date('1066', 'full_year');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1066-12-31', $result[1]);
+    }
+
+    public function testRangeDatesJanuary1()
+    {
+        $result = neatlinetime_convert_range_dates(array('1066', '1067'), 'january_1');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1067-01-01', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066-10-09', '1067'), 'january_1');
+        $this->assertContains('1066-10-09', $result[0]);
+        $this->assertContains('1067-01-01', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066', '1067-12-25'), 'january_1');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1067-12-25', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066', '1066'), 'january_1');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1066-12-31', $result[1]);
+    }
+
+    public function testRangeDatesJuly1()
+    {
+        $result = neatlinetime_convert_range_dates(array('1066', '1067'), 'july_1');
+        $this->assertContains('1066-07-01', $result[0]);
+        $this->assertContains('1067-06-30', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066', '1067-05-04'), 'july_1');
+        $this->assertContains('1066-07-01', $result[0]);
+        $this->assertContains('1067-05-04', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066-03-21', '1067'), 'july_1');
+        $this->assertContains('1066-03-21', $result[0]);
+        $this->assertContains('1067-07-01', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066', '1066'), 'july_1');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1066-12-31', $result[1]);
+    }
+
+    public function testRangeDatesFullYear()
+    {
+        $result = neatlinetime_convert_range_dates(array('1066', '1067'), 'full_year');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1067-12-31', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1067', '1066'), 'full_year');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1067-12-31', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1066', '1066'), 'full_year');
+        $this->assertContains('1066-01-01', $result[0]);
+        $this->assertContains('1066-12-31', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1067-04-21', '1067'), 'full_year');
+        $this->assertContains('1067-04-21', $result[0]);
+        $this->assertContains('1067-12-31', $result[1]);
+        $result = neatlinetime_convert_range_dates(array('1067', '1067-04-21'), 'full_year');
+        $this->assertContains('1067-01-01', $result[0]);
+        $this->assertContains('1067-04-21', $result[1]);
     }
 }
