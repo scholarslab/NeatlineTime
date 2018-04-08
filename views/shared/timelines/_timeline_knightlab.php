@@ -76,10 +76,10 @@ if (empty($timeline)) $timeline = get_current_record('neatline_time_timeline');
             "events": timelineEvents
           };
 
-          var timelineDivID = '<?php echo $timeline->id; ?>';
+          var timelineDivID = 'timeline-<?php echo $timeline->id; ?>';
 
           // initialize the timeline instance
-          window.timeline = new TL.Timeline('timeline-' + timelineDivID, slides);
+          window.timeline = new TL.Timeline(timelineDivID, slides);
 
           function parseDate(entryDateString) {
             var entryDate = entryDateString;
