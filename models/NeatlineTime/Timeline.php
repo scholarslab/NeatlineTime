@@ -170,7 +170,7 @@ class NeatlineTime_Timeline extends Omeka_Record_AbstractRecord implements Zend_
      * Set the specified parameter of the record.
      *
      * @param string $name
-     * @param var $value
+     * @param mixed $value
      * @return string The specified parameter of the record.
      */
     public function setParameter($name, $value)
