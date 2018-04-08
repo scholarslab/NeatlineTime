@@ -266,7 +266,7 @@ Credits
 [simile-timeline]: http://www.simile-widgets.org/wiki/Timeline
 [Knightlab timeline]: https://timeline.knightlab.com
 [Omeka S]: https://omeka.org/s
-[Upgrade to Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
+[Upgrade to Omeka S]: https://github.com/Daniel-KM/Omeka-plugin-UpgradeToOmekaS
 [Timeline for Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-Timeline
 [installing-a-plugin]: http://omeka.org/codex/Installing_a_Plugin
 [example of use]: https://docs.neatline.org/working-with-the-simile-timeline-widget.html
