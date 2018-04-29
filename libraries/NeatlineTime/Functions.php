@@ -217,7 +217,7 @@ function neatlinetime_convert_date($date, $renderYear = null)
     if (preg_match('/^-?\d{1,4}$/', $date)) {
         // Normalize the year.
         $date = $date < 0
-            ? '-' . str_pad(substring($date, 1), 4, '0', STR_PAD_LEFT)
+            ? '-' . str_pad(substr($date, 1), 4, '0', STR_PAD_LEFT)
             : str_pad($date, 4, '0', STR_PAD_LEFT);
         switch ($renderYear) {
             case 'january_1':
