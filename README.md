@@ -258,7 +258,7 @@ Credits
 ### Copyright
 
 * Copyright (c) 2010–2012 The Board and Visitors of the University of Virginia.
-* Copyright Daniel Berthereau, 2016-2017
+* Copyright Daniel Berthereau, 2016-2018
 
 
 [scholarslab]: http://scholarslab.org
