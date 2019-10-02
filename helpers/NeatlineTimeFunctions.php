@@ -55,25 +55,12 @@ function queue_timeline_assets()
     $headScript = get_view()->headScript();
     $headScript->appendFile(src('neatline-time-scripts.js', 'javascripts'));
 
-    // Check useInternalJavascripts in config.ini.
-    $config = Zend_Registry::get('bootstrap')->getResource('Config');
-    $useInternalJs = isset($config->theme->useInternalJavascripts)
-            ? (bool) $config->theme->useInternalJavascripts
-            : false;
-    $useInternalJs = isset($config->theme->useInternalAssets)
-            ? (bool) $config->theme->useInternalAssets
-            : $useInternalJs;
+    $timelineVariables = 'Timeline_ajax_url="'.src('simile-ajax-api.js', 'javascripts/simile/ajax-api').'"; '
+                       . 'Timeline_urlPrefix="'.dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')).'/"; '
+                       . 'Timeline_parameters="bundle=true";';
 
-    if ($useInternalJs) {
-        $timelineVariables = 'Timeline_ajax_url="'.src('simile-ajax-api.js', 'javascripts/simile/ajax-api').'"; '
-                           . 'Timeline_urlPrefix="'.dirname(src('timeline-api.js', 'javascripts/simile/timeline-api')).'/"; '
-                           . 'Timeline_parameters="bundle=true";';
-
-        $headScript->appendScript($timelineVariables);
-        $headScript->appendFile(src('timeline-api.js', 'javascripts/simile/timeline-api'));
-    } else {
-        $headScript->appendFile('//api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true');
-    }
+    $headScript->appendScript($timelineVariables);
+    $headScript->appendFile(src('timeline-api.js', 'javascripts/simile/timeline-api'));
 
     $headScript->appendScript('SimileAjax.History.enabled = false; window.jQuery = SimileAjax.jQuery');
 
