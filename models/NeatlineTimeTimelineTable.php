@@ -43,7 +43,7 @@ class NeatlineTimeTimelineTable extends Omeka_Db_Table {
      * @param Zend_Db_Select
      * @param boolean Whether to retrieve only featured timelines.
      */
-    public function filterByUser($select, $userId)
+    public function filterByUser($select, $userId, $userField)
     {
         $userId = (int) $userId;
 
